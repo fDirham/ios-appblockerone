@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FamilyControls
 
 struct NewGroupView: View {
     @State var isKeyboardOpen: Bool = false
@@ -19,59 +20,58 @@ struct NewGroupView: View {
     @State private var openMethod: String = "Tap 5 times"
     @State private var startTimeRawInt: Int16 = 0
     @State private var endTimeRawInt: Int16 = 2359
+    @State private var faSelection: FamilyActivitySelection = FamilyActivitySelection()
 
 
     var body: some View {
         Color.bg
             .ignoresSafeArea()
             .overlay {
-                VStack(spacing: 16) {
-                    SettingGroupView("Group Name") {
-                        TextField("E.g Socials", text: $groupName)
-                            .labelsHidden()
-                            .padding(.horizontal)
-                            .padding(.vertical, 8)
-                            .background(RoundedRectangle(cornerRadius: 5).fill(Color.interactable))
-                            .foregroundColor(.black)
-                    }
-                    SettingGroupView("Apps") {
-                        TextField("TODO", text: $appsSelected)
-                            .labelsHidden()
-                            .padding(.horizontal)
-                            .padding(.vertical, 8)
-                            .background(RoundedRectangle(cornerRadius: 5).fill(Color.interactable))
-                            .foregroundColor(.black)
-                    }
-                    SettingGroupView("Block settings", spacing: 12) {
-                        BooleanSettingsView("Blocking enabled", value: $isBlockEnabled)
-                        BooleanSettingsView("Strict block", value: $isStrictBlock)
-                        NumberSettingsView("Maximum opens per day", value: $maxOpensPerDay,  min: 0, max: 100)
-                        NumberSettingsView("Duration per open (minutes)", value: $durationPerOpenM, min: 1, max: 120)
-                        PickerSettingsView("Open method", value: $openMethod, optionsList: ["Tap 5 times", "None"])
-                    }
-                    SettingGroupView("Block schedule", spacing: 12) {
-                        TimeSettingView("Start", rawIntValue: $startTimeRawInt )
-                        TimeSettingView("End", rawIntValue: $endTimeRawInt )
-                    }
-                    Spacer()
-                }
-                .padding(.horizontal, 24)
-                .padding(.top, 16)
-                .toolbar {
-                    ToolbarItemGroup(placement: .keyboard) {
-                        HStack{
-                            Spacer()
-                            Button("Done") {
-                                // Dismiss keyboard
-                                UIApplication.shared.sendAction(
-                                    #selector(UIResponder.resignFirstResponder),
-                                    to: nil,
-                                    from: nil,
-                                    for: nil
-                                )
-                            }
+                ScrollView {
+                    VStack(spacing: 16) {
+                        SettingGroupView("Group Name") {
+                            TextField("E.g Socials", text: $groupName)
+                                .labelsHidden()
+                                .padding(.horizontal)
+                                .padding(.vertical, 8)
+                                .settingBlockBG()
+                                .foregroundColor(.black)
                         }
+                        SettingGroupView("Apps") {
+                                AppSelectionSettingView(faSelection: $faSelection)
+                        }
+                        SettingGroupView("Block settings", spacing: 12) {
+                            BooleanSettingsView("Blocking enabled", value: $isBlockEnabled)
+                            BooleanSettingsView("Strict block", value: $isStrictBlock)
+                            NumberSettingsView("Maximum opens per day", value: $maxOpensPerDay,  min: 0, max: 100)
+                            NumberSettingsView("Duration per open (minutes)", value: $durationPerOpenM, min: 1, max: 120)
+                            PickerSettingsView("Open method", value: $openMethod, optionsList: ["Tap 5 times", "None"])
+                        }
+                        SettingGroupView("Block schedule", spacing: 12) {
+                            TimeSettingView("Start", rawIntValue: $startTimeRawInt )
+                            TimeSettingView("End", rawIntValue: $endTimeRawInt )
+                        }
+                        Spacer()
                     }
+                    .padding(.horizontal, 24)
+                    .padding(.top, 16)
+                    .toolbar {
+                        ToolbarItemGroup(placement: .keyboard) {
+                            HStack{
+                                Spacer()
+                                Button("Done") {
+                                    // Dismiss keyboard
+                                    UIApplication.shared.sendAction(
+                                        #selector(UIResponder.resignFirstResponder),
+                                        to: nil,
+                                        from: nil,
+                                        for: nil
+                                    )
+                                }
+                            }
+                            .foregroundStyle(.accent)
+                        }
+                }
                 }
             }
     }
@@ -166,9 +166,10 @@ struct NumberSettingsView: View {
                 .multilineTextAlignment(.center)
                 .labelsHidden()
                 .frame(width: 65, height: 32)
-                .background(RoundedRectangle(cornerRadius: 5).fill(Color.interactable))
+                .settingBlockBG()
                 .keyboardType(.numberPad)
                 .onChange(of: value) {
+                    print("change val \(value)")
                     if max != nil {
                         if value > max! {
                             value = max!
@@ -211,7 +212,7 @@ struct PickerSettingsView: View {
                     .multilineTextAlignment(.center)
                     .foregroundStyle(.black)
                     .frame(width: 130, height: 32)
-                    .background(RoundedRectangle(cornerRadius: 5).fill(Color.interactable))
+                    .settingBlockBG()
             }
         }
     }
@@ -238,18 +239,23 @@ struct TimeSettingView: View {
         HStack{
             Text(name)
             Spacer()
-            DatePicker(name, selection: dateValue, displayedComponents: .hourAndMinute)
-                .labelsHidden()
-                .background(RoundedRectangle(cornerRadius: 5).fill(Color.interactable))
+            Text(dateValue.wrappedValue, style: .time)
+                .frame(width: 130, height: 32)
+                .settingBlockBG()
+                .overlay {
+                DatePicker(name, selection: dateValue, displayedComponents: .hourAndMinute)
+                    .labelsHidden()
+                    .colorMultiply(.clear)
+            }
         }
     }
     
     private func convertRawIntToDate(rawInt: Int16) -> Date{
         // Stringify rawIntValue
         var strValue: String = String(rawIntValue)
-        let deficit = strValue.count - 4
+        let deficit = 4 - strValue.count
         if deficit > 0 {
-            for _ in 0...deficit {
+            for _ in 0..<deficit {
                 strValue = "0\(strValue)"
             }
         }
@@ -269,7 +275,10 @@ struct TimeSettingView: View {
     private func convertDateToRawInt(inDate: Date) -> Int16 {
         let dateComponents = Calendar.current.dateComponents([.hour, .minute], from: inDate)
         let hourStr = String(dateComponents.hour!)
-        let minStr = String(dateComponents.minute!)
+        var minStr = String(dateComponents.minute!)
+        if minStr.count < 2 {
+            minStr = "0\(minStr)"
+        }
         
         return Int16("\(hourStr)\(minStr)") ?? 0
     }

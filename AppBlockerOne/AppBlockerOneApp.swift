@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FamilyControls
 
 @main
 struct AppBlockerOneApp: App {
@@ -13,8 +14,19 @@ struct AppBlockerOneApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NewGroupView()
+//            ContentView()
+                .foregroundStyle(.fg)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .task {
+                    do
+                    {
+                        try await AuthorizationCenter.shared.requestAuthorization(for: .individual)
+                    }
+                    catch {
+                        fatalError(error.localizedDescription)
+                    }
+                }
         }
     }
 }
