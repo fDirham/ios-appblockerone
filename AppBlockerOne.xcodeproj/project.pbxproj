@@ -13,6 +13,11 @@
 		8BBF76B42C6BDAD5005EC2D2 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BBF76B32C6BDAD5005EC2D2 /* Preview Assets.xcassets */; };
 		8BBF76B62C6BDAD5005EC2D2 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76B52C6BDAD5005EC2D2 /* Persistence.swift */; };
 		8BBF76B92C6BDAD5005EC2D2 /* AppBlockerOne.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76B72C6BDAD5005EC2D2 /* AppBlockerOne.xcdatamodeld */; };
+		8BBF76C12C6BE725005EC2D2 /* GroupColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76C02C6BE725005EC2D2 /* GroupColor.swift */; };
+		8BBF76C42C6BE8A5005EC2D2 /* NewGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76C32C6BE8A5005EC2D2 /* NewGroupView.swift */; };
+		8BBF76C62C6C0744005EC2D2 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76C52C6C0744005EC2D2 /* Test.swift */; };
+		8BBF76C92C6C15A3005EC2D2 /* BoundFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76C82C6C15A3005EC2D2 /* BoundFormatter.swift */; };
+		8BBF76CD2C6C20ED005EC2D2 /* NumpadTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76CC2C6C20ED005EC2D2 /* NumpadTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +28,11 @@
 		8BBF76B32C6BDAD5005EC2D2 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		8BBF76B52C6BDAD5005EC2D2 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		8BBF76B82C6BDAD5005EC2D2 /* AppBlockerOne.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = AppBlockerOne.xcdatamodel; sourceTree = "<group>"; };
+		8BBF76C02C6BE725005EC2D2 /* GroupColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupColor.swift; sourceTree = "<group>"; };
+		8BBF76C32C6BE8A5005EC2D2 /* NewGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupView.swift; sourceTree = "<group>"; };
+		8BBF76C52C6C0744005EC2D2 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
+		8BBF76C82C6C15A3005EC2D2 /* BoundFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundFormatter.swift; sourceTree = "<group>"; };
+		8BBF76CC2C6C20ED005EC2D2 /* NumpadTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumpadTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,11 +65,12 @@
 		8BBF76AB2C6BDAD2005EC2D2 /* AppBlockerOne */ = {
 			isa = PBXGroup;
 			children = (
+				8BBF76C72C6C158E005EC2D2 /* Styles */,
+				8BBF76BF2C6BE702005EC2D2 /* Models */,
 				8BBF76AC2C6BDAD2005EC2D2 /* AppBlockerOneApp.swift */,
-				8BBF76AE2C6BDAD2005EC2D2 /* ContentView.swift */,
-				8BBF76B02C6BDAD5005EC2D2 /* Assets.xcassets */,
+				8BBF76C22C6BE880005EC2D2 /* Views */,
 				8BBF76B52C6BDAD5005EC2D2 /* Persistence.swift */,
-				8BBF76B72C6BDAD5005EC2D2 /* AppBlockerOne.xcdatamodeld */,
+				8BBF76B02C6BDAD5005EC2D2 /* Assets.xcassets */,
 				8BBF76B22C6BDAD5005EC2D2 /* Preview Content */,
 			);
 			path = AppBlockerOne;
@@ -71,6 +82,34 @@
 				8BBF76B32C6BDAD5005EC2D2 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		8BBF76BF2C6BE702005EC2D2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8BBF76B72C6BDAD5005EC2D2 /* AppBlockerOne.xcdatamodeld */,
+				8BBF76C02C6BE725005EC2D2 /* GroupColor.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		8BBF76C22C6BE880005EC2D2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8BBF76AE2C6BDAD2005EC2D2 /* ContentView.swift */,
+				8BBF76C32C6BE8A5005EC2D2 /* NewGroupView.swift */,
+				8BBF76C52C6C0744005EC2D2 /* Test.swift */,
+				8BBF76CC2C6C20ED005EC2D2 /* NumpadTextField.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		8BBF76C72C6C158E005EC2D2 /* Styles */ = {
+			isa = PBXGroup;
+			children = (
+				8BBF76C82C6C15A3005EC2D2 /* BoundFormatter.swift */,
+			);
+			path = Styles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -144,8 +183,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BBF76B62C6BDAD5005EC2D2 /* Persistence.swift in Sources */,
+				8BBF76C42C6BE8A5005EC2D2 /* NewGroupView.swift in Sources */,
 				8BBF76AF2C6BDAD2005EC2D2 /* ContentView.swift in Sources */,
+				8BBF76C92C6C15A3005EC2D2 /* BoundFormatter.swift in Sources */,
+				8BBF76C62C6C0744005EC2D2 /* Test.swift in Sources */,
 				8BBF76AD2C6BDAD2005EC2D2 /* AppBlockerOneApp.swift in Sources */,
+				8BBF76CD2C6C20ED005EC2D2 /* NumpadTextField.swift in Sources */,
+				8BBF76C12C6BE725005EC2D2 /* GroupColor.swift in Sources */,
 				8BBF76B92C6BDAD5005EC2D2 /* AppBlockerOne.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
