@@ -17,7 +17,7 @@ struct NewGroupView: View {
     @State private var isStrictBlock: Bool = false
     @State private var maxOpensPerDay: Int16 = 5
     @State private var durationPerOpenM: Int16 = 5
-    @State private var openMethod: String = "Tap 5 times"
+    @State private var openMethod: OpenMethods = .Tap5
     @State private var startTimeRawInt: Int16 = 0
     @State private var endTimeRawInt: Int16 = 2359
     @State private var faSelection: FamilyActivitySelection = FamilyActivitySelection()
@@ -49,7 +49,7 @@ struct NewGroupView: View {
                             BooleanSettingsView("Strict block", value: $isStrictBlock)
                             NumberSettingsView("Maximum opens per day", value: $maxOpensPerDay,  min: 0, max: 100)
                             NumberSettingsView("Duration per open (minutes)", value: $durationPerOpenM, min: 1, max: 120)
-                            PickerSettingsView("Open method", value: $openMethod, optionsList: ["Tap 5 times", "None"])
+                            OpenMethodsPickerSettingsView("Open method", value: $openMethod, optionsList: OpenMethods.allCases)
                         }
                         SettingGroupView("Block schedule", spacing: 12) {
                             TimeSettingView("Start", rawIntValue: $startTimeRawInt )
@@ -198,13 +198,13 @@ struct NumberSettingsView: View {
     }
 }
 
-struct PickerSettingsView: View {
+struct OpenMethodsPickerSettingsView: View {
     let name: String
-    @Binding var value: String
-    var optionsList: Array<String>
+    @Binding var value: OpenMethods
+    var optionsList: [OpenMethods]
     
     
-    init(_ name: String, value: Binding<String>, optionsList: Array<String>){
+    init(_ name: String, value: Binding<OpenMethods>, optionsList: [OpenMethods]){
         self.name  = name
         self._value = value
         self.optionsList = optionsList
@@ -217,11 +217,11 @@ struct PickerSettingsView: View {
             Menu {
                 Picker(selection: $value, label: EmptyView()) {
                     ForEach(0 ..< optionsList.count, id: \.self) { idx in
-                        Text(optionsList[idx]).tag(optionsList[idx])
+                        Text(optionsList[idx].rawValue).tag(optionsList[idx])
                     }
                 }
             } label: {
-                Text(value)
+                Text(value.rawValue)
                     .multilineTextAlignment(.center)
                     .foregroundStyle(.black)
                     .frame(width: 130, height: 32)
