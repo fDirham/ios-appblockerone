@@ -16,7 +16,6 @@
 		8BBF76C12C6BE725005EC2D2 /* GroupColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76C02C6BE725005EC2D2 /* GroupColor.swift */; };
 		8BBF76C42C6BE8A5005EC2D2 /* NewGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76C32C6BE8A5005EC2D2 /* NewGroupView.swift */; };
 		8BBF76C92C6C15A3005EC2D2 /* BoundFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76C82C6C15A3005EC2D2 /* BoundFormatter.swift */; };
-		8BBF76CD2C6C20ED005EC2D2 /* NumpadTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76CC2C6C20ED005EC2D2 /* NumpadTextField.swift */; };
 		8BBF76CF2C6D1DCF005EC2D2 /* AppSelectionSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76CE2C6D1DCF005EC2D2 /* AppSelectionSettingView.swift */; };
 		8BBF76D12C6D1FB1005EC2D2 /* ReusableStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76D02C6D1FB1005EC2D2 /* ReusableStyles.swift */; };
 /* End PBXBuildFile section */
@@ -32,7 +31,6 @@
 		8BBF76C02C6BE725005EC2D2 /* GroupColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupColor.swift; sourceTree = "<group>"; };
 		8BBF76C32C6BE8A5005EC2D2 /* NewGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupView.swift; sourceTree = "<group>"; };
 		8BBF76C82C6C15A3005EC2D2 /* BoundFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundFormatter.swift; sourceTree = "<group>"; };
-		8BBF76CC2C6C20ED005EC2D2 /* NumpadTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumpadTextField.swift; sourceTree = "<group>"; };
 		8BBF76CE2C6D1DCF005EC2D2 /* AppSelectionSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSelectionSettingView.swift; sourceTree = "<group>"; };
 		8BBF76D02C6D1FB1005EC2D2 /* ReusableStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableStyles.swift; sourceTree = "<group>"; };
 		8BBF76D22C6D29EF005EC2D2 /* AppBlockerOne.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AppBlockerOne.entitlements; sourceTree = "<group>"; };
@@ -102,7 +100,6 @@
 			children = (
 				8BBF76AE2C6BDAD2005EC2D2 /* ContentView.swift */,
 				8BBF76C32C6BE8A5005EC2D2 /* NewGroupView.swift */,
-				8BBF76CC2C6C20ED005EC2D2 /* NumpadTextField.swift */,
 				8BBF76CE2C6D1DCF005EC2D2 /* AppSelectionSettingView.swift */,
 			);
 			path = Views;
@@ -192,7 +189,6 @@
 				8BBF76AF2C6BDAD2005EC2D2 /* ContentView.swift in Sources */,
 				8BBF76C92C6C15A3005EC2D2 /* BoundFormatter.swift in Sources */,
 				8BBF76AD2C6BDAD2005EC2D2 /* AppBlockerOneApp.swift in Sources */,
-				8BBF76CD2C6C20ED005EC2D2 /* NumpadTextField.swift in Sources */,
 				8BBF76D12C6D1FB1005EC2D2 /* ReusableStyles.swift in Sources */,
 				8BBF76C12C6BE725005EC2D2 /* GroupColor.swift in Sources */,
 				8BBF76CF2C6D1DCF005EC2D2 /* AppSelectionSettingView.swift in Sources */,

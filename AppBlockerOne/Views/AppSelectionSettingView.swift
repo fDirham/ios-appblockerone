@@ -80,7 +80,7 @@ struct AppSelectionSettingView: View {
                 HStack {
                     if isNoTokens {
                         Text("Tap here...")
-                            .foregroundStyle(.fg)
+                            .foregroundStyle(.fgFaint)
                     }
                     else {
                         if aptListToShowNum > 0 {

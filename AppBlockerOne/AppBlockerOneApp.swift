@@ -14,8 +14,8 @@ struct AppBlockerOneApp: App {
 
     var body: some Scene {
         WindowGroup {
-            NewGroupView()
-//            ContentView()
+//            NewGroupView()
+            ContentView()
                 .foregroundStyle(.fg)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .task {

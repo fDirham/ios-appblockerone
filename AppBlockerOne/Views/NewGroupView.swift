@@ -22,6 +22,10 @@ struct NewGroupView: View {
     @State private var endTimeRawInt: Int16 = 2359
     @State private var faSelection: FamilyActivitySelection = FamilyActivitySelection()
 
+    private var isFormValid: Bool {
+        // TODO
+        true
+    }
 
     var body: some View {
         Color.bg
@@ -30,7 +34,7 @@ struct NewGroupView: View {
                 ScrollView {
                     VStack(spacing: 16) {
                         SettingGroupView("Group Name") {
-                            TextField("E.g Socials", text: $groupName)
+                            TextField("group name", text: $groupName, prompt: Text("e.g Socials").foregroundStyle(.fgFaint))
                                 .labelsHidden()
                                 .padding(.horizontal)
                                 .padding(.vertical, 8)
@@ -53,9 +57,18 @@ struct NewGroupView: View {
                         }
                         Spacer()
                     }
-                    .padding(.horizontal, 24)
+                    .padding(.horizontal)
                     .padding(.top, 16)
                     .toolbar {
+                        if isFormValid {
+                            ToolbarItem(placement: .topBarTrailing) {
+                                Button(action: {
+                                    print("TODO: Save")
+                                }){
+                                    Text("Save")
+                                }
+                            }
+                        }
                         ToolbarItemGroup(placement: .keyboard) {
                             HStack{
                                 Spacer()
@@ -162,7 +175,7 @@ struct NumberSettingsView: View {
         HStack{
             Text(name)
             Spacer()
-            TextField(name, value: $value, formatter: self.formatter, prompt: Text("..."))
+            TextField(name, value: $value, formatter: self.formatter, prompt: Text("...").foregroundStyle(.fgFaint))
                 .multilineTextAlignment(.center)
                 .labelsHidden()
                 .frame(width: 65, height: 32)
@@ -284,6 +297,17 @@ struct TimeSettingView: View {
     }
 }
 
-#Preview {
-    NewGroupView()
+struct NewGroupView_Preview: PreviewProvider {
+    struct Container: View {
+        @State private var faSelection = FamilyActivitySelection()
+        var body: some View {
+            NavigationStack{
+                NewGroupView()
+            }
+        }
+    }
+    
+    static var previews: some View {
+        Container()
+    }
 }
