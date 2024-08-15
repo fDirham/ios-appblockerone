@@ -17,45 +17,31 @@ struct ContentView: View {
     private var appGroups: FetchedResults<AppGroup>
     
     var body: some View {
-        Color.bg
-            .ignoresSafeArea()
-            .overlay {
-                NavigationStack {
-                    VStack{
-                        ForEach(appGroups) {appGroup in
-                            HStack {
-                                Text(appGroup.groupName!)
+        NavigationStack {
+            Color.bg
+                .ignoresSafeArea()
+                .overlay {
+                    ScrollView {
+                        VStack{
+                            ForEach(appGroups) {appGroup in
+                                HStack {
+                                    Text(appGroup.groupName!)
+                                        .background(getColor(colorString: appGroup.groupColor!))
+                                }
                             }
-                            .padding()
-                            .background(getColor(colorString: appGroup.groupColor!))
                         }
                     }
                     .toolbar {
                         ToolbarItem(placement: .topBarTrailing) {
-                            NavigationLink(destination: NewAppGroupView()) {
+                            NavigationLink(destination: NewAppGroupView(coreDataContext: viewContext)) {
                                 Image(systemName: "plus")
+                                    .foregroundColor(.accent)
                             }
                         }
                     }
                 }
-            }
+        }
     }
-    //
-    //    private func addItem() {
-    //        withAnimation {
-    //            let newItem = Item(context: viewContext)
-    //            newItem.timestamp = Date()
-    //
-    //            do {
-    //                try viewContext.save()
-    //            } catch {
-    //                // Replace this implementation with code to handle the error appropriately.
-    //                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-    //                let nsError = error as NSError
-    //                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-    //            }
-    //        }
-    //    }
     
     //    private func deleteItems(offsets: IndexSet) {
     //        withAnimation {

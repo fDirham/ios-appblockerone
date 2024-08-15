@@ -7,8 +7,12 @@
 
 import Foundation
 import FamilyControls
+import CoreData
+import OSLog
 
 @Observable class AppGroupSettingsModel {
+    var coreDataContext: NSManagedObjectContext
+    
     var groupName: String = ""
     var faSelection: FamilyActivitySelection = FamilyActivitySelection()
     var s_blockingEnabled: Bool = true
@@ -16,17 +20,43 @@ import FamilyControls
     var s_maxOpensPerDay = 6
     var s_durationPerOpenM = 5
     var s_openMethod: OpenMethods = .Tap5
-    var s_blockSchedule_start = 0
-    var s_blockSchedule_end = 2359
+    var s_blockSchedule_start: Int = 0
+    var s_blockSchedule_end: Int = 2359
     
     private static let RANGE_MAX_OPENS_PER_DAY = 1...100
     private static let RANGE_DURATION_PER_OPEN_M = 1...300
 
+    init(coreDataContext: NSManagedObjectContext){
+        self.coreDataContext = coreDataContext
+    }
     
     func handleKeyboardClose(){
         // Check max and mins
         s_maxOpensPerDay = s_maxOpensPerDay.clamped(to: Self.RANGE_MAX_OPENS_PER_DAY)
         s_durationPerOpenM = s_durationPerOpenM.clamped(to: Self.RANGE_DURATION_PER_OPEN_M)
+    }
+    
+    static func createNewCDObj(inObj: AppGroupSettingsModel) throws -> AppGroup{
+        let newItem = AppGroup(context: inObj.coreDataContext)
+        newItem.timestamp = Date()
+        
+        let jsonEncoder = JSONEncoder()
+        let faData = try jsonEncoder.encode(inObj.faSelection)
+        let faString = String(data: faData, encoding: .utf8)
+        newItem.faSelection = faString
+        
+        newItem.id = UUID()
+        newItem.groupName = inObj.groupName
+        // TODO: Better color handling
+        newItem.groupColor = ["blue", "red", "green", "orange"].randomElement()!
+        newItem.s_blockSchedule_start = Int16(inObj.s_blockSchedule_start)
+        newItem.s_blockSchedule_end = Int16(inObj.s_blockSchedule_end)
+        newItem.s_openMethod = inObj.s_openMethod.rawValue
+        newItem.s_strictBlock = inObj.s_strictBlock
+        newItem.s_maxOpensPerDay = Int16(inObj.s_maxOpensPerDay)
+        newItem.s_durationPerOpenM = Int16(inObj.s_durationPerOpenM)
+        
+        return newItem
     }
     
     func handleSaveNew() -> (Bool, String?){
@@ -37,6 +67,15 @@ import FamilyControls
         }
         
         // Save
+        do {
+            var _ = try AppGroupSettingsModel.createNewCDObj(inObj: self)
+            try coreDataContext.save()
+        } catch {
+            let nsError = error as NSError
+            Logger().error("Unresolved error \(nsError), \(nsError.userInfo)")
+            return (false, "Failed to save, please try again later")
+        }
+
         // TODO
         return (true, nil)
     }

@@ -283,7 +283,7 @@ struct TimeSettingView: View {
 
 struct AppGroupSettingsView_Preview: PreviewProvider {
     struct Container: View {
-        @State private var sm: AppGroupSettingsModel = AppGroupSettingsModel()
+        @State private var sm: AppGroupSettingsModel = AppGroupSettingsModel(coreDataContext: PersistenceController.preview.container.viewContext)
         
         var body: some View {
             NavigationStack{

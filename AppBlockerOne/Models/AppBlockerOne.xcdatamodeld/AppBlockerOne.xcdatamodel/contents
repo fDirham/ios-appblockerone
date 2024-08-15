@@ -8,7 +8,7 @@
         <attribute name="s_blockingEnabled" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="s_blockSchedule_end" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="s_blockSchedule_start" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="s_durationPerBlock" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="s_durationPerOpenM" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="s_maxOpensPerDay" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="s_openMethod" optional="YES" attributeType="String"/>
         <attribute name="s_strictBlock" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>

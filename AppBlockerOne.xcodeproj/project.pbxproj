@@ -74,11 +74,11 @@
 		8BBF76AB2C6BDAD2005EC2D2 /* AppBlockerOne */ = {
 			isa = PBXGroup;
 			children = (
+				8BBF76AC2C6BDAD2005EC2D2 /* AppBlockerOneApp.swift */,
 				8BBF76D92C6D6A23005EC2D2 /* Extensions */,
 				8BBF76D22C6D29EF005EC2D2 /* AppBlockerOne.entitlements */,
 				8BBF76C72C6C158E005EC2D2 /* Styles */,
 				8BBF76BF2C6BE702005EC2D2 /* Models */,
-				8BBF76AC2C6BDAD2005EC2D2 /* AppBlockerOneApp.swift */,
 				8BBF76C22C6BE880005EC2D2 /* Views */,
 				8BBF76B02C6BDAD5005EC2D2 /* Assets.xcassets */,
 				8BBF76B22C6BDAD5005EC2D2 /* Preview Content */,
