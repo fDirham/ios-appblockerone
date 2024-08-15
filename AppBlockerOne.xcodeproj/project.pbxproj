@@ -22,6 +22,9 @@
 		8BBF76D82C6D662A005EC2D2 /* NewAppGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76D72C6D662A005EC2D2 /* NewAppGroupView.swift */; };
 		8BBF76DB2C6D6A35005EC2D2 /* KeyboardReadable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76DA2C6D6A35005EC2D2 /* KeyboardReadable+Extensions.swift */; };
 		8BBF76DD2C6D6EE8005EC2D2 /* Comparable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76DC2C6D6EE8005EC2D2 /* Comparable+Extensions.swift */; };
+		8BBF76DF2C6E6EFF005EC2D2 /* FamilyActivityTokensView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76DE2C6E6EFF005EC2D2 /* FamilyActivityTokensView.swift */; };
+		8BBF76E22C6E7C23005EC2D2 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76E12C6E7C23005EC2D2 /* Helpers.swift */; };
+		8BBF76E62C6E85A9005EC2D2 /* mockFaSelection.json in Resources */ = {isa = PBXBuildFile; fileRef = 8BBF76E52C6E85A9005EC2D2 /* mockFaSelection.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +45,9 @@
 		8BBF76D72C6D662A005EC2D2 /* NewAppGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAppGroupView.swift; sourceTree = "<group>"; };
 		8BBF76DA2C6D6A35005EC2D2 /* KeyboardReadable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardReadable+Extensions.swift"; sourceTree = "<group>"; };
 		8BBF76DC2C6D6EE8005EC2D2 /* Comparable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+Extensions.swift"; sourceTree = "<group>"; };
+		8BBF76DE2C6E6EFF005EC2D2 /* FamilyActivityTokensView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyActivityTokensView.swift; sourceTree = "<group>"; };
+		8BBF76E12C6E7C23005EC2D2 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
+		8BBF76E52C6E85A9005EC2D2 /* mockFaSelection.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mockFaSelection.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				8BBF76AC2C6BDAD2005EC2D2 /* AppBlockerOneApp.swift */,
+				8BBF76E02C6E7C0F005EC2D2 /* Utilities */,
 				8BBF76D92C6D6A23005EC2D2 /* Extensions */,
 				8BBF76D22C6D29EF005EC2D2 /* AppBlockerOne.entitlements */,
 				8BBF76C72C6C158E005EC2D2 /* Styles */,
@@ -90,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				8BBF76B32C6BDAD5005EC2D2 /* Preview Assets.xcassets */,
+				8BBF76E52C6E85A9005EC2D2 /* mockFaSelection.json */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -113,6 +121,7 @@
 				8BBF76C32C6BE8A5005EC2D2 /* AppGroupSettingsView.swift */,
 				8BBF76CE2C6D1DCF005EC2D2 /* AppSelectionSettingView.swift */,
 				8BBF76D72C6D662A005EC2D2 /* NewAppGroupView.swift */,
+				8BBF76DE2C6E6EFF005EC2D2 /* FamilyActivityTokensView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -132,6 +141,14 @@
 				8BBF76DC2C6D6EE8005EC2D2 /* Comparable+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		8BBF76E02C6E7C0F005EC2D2 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				8BBF76E12C6E7C23005EC2D2 /* Helpers.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -194,6 +211,7 @@
 			files = (
 				8BBF76B42C6BDAD5005EC2D2 /* Preview Assets.xcassets in Resources */,
 				8BBF76B12C6BDAD5005EC2D2 /* Assets.xcassets in Resources */,
+				8BBF76E62C6E85A9005EC2D2 /* mockFaSelection.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +227,7 @@
 				8BBF76AF2C6BDAD2005EC2D2 /* ContentView.swift in Sources */,
 				8BBF76AD2C6BDAD2005EC2D2 /* AppBlockerOneApp.swift in Sources */,
 				8BBF76D12C6D1FB1005EC2D2 /* ReusableStyles.swift in Sources */,
+				8BBF76DF2C6E6EFF005EC2D2 /* FamilyActivityTokensView.swift in Sources */,
 				8BBF76DD2C6D6EE8005EC2D2 /* Comparable+Extensions.swift in Sources */,
 				8BBF76C12C6BE725005EC2D2 /* GroupColor.swift in Sources */,
 				8BBF76D82C6D662A005EC2D2 /* NewAppGroupView.swift in Sources */,
@@ -216,6 +235,7 @@
 				8BBF76DB2C6D6A35005EC2D2 /* KeyboardReadable+Extensions.swift in Sources */,
 				8BBF76D62C6D643D005EC2D2 /* OpenMethods.swift in Sources */,
 				8BBF76D42C6D5C81005EC2D2 /* AppGroupSettingsModel.swift in Sources */,
+				8BBF76E22C6E7C23005EC2D2 /* Helpers.swift in Sources */,
 				8BBF76B92C6BDAD5005EC2D2 /* AppBlockerOne.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

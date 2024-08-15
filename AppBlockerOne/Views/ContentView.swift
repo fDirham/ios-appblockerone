@@ -7,6 +7,11 @@
 
 import SwiftUI
 import CoreData
+import FamilyControls
+import OSLog
+import ManagedSettings
+
+let logger = Logger()
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -16,29 +21,45 @@ struct ContentView: View {
         animation: .default)
     private var appGroups: FetchedResults<AppGroup>
     
+    let columns = [GridItem(.flexible()), GridItem(.flexible())]
+    
     var body: some View {
         NavigationStack {
             Color.bg
                 .ignoresSafeArea()
                 .overlay {
-                    ScrollView {
-                        VStack{
-                            ForEach(appGroups) {appGroup in
-                                HStack {
-                                    Text(appGroup.groupName!)
-                                        .background(getColor(colorString: appGroup.groupColor!))
+                    VStack(alignment: .leading){
+                        Text("Blocked groups")
+                            .multilineTextAlignment(.leading)
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .padding(.top)
+                            .padding(.horizontal)
+                            .padding(.bottom, 4)
+                        ScrollView {
+                            LazyVGrid(columns: columns, alignment: .leading) {
+                                ForEach(appGroups) {appGroup in
+                                    AppGroupBlockView(appGroup: appGroup)
                                 }
                             }
                         }
+                        .padding(.horizontal)
                     }
                     .toolbar {
+                        ToolbarItem(placement: .topBarLeading) {
+                            NavigationLink(destination: Text("TODO")) {
+                                Text("Help")
+                                    .foregroundStyle(.accent)
+                            }
+                        }
                         ToolbarItem(placement: .topBarTrailing) {
                             NavigationLink(destination: NewAppGroupView(coreDataContext: viewContext)) {
                                 Image(systemName: "plus")
-                                    .foregroundColor(.accent)
+                                    .foregroundStyle(.accent)
                             }
                         }
                     }
+                    .toolbarBackground(.bg)
                 }
         }
     }
@@ -57,6 +78,42 @@ struct ContentView: View {
     //            }
     //        }
     //    }
+}
+
+struct AppGroupBlockView: View {
+    let appGroup: AppGroup
+    
+    
+    let columns = Array(repeating: GridItem(.flexible(), spacing: 0), count: 3)
+    
+    private var faSelection: FamilyActivitySelection {
+        do{
+            return try decodeJSONObj(appGroup.faSelection ?? "")
+        }
+        catch {
+            logger.error("Can't decode family activity selection for \(appGroup.groupName ?? "Unknown???")")
+            return FamilyActivitySelection()
+        }
+    }
+    
+    private let frameSize: CGFloat = 120
+    private let cellSize: CGFloat = 40 // Make sure this is 1/3 of above
+    
+    private let MAX_ICONS_TO_SHOW = 9
+    
+    var body: some View {
+        VStack {
+            LazyVGrid(columns: columns, alignment: .center, spacing: 0) {
+                FamilyActivityTokensView(faSelection: faSelection, maxIconsToShow: MAX_ICONS_TO_SHOW)
+                    .frame(width: cellSize, height: cellSize)
+            }
+            .frame(width: frameSize, height: frameSize, alignment: .top)
+            .padding()
+            .roundedBG(fill: getColor(colorString: appGroup.groupColor!))
+            Text(appGroup.groupName!)
+        }
+    }
+        
 }
 
 #Preview {

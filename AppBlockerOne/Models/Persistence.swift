@@ -7,6 +7,7 @@
 
 import CoreData
 import SwiftUI
+import FamilyControls
 
 struct PersistenceController {
     static let shared = PersistenceController()
@@ -14,12 +15,27 @@ struct PersistenceController {
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
-        for _ in 0..<10 {
+        for i in 0..<10 {
             let newItem = AppGroup(context: viewContext)
             newItem.timestamp = Date()
-            newItem.faSelection = ""
+            
+            var newFaSelection = ""
+            if let path = Bundle.main.path(forResource: "mockFaSelection", ofType: "json") {
+                do {
+                    let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+                    newFaSelection = String(data: data, encoding: .utf8) ?? "FAILED"
+                  } catch {
+                       // handle error
+                      print("failed to load data \(error.localizedDescription)")
+                  }
+            }
+            else {
+                print("mock path not found")
+            }
+            
+            newItem.faSelection = newFaSelection
             newItem.id = UUID()
-            newItem.groupName = ["socials", "gaming", "porn", "news", "addiction", "danger"].randomElement()!
+            newItem.groupName = ["socials", "gaming", "porn", "news", "addiction", "danger"].randomElement()! + " \(i)"
             newItem.groupColor = ["blue", "red", "green", "orange"].randomElement()!
         }
         do {
@@ -32,6 +48,7 @@ struct PersistenceController {
         }
         return result
     }()
+    
 
     let container: NSPersistentContainer
 

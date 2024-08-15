@@ -11,6 +11,8 @@ import FamilyControls
 struct AppGroupSettingsView: View, KeyboardReadable {
     @Environment(AppGroupSettingsModel.self) private var sm
     @State private var errorAlertMsg: String = ""
+    @Environment(\.presentationMode) var presentationMode
+    
     private var isShowAlert: Binding<Bool> {
         Binding(get: {
             return !errorAlertMsg.isEmpty
@@ -68,7 +70,7 @@ struct AppGroupSettingsView: View, KeyboardReadable {
                                     errorAlertMsg = saveRes.1 ?? "Empty error"
                                 }
                                 else {
-                                    print("TODO: Handle successful add in view")
+                                    presentationMode.wrappedValue.dismiss()
                                 }
                             
                             }){

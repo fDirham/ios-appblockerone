@@ -30,19 +30,11 @@ import OSLog
         self.coreDataContext = coreDataContext
     }
     
-    func handleKeyboardClose(){
-        // Check max and mins
-        s_maxOpensPerDay = s_maxOpensPerDay.clamped(to: Self.RANGE_MAX_OPENS_PER_DAY)
-        s_durationPerOpenM = s_durationPerOpenM.clamped(to: Self.RANGE_DURATION_PER_OPEN_M)
-    }
-    
     static func createNewCDObj(inObj: AppGroupSettingsModel) throws -> AppGroup{
         let newItem = AppGroup(context: inObj.coreDataContext)
         newItem.timestamp = Date()
         
-        let jsonEncoder = JSONEncoder()
-        let faData = try jsonEncoder.encode(inObj.faSelection)
-        let faString = String(data: faData, encoding: .utf8)
+        let faString = try encodeJSONObj(inObj.faSelection)
         newItem.faSelection = faString
         
         newItem.id = UUID()
@@ -57,6 +49,12 @@ import OSLog
         newItem.s_durationPerOpenM = Int16(inObj.s_durationPerOpenM)
         
         return newItem
+    }
+    
+    func handleKeyboardClose(){
+        // Check max and mins
+        s_maxOpensPerDay = s_maxOpensPerDay.clamped(to: Self.RANGE_MAX_OPENS_PER_DAY)
+        s_durationPerOpenM = s_durationPerOpenM.clamped(to: Self.RANGE_DURATION_PER_OPEN_M)
     }
     
     func handleSaveNew() -> (Bool, String?){
