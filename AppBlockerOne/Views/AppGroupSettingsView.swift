@@ -8,66 +8,74 @@
 import SwiftUI
 import FamilyControls
 
-struct AppGroupSettingsView: View {
-    @State var isKeyboardOpen: Bool = false
-    
-    @State private var groupName: String = ""
-    @State private var appsSelected: String = "TODO"
-    @State private var isBlockEnabled: Bool = false
-    @State private var isStrictBlock: Bool = false
-    @State private var maxOpensPerDay: Int16 = 5
-    @State private var durationPerOpenM: Int16 = 5
-    @State private var openMethod: OpenMethods = .Tap5
-    @State private var startTimeRawInt: Int16 = 0
-    @State private var endTimeRawInt: Int16 = 2359
-    @State private var faSelection: FamilyActivitySelection = FamilyActivitySelection()
-
-    private var isFormValid: Bool {
-        // TODO
-        true
+struct AppGroupSettingsView: View, KeyboardReadable {
+    @Environment(AppGroupSettingsModel.self) private var sm
+    @State private var errorAlertMsg: String = ""
+    private var isShowAlert: Binding<Bool> {
+        Binding(get: {
+            return !errorAlertMsg.isEmpty
+        }, set: {
+            if !$0 {
+                errorAlertMsg = ""
+            }
+        })
     }
 
     var body: some View {
+        @Bindable var sm = sm
+        
         Color.bg
             .ignoresSafeArea()
             .overlay {
                 ScrollView {
-                    VStack(spacing: 16) {
+                    VStack(spacing: 35) {
                         SettingGroupView("Group Name") {
-                            TextField("group name", text: $groupName, prompt: Text("e.g Socials").foregroundStyle(.fgFaint))
+                            TextField("group name", text: $sm.groupName, prompt: Text("e.g Socials").foregroundStyle(.fgFaint))
                                 .labelsHidden()
-                                .padding(.horizontal)
-                                .padding(.vertical, 8)
+                                .padding()
                                 .settingBlockBG()
                                 .foregroundColor(.black)
                         }
                         SettingGroupView("Apps") {
-                                AppSelectionSettingView(faSelection: $faSelection)
+                            AppSelectionSettingView(faSelection: $sm.faSelection)
                         }
                         SettingGroupView("Block settings", spacing: 12) {
-                            BooleanSettingsView("Blocking enabled", value: $isBlockEnabled)
-                            BooleanSettingsView("Strict block", value: $isStrictBlock)
-                            NumberSettingsView("Maximum opens per day", value: $maxOpensPerDay,  min: 0, max: 100)
-                            NumberSettingsView("Duration per open (minutes)", value: $durationPerOpenM, min: 1, max: 120)
-                            OpenMethodsPickerSettingsView("Open method", value: $openMethod, optionsList: OpenMethods.allCases)
+                            BooleanSettingsView("Blocking enabled", value: $sm.s_blockingEnabled)
+                            BooleanSettingsView("Strict block", value: $sm.s_strictBlock)
+                            NumberSettingsView("Maximum opens per day", value: $sm.s_maxOpensPerDay)
+                            NumberSettingsView("Duration per open (minutes)", value: $sm.s_durationPerOpenM)
+                            OpenMethodsPickerSettingsView("Open method", value: $sm.s_openMethod, optionsList: OpenMethods.allCases)
                         }
                         SettingGroupView("Block schedule", spacing: 12) {
-                            TimeSettingView("Start", rawIntValue: $startTimeRawInt )
-                            TimeSettingView("End", rawIntValue: $endTimeRawInt )
+                            TimeSettingView("Start", rawIntValue: $sm.s_blockSchedule_start )
+                            TimeSettingView("End", rawIntValue: $sm.s_blockSchedule_end )
                         }
                         Spacer()
+                    }
+                    .onReceive(keyboardPublisher) { newIsKeyboardVisible in
+                        if !newIsKeyboardVisible {
+                            sm.handleKeyboardClose()
+                        }
                     }
                     .padding(.horizontal)
                     .padding(.top, 16)
                     .toolbar {
-                        if isFormValid {
-                            ToolbarItem(placement: .topBarTrailing) {
-                                Button(action: {
-                                    print("TODO: Save")
-                                }){
-                                    Text("Save")
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button(action: {
+                                let saveRes = sm.handleSaveNew()
+                                let isSuccess = saveRes.0
+                                if !isSuccess {
+                                    errorAlertMsg = saveRes.1 ?? "Empty error"
                                 }
+                                else {
+                                    print("TODO: Handle successful add in view")
+                                }
+                            
+                            }){
+                                Text("Save")
+                                    .foregroundStyle(Color.accent)
                             }
+                            .alert(errorAlertMsg, isPresented: isShowAlert) {}
                         }
                         ToolbarItemGroup(placement: .keyboard) {
                             HStack{
@@ -84,7 +92,8 @@ struct AppGroupSettingsView: View {
                             }
                             .foregroundStyle(.accent)
                         }
-                }
+                    }
+                    .toolbarBackground(.bg)
                 }
             }
     }
@@ -138,62 +147,37 @@ struct BooleanSettingsView: View {
 
 struct NumberSettingsView: View {
     let name: String
-    @Binding var value: Int16
-    var min: Int16?
-    var max: Int16?
+    @Binding var value: Int
     
-    var formatter: Formatter
-    
-    init(_ name: String, value: Binding<Int16>){
+    init(_ name: String, value: Binding<Int>){
         self.name  = name
         self._value = value
-        self.formatter = {
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            return formatter
-        }()
     }
     
-    init(_ name: String, value: Binding<Int16>, min: Int16?, max: Int16?){
-        self.name  = name
-        self._value = value
-        self.formatter = {
-            let formatter = BoundFormatter()
-            if max != nil {
-                formatter.setMax(Int(max!) )
+    var stringValue: Binding<String>{
+        Binding(get: {
+            return String(value)
+        }, set: { newValue in
+            if newValue == ""{
+                value = 0
             }
-            if min != nil {
-                formatter.setMin(Int(min!))
+            else {
+                value = Int(newValue) ?? 0
             }
-            return formatter
-        }()
-        self.min = min
-        self.max = max
+        })
     }
 
+    
     var body: some View {
         HStack{
             Text(name)
             Spacer()
-            TextField(name, value: $value, formatter: self.formatter, prompt: Text("...").foregroundStyle(.fgFaint))
+            TextField(name, text: stringValue, prompt: Text("...").foregroundStyle(.fgFaint))
                 .multilineTextAlignment(.center)
                 .labelsHidden()
                 .frame(width: 65, height: 32)
                 .settingBlockBG()
                 .keyboardType(.numberPad)
-                .onChange(of: value) {
-                    print("change val \(value)")
-                    if max != nil {
-                        if value > max! {
-                            value = max!
-                        }
-                    }
-                    if min != nil {
-                        if value < min! {
-                            value = min!
-                        }
-                    }
-                }
         }
     }
 }
@@ -232,10 +216,10 @@ struct OpenMethodsPickerSettingsView: View {
 }
 
 struct TimeSettingView: View {
-    @Binding var rawIntValue: Int16
+    @Binding var rawIntValue: Int
     let name: String
     
-    init(_ name: String, rawIntValue: Binding<Int16>){
+    init(_ name: String, rawIntValue: Binding<Int>){
         self.name = name
         self._rawIntValue = rawIntValue
     }
@@ -263,7 +247,7 @@ struct TimeSettingView: View {
         }
     }
     
-    private func convertRawIntToDate(rawInt: Int16) -> Date{
+    private func convertRawIntToDate(rawInt: Int) -> Date{
         // Stringify rawIntValue
         var strValue: String = String(rawIntValue)
         let deficit = 4 - strValue.count
@@ -285,7 +269,7 @@ struct TimeSettingView: View {
         return date
     }
     
-    private func convertDateToRawInt(inDate: Date) -> Int16 {
+    private func convertDateToRawInt(inDate: Date) -> Int {
         let dateComponents = Calendar.current.dateComponents([.hour, .minute], from: inDate)
         let hourStr = String(dateComponents.hour!)
         var minStr = String(dateComponents.minute!)
@@ -293,16 +277,18 @@ struct TimeSettingView: View {
             minStr = "0\(minStr)"
         }
         
-        return Int16("\(hourStr)\(minStr)") ?? 0
+        return Int("\(hourStr)\(minStr)") ?? 0
     }
 }
 
-struct NewGroupView_Preview: PreviewProvider {
+struct AppGroupSettingsView_Preview: PreviewProvider {
     struct Container: View {
-        @State private var faSelection = FamilyActivitySelection()
+        @State private var sm: AppGroupSettingsModel = AppGroupSettingsModel()
+        
         var body: some View {
             NavigationStack{
                 AppGroupSettingsView()
+                    .environment(sm)
             }
         }
     }
