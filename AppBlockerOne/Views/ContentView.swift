@@ -31,8 +31,7 @@ struct ContentView: View {
                     VStack(alignment: .leading){
                         Text("Blocked groups")
                             .multilineTextAlignment(.leading)
-                            .font(.title)
-                            .fontWeight(.bold)
+                            .font(.custom("Poppins-Bold", size: 28, relativeTo: .title))
                             .padding(.top)
                             .padding(.horizontal)
                             .padding(.bottom, 4)

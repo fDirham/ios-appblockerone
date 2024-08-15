@@ -25,6 +25,7 @@
 		8BBF76DF2C6E6EFF005EC2D2 /* FamilyActivityTokensView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76DE2C6E6EFF005EC2D2 /* FamilyActivityTokensView.swift */; };
 		8BBF76E22C6E7C23005EC2D2 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76E12C6E7C23005EC2D2 /* Helpers.swift */; };
 		8BBF76E62C6E85A9005EC2D2 /* mockFaSelection.json in Resources */ = {isa = PBXBuildFile; fileRef = 8BBF76E52C6E85A9005EC2D2 /* mockFaSelection.json */; };
+		8BBF76ED2C6EAD04005EC2D2 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8BBF76EB2C6EACEA005EC2D2 /* Poppins-Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,8 @@
 		8BBF76DE2C6E6EFF005EC2D2 /* FamilyActivityTokensView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyActivityTokensView.swift; sourceTree = "<group>"; };
 		8BBF76E12C6E7C23005EC2D2 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		8BBF76E52C6E85A9005EC2D2 /* mockFaSelection.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mockFaSelection.json; sourceTree = "<group>"; };
+		8BBF76EB2C6EACEA005EC2D2 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
+		8BBF76F02C6EADA1005EC2D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +83,8 @@
 		8BBF76AB2C6BDAD2005EC2D2 /* AppBlockerOne */ = {
 			isa = PBXGroup;
 			children = (
+				8BBF76F02C6EADA1005EC2D2 /* Info.plist */,
+				8BBF76E72C6EACD9005EC2D2 /* Fonts */,
 				8BBF76AC2C6BDAD2005EC2D2 /* AppBlockerOneApp.swift */,
 				8BBF76E02C6E7C0F005EC2D2 /* Utilities */,
 				8BBF76D92C6D6A23005EC2D2 /* Extensions */,
@@ -118,9 +123,8 @@
 			isa = PBXGroup;
 			children = (
 				8BBF76AE2C6BDAD2005EC2D2 /* ContentView.swift */,
-				8BBF76C32C6BE8A5005EC2D2 /* AppGroupSettingsView.swift */,
 				8BBF76CE2C6D1DCF005EC2D2 /* AppSelectionSettingView.swift */,
-				8BBF76D72C6D662A005EC2D2 /* NewAppGroupView.swift */,
+				8BBF76F32C6EB2DD005EC2D2 /* AppGroupSettings */,
 				8BBF76DE2C6E6EFF005EC2D2 /* FamilyActivityTokensView.swift */,
 			);
 			path = Views;
@@ -149,6 +153,23 @@
 				8BBF76E12C6E7C23005EC2D2 /* Helpers.swift */,
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		8BBF76E72C6EACD9005EC2D2 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				8BBF76EB2C6EACEA005EC2D2 /* Poppins-Bold.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		8BBF76F32C6EB2DD005EC2D2 /* AppGroupSettings */ = {
+			isa = PBXGroup;
+			children = (
+				8BBF76D72C6D662A005EC2D2 /* NewAppGroupView.swift */,
+				8BBF76C32C6BE8A5005EC2D2 /* AppGroupSettingsView.swift */,
+			);
+			path = AppGroupSettings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -210,6 +231,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BBF76B42C6BDAD5005EC2D2 /* Preview Assets.xcassets in Resources */,
+				8BBF76ED2C6EAD04005EC2D2 /* Poppins-Bold.ttf in Resources */,
 				8BBF76B12C6BDAD5005EC2D2 /* Assets.xcassets in Resources */,
 				8BBF76E62C6E85A9005EC2D2 /* mockFaSelection.json in Resources */,
 			);
@@ -374,6 +396,7 @@
 				DEVELOPMENT_TEAM = 456G72PT96;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AppBlockerOne/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -404,6 +427,7 @@
 				DEVELOPMENT_TEAM = 456G72PT96;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = AppBlockerOne/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
