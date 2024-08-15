@@ -26,6 +26,7 @@
 		8BBF76E22C6E7C23005EC2D2 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76E12C6E7C23005EC2D2 /* Helpers.swift */; };
 		8BBF76E62C6E85A9005EC2D2 /* mockFaSelection.json in Resources */ = {isa = PBXBuildFile; fileRef = 8BBF76E52C6E85A9005EC2D2 /* mockFaSelection.json */; };
 		8BBF76ED2C6EAD04005EC2D2 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8BBF76EB2C6EACEA005EC2D2 /* Poppins-Bold.ttf */; };
+		8BBF76F52C6EB346005EC2D2 /* EditAppGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76F42C6EB346005EC2D2 /* EditAppGroupView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +52,7 @@
 		8BBF76E52C6E85A9005EC2D2 /* mockFaSelection.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mockFaSelection.json; sourceTree = "<group>"; };
 		8BBF76EB2C6EACEA005EC2D2 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
 		8BBF76F02C6EADA1005EC2D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8BBF76F42C6EB346005EC2D2 /* EditAppGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAppGroupView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,8 +126,8 @@
 			children = (
 				8BBF76AE2C6BDAD2005EC2D2 /* ContentView.swift */,
 				8BBF76CE2C6D1DCF005EC2D2 /* AppSelectionSettingView.swift */,
-				8BBF76F32C6EB2DD005EC2D2 /* AppGroupSettings */,
 				8BBF76DE2C6E6EFF005EC2D2 /* FamilyActivityTokensView.swift */,
+				8BBF76F32C6EB2DD005EC2D2 /* AppGroupSettings */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -167,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				8BBF76D72C6D662A005EC2D2 /* NewAppGroupView.swift */,
+				8BBF76F42C6EB346005EC2D2 /* EditAppGroupView.swift */,
 				8BBF76C32C6BE8A5005EC2D2 /* AppGroupSettingsView.swift */,
 			);
 			path = AppGroupSettings;
@@ -244,6 +247,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BBF76F52C6EB346005EC2D2 /* EditAppGroupView.swift in Sources */,
 				8BBF76B62C6BDAD5005EC2D2 /* Persistence.swift in Sources */,
 				8BBF76C42C6BE8A5005EC2D2 /* AppGroupSettingsView.swift in Sources */,
 				8BBF76AF2C6BDAD2005EC2D2 /* ContentView.swift in Sources */,

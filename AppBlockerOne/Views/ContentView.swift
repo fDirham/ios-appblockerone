@@ -38,7 +38,10 @@ struct ContentView: View {
                         ScrollView {
                             LazyVGrid(columns: columns, alignment: .leading) {
                                 ForEach(appGroups) {appGroup in
-                                    AppGroupBlockView(appGroup: appGroup)
+                                    NavigationLink(destination: EditAppGroupView(coreDataContext: viewContext, appGroup: appGroup)) {
+                                        
+                                        AppGroupBlockView(appGroup: appGroup)
+                                    }
                                 }
                             }
                         }

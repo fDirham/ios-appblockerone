@@ -1,24 +1,24 @@
 //
-//  NewAppGroupView.swift
+//  EditAppGroupView.swift
 //  AppBlockerOne
 //
-//  Created by Fajar Dirham on 8/14/24.
+//  Created by Fajar Dirham on 8/15/24.
 //
 
 import SwiftUI
 import CoreData
 
-struct NewAppGroupView: View {
-    @State private var sm: AppGroupSettingsModel
+struct EditAppGroupView: View {
     @Environment(\.managedObjectContext) private var viewContext
-
-    init(coreDataContext: NSManagedObjectContext){
-        sm = AppGroupSettingsModel(coreDataContext: coreDataContext)
+    @State private var sm: AppGroupSettingsModel
+    
+    init(coreDataContext: NSManagedObjectContext, appGroup: AppGroup){
+        sm = AppGroupSettingsModel(coreDataContext: coreDataContext, cdObj: appGroup)
     }
     
     var body: some View {
         AppGroupSettingsView(onSave: {
-            return sm.handleSaveNew()
+            return sm.handleSaveEdit()
         })
         .environment(sm)
         .onDisappear {
@@ -27,12 +27,14 @@ struct NewAppGroupView: View {
     }
 }
 
-struct NewAppGroupView_Preview: PreviewProvider {
+struct EditAppGroupView_Preview: PreviewProvider {
     struct Container: View {
         let coreDataContext = PersistenceController.preview.container.viewContext
+        let previewAppGroup = PersistenceController.previewObj
+        
         var body: some View {
             NavigationStack{
-                NewAppGroupView(coreDataContext: coreDataContext)
+                EditAppGroupView(coreDataContext: coreDataContext, appGroup: previewAppGroup)
                     .environment(\.managedObjectContext, coreDataContext)
             }
         }

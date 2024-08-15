@@ -15,24 +15,25 @@ struct PersistenceController {
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
+        
+        // Get mock family activity
+        var newFaSelection = ""
+        if let path = Bundle.main.path(forResource: "mockFaSelection", ofType: "json") {
+            do {
+                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+                newFaSelection = String(data: data, encoding: .utf8) ?? "FAILED"
+              } catch {
+                   // handle error
+                  print("failed to load data \(error.localizedDescription)")
+              }
+        }
+        else {
+            print("mock path not found")
+        }
+        
         for i in 0..<10 {
             let newItem = AppGroup(context: viewContext)
             newItem.timestamp = Date()
-            
-            var newFaSelection = ""
-            if let path = Bundle.main.path(forResource: "mockFaSelection", ofType: "json") {
-                do {
-                    let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
-                    newFaSelection = String(data: data, encoding: .utf8) ?? "FAILED"
-                  } catch {
-                       // handle error
-                      print("failed to load data \(error.localizedDescription)")
-                  }
-            }
-            else {
-                print("mock path not found")
-            }
-            
             newItem.faSelection = newFaSelection
             newItem.id = UUID()
             newItem.groupName = ["socials", "gaming", "porn", "news", "addiction", "danger"].randomElement()! + " \(i)"
@@ -47,6 +48,35 @@ struct PersistenceController {
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
         return result
+    }()
+    
+    static var previewObj: AppGroup = {
+        let newItem = AppGroup(context: Self.preview.container.viewContext)
+        
+        // Get mock family activity
+        var newFaSelection = ""
+        if let path = Bundle.main.path(forResource: "mockFaSelection", ofType: "json") {
+            do {
+                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
+                newFaSelection = String(data: data, encoding: .utf8) ?? "FAILED"
+              } catch {
+                   // handle error
+                  print("failed to load data \(error.localizedDescription)")
+              }
+        }
+        else {
+            print("mock path not found")
+        }
+        
+        newItem.timestamp = Date()
+        newItem.faSelection = newFaSelection
+        newItem.id = UUID()
+        newItem.groupName = "Test group"
+        newItem.groupColor = ["blue", "red", "green", "orange"].randomElement()!
+        newItem.s_blockingEnabled = true
+        newItem.s_strictBlock = true
+
+        return newItem
     }()
     
 

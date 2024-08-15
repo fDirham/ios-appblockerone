@@ -12,6 +12,7 @@ struct AppGroupSettingsView: View, KeyboardReadable {
     @Environment(AppGroupSettingsModel.self) private var sm
     @State private var errorAlertMsg: String = ""
     @Environment(\.presentationMode) var presentationMode
+    let onSave: () -> (Bool, String?)
     
     private var isShowAlert: Binding<Bool> {
         Binding(get: {
@@ -62,9 +63,18 @@ struct AppGroupSettingsView: View, KeyboardReadable {
                     .padding(.horizontal)
                     .padding(.top, 16)
                     .toolbar {
+                        ToolbarItem(placement: .topBarLeading) {
+                            Button(action: {
+                                sm.rollbackLocalChanges()
+                                presentationMode.wrappedValue.dismiss()
+                            }){
+                                Text("Cancel")
+                                    .foregroundStyle(Color.danger)
+                            }
+                        }
                         ToolbarItem(placement: .topBarTrailing) {
                             Button(action: {
-                                let saveRes = sm.handleSaveNew()
+                                let saveRes = onSave()
                                 let isSuccess = saveRes.0
                                 if !isSuccess {
                                     errorAlertMsg = saveRes.1 ?? "Empty error"
@@ -96,6 +106,7 @@ struct AppGroupSettingsView: View, KeyboardReadable {
                         }
                     }
                     .toolbarBackground(.bg)
+                    .navigationBarBackButtonHidden(true)
                 }
             }
     }
@@ -289,7 +300,7 @@ struct AppGroupSettingsView_Preview: PreviewProvider {
         
         var body: some View {
             NavigationStack{
-                AppGroupSettingsView()
+                AppGroupSettingsView(onSave: {return (true, nil)})
                     .environment(sm)
             }
         }
