@@ -19,7 +19,7 @@ struct EditAppGroupView: View {
     var body: some View {
         AppGroupSettingsView(onSave: {
             return sm.handleSaveEdit()
-        })
+        }, navTitle: "Edit")
         .environment(sm)
         .onDisappear {
             var _ = try? sm._syncCDObjWithSelf()

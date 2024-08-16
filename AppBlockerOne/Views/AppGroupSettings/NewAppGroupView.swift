@@ -19,7 +19,7 @@ struct NewAppGroupView: View {
     var body: some View {
         AppGroupSettingsView(onSave: {
             return sm.handleSaveNew()
-        })
+        }, navTitle: "New")
         .environment(sm)
         .onDisappear {
             var _ = try? sm._syncCDObjWithSelf()

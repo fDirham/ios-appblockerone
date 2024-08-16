@@ -28,25 +28,20 @@ struct ContentView: View {
             Color.bg
                 .ignoresSafeArea()
                 .overlay {
-                    VStack(alignment: .leading){
-                        Text("Blocked groups")
-                            .multilineTextAlignment(.leading)
-                            .font(.custom("Poppins-Bold", size: 28, relativeTo: .title))
-                            .padding(.top)
-                            .padding(.horizontal)
-                            .padding(.bottom, 4)
-                        ScrollView {
-                            LazyVGrid(columns: columns, alignment: .leading) {
-                                ForEach(appGroups) {appGroup in
-                                    NavigationLink(destination: EditAppGroupView(coreDataContext: viewContext, appGroup: appGroup)) {
-                                        
-                                        AppGroupBlockView(appGroup: appGroup)
-                                    }
+                    ScrollView {
+                        LazyVGrid(columns: columns, alignment: .leading) {
+                            ForEach(appGroups) {appGroup in
+                                NavigationLink(destination: EditAppGroupView(coreDataContext: viewContext, appGroup: appGroup)) {
+                                    
+                                    AppGroupBlockView(appGroup: appGroup)
+                                    
                                 }
                             }
                         }
-                        .padding(.horizontal)
+                        .padding(.top, 10)
                     }
+                    .navigationTitle("Blocked groups")
+                    .padding(.horizontal)
                     .toolbar {
                         ToolbarItem(placement: .topBarLeading) {
                             NavigationLink(destination: Text("TODO")) {
@@ -61,7 +56,6 @@ struct ContentView: View {
                             }
                         }
                     }
-                    .toolbarBackground(.bg)
                 }
         }
     }
@@ -111,11 +105,13 @@ struct AppGroupBlockView: View {
             }
             .frame(width: frameSize, height: frameSize, alignment: .top)
             .padding()
-            .roundedBG(fill: getColor(colorString: appGroup.groupColor!))
+            .roundedBG(fill: getColor(colorString: appGroup.groupColor!), cornerRadius: 12)
             Text(appGroup.groupName!)
+                .foregroundStyle(Color.fg)
+                .frame(maxWidth: frameSize)
         }
     }
-        
+    
 }
 
 #Preview {

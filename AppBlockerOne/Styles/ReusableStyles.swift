@@ -8,11 +8,19 @@
 import SwiftUI
 
 struct RoundedBG: ViewModifier {
-    let fill: Color
+    var fill: Color
+    var cornerRadius: CGFloat = 5
+    
+    init(fill: Color, cornerRadius: CGFloat?) {
+        self.fill = fill
+        if cornerRadius != nil {
+            self.cornerRadius = cornerRadius!
+        }
+    }
     
     func body(content: Content) -> some View {
         content
-            .background(RoundedRectangle(cornerRadius: 5).fill(fill))
+            .background(RoundedRectangle(cornerRadius: cornerRadius).fill(fill))
     }
 }
 
@@ -29,6 +37,10 @@ extension View {
     }
     
     public func roundedBG (fill: Color) -> some View {
-        modifier(RoundedBG(fill: fill))
+        modifier(RoundedBG(fill: fill, cornerRadius: nil))
+    }
+    
+    public func roundedBG (fill: Color, cornerRadius: CGFloat) -> some View {
+        modifier(RoundedBG(fill: fill, cornerRadius: cornerRadius))
     }
 }

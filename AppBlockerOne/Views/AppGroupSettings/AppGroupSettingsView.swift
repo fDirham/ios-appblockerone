@@ -13,6 +13,7 @@ struct AppGroupSettingsView: View, KeyboardReadable {
     @State private var errorAlertMsg: String = ""
     @Environment(\.presentationMode) var presentationMode
     let onSave: () -> (Bool, String?)
+    let navTitle: String
     
     private var isShowAlert: Binding<Bool> {
         Binding(get: {
@@ -105,8 +106,9 @@ struct AppGroupSettingsView: View, KeyboardReadable {
                             .foregroundStyle(.accent)
                         }
                     }
-                    .toolbarBackground(.bg)
                     .navigationBarBackButtonHidden(true)
+                    .navigationTitle(navTitle)
+                    .navigationBarTitleDisplayMode(.inline)
                 }
             }
     }
@@ -300,7 +302,7 @@ struct AppGroupSettingsView_Preview: PreviewProvider {
         
         var body: some View {
             NavigationStack{
-                AppGroupSettingsView(onSave: {return (true, nil)})
+                AppGroupSettingsView(onSave: {return (false, "Save clicked!")}, navTitle: "Settings")
                     .environment(sm)
             }
         }

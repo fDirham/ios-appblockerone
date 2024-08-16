@@ -9,6 +9,17 @@ import SwiftUI
 import ManagedSettings
 import FamilyControls
 
+struct FATokensLabelStyle: LabelStyle {
+    var isAppToken = false
+    
+    func makeBody(configuration: Configuration) -> some View {
+        HStack{
+            configuration.icon
+                .scaleEffect(isAppToken ? 1.8 : 1.2)
+                .frame(width: 32, height: 32)
+        }
+    }
+}
 struct FamilyActivityTokensView: View{
     var faSelection: FamilyActivitySelection
     var maxIconsToShow = 12
@@ -62,11 +73,12 @@ struct FamilyActivityTokensView: View{
         return aptList.isEmpty && actList.isEmpty && wdtList.isEmpty
     }
     
+    let previewRectSize: CGFloat = 32
     var body: some View {
         if isPreview {
             ForEach(0..<maxIconsToShow, id: \.hashValue) { _ in
                 Rectangle()
-                    .frame(width: 24, height: 24)
+                    .frame(width: previewRectSize, height: previewRectSize)
                     .foregroundStyle(.cyan)
                     .backgroundStyle(.cyan)
             }
@@ -75,19 +87,19 @@ struct FamilyActivityTokensView: View{
             if aptListToShowNum > 0 {
                 ForEach(aptList[..<aptListToShowNum], id: \.hashValue) { token in
                     Label(token)
-                        .labelStyle(CustomLabelStyle())
+                        .labelStyle(FATokensLabelStyle(isAppToken: true))
                 }
             }
             if actListToShowNum > 0 {
                 ForEach(actList[..<actListToShowNum], id: \.hashValue) { token in
                     Label(token)
-                        .labelStyle(CustomLabelStyle())
+                        .labelStyle(FATokensLabelStyle())
                 }
             }
             if wdtListToShowNum > 0 {
                 ForEach(wdtList[..<wdtListToShowNum], id: \.hashValue) { token in
                     Label(token)
-                        .labelStyle(CustomLabelStyle())
+                        .labelStyle(FATokensLabelStyle())
                 }
             }
             

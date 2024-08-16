@@ -125,7 +125,6 @@
 			isa = PBXGroup;
 			children = (
 				8BBF76AE2C6BDAD2005EC2D2 /* ContentView.swift */,
-				8BBF76CE2C6D1DCF005EC2D2 /* AppSelectionSettingView.swift */,
 				8BBF76DE2C6E6EFF005EC2D2 /* FamilyActivityTokensView.swift */,
 				8BBF76F32C6EB2DD005EC2D2 /* AppGroupSettings */,
 			);
@@ -171,6 +170,7 @@
 				8BBF76D72C6D662A005EC2D2 /* NewAppGroupView.swift */,
 				8BBF76F42C6EB346005EC2D2 /* EditAppGroupView.swift */,
 				8BBF76C32C6BE8A5005EC2D2 /* AppGroupSettingsView.swift */,
+				8BBF76CE2C6D1DCF005EC2D2 /* AppSelectionSettingView.swift */,
 			);
 			path = AppGroupSettings;
 			sourceTree = "<group>";

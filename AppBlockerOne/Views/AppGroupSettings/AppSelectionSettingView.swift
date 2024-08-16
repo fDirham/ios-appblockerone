@@ -9,14 +9,6 @@ import SwiftUI
 import FamilyControls
 import ManagedSettings
 
-struct CustomLabelStyle: LabelStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        HStack{
-            configuration.icon
-        }
-    }
-}
-
 struct AppSelectionSettingView: View {
     @Binding var faSelection: FamilyActivitySelection
     @State private var showFaPicker = false
@@ -42,9 +34,9 @@ struct AppSelectionSettingView: View {
                         Spacer()
                     }
                 }
+                .padding()
             }
         }
-        .padding()
         .frame(maxWidth: .infinity)
         .settingBlockBG()
         .familyActivityPicker(isPresented: $showFaPicker, selection: $faSelection)

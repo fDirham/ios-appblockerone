@@ -133,6 +133,9 @@ import OSLog
         if groupName == "" {
             return "Group needs a name"
         }
+        if groupName.count > 15 {
+            return "Group name too long"
+        }
         let emptyFa = faSelection.applicationTokens.isEmpty && faSelection.webDomainTokens.isEmpty && faSelection.categoryTokens.isEmpty
         if emptyFa {
             return "Please select one or more apps for this group"
