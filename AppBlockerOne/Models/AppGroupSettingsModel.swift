@@ -119,10 +119,11 @@ import ManagedSettings
         return _handleSave()
     }
     
-    func _handleSave() -> (Bool, String?) {
+    private func _handleSave() -> (Bool, String?) {
         do {
             let tokenSplit = try _splitTokensBeforeSync()
             try _syncCDObjWithSelf()
+            try _createBlockedItemTokensOnSave(added: tokenSplit.added, removed: tokenSplit.removed)
             try coreDataContext.save()
             
             // Block and unblock those added
@@ -154,6 +155,40 @@ import ManagedSettings
         }
 
         return (true, nil)
+    }
+    
+    private func _createBlockedItemTokensOnSave(added: TokenSplit, removed: TokenSplit) throws {
+        // Add
+        func addTokenSet<T>(_ tokenSet: Set<Token<T>>) throws {
+            try tokenSet.forEach{token in
+                let idStr = try getIdFromToken(token)
+                let newObj = BlockedItem(context: coreDataContext)
+                newObj.selectionId = idStr
+                newObj.id = UUID()
+                newObj.groupId = cdObj!.id!
+            }
+        }
+        
+        try addTokenSet(added.appTokens)
+        try addTokenSet(added.webTokens)
+        try addTokenSet(added.catTokens)
+        
+        // Remove
+        func removeTokenSet<T>(_ tokenSet: Set<Token<T>>) throws {
+            try tokenSet.forEach{token in
+                let idStr = try getIdFromToken(token)
+                let predicate = NSPredicate(format: "selectionId == %@", idStr)
+                let request = NSFetchRequest<BlockedItem>(entityName: "BlockedItem")
+                let result = try coreDataContext.fetch(request)
+                if let biObj = result.first {
+                    coreDataContext.delete(biObj)
+                }
+            }
+        }
+        
+        try removeTokenSet(removed.appTokens)
+        try removeTokenSet(removed.webTokens)
+        try removeTokenSet(removed.catTokens)
     }
     
     private struct TokenSplit {

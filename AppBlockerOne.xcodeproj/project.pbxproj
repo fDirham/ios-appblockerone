@@ -12,6 +12,7 @@
 		8BADB4062C73B4B400E0DCDC /* ShieldConfigurationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BADB4052C73B4B400E0DCDC /* ShieldConfigurationExtension.swift */; };
 		8BADB40B2C73B4B400E0DCDC /* iosShieldConfiguration.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8BADB4012C73B4B400E0DCDC /* iosShieldConfiguration.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8BADB40F2C73C0A600E0DCDC /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76E12C6E7C23005EC2D2 /* Helpers.swift */; };
+		8BADB4112C73F28900E0DCDC /* TokenHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BADB4102C73F28900E0DCDC /* TokenHelpers.swift */; };
 		8BBF76AD2C6BDAD2005EC2D2 /* AppBlockerOneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76AC2C6BDAD2005EC2D2 /* AppBlockerOneApp.swift */; };
 		8BBF76AF2C6BDAD2005EC2D2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76AE2C6BDAD2005EC2D2 /* ContentView.swift */; };
 		8BBF76B12C6BDAD5005EC2D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BBF76B02C6BDAD5005EC2D2 /* Assets.xcassets */; };
@@ -82,6 +83,7 @@
 		8BADB4052C73B4B400E0DCDC /* ShieldConfigurationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldConfigurationExtension.swift; sourceTree = "<group>"; };
 		8BADB4072C73B4B400E0DCDC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8BADB4082C73B4B400E0DCDC /* iosShieldConfiguration.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iosShieldConfiguration.entitlements; sourceTree = "<group>"; };
+		8BADB4102C73F28900E0DCDC /* TokenHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenHelpers.swift; sourceTree = "<group>"; };
 		8BBF76A92C6BDAD2005EC2D2 /* AppBlockerOne.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppBlockerOne.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BBF76AC2C6BDAD2005EC2D2 /* AppBlockerOneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBlockerOneApp.swift; sourceTree = "<group>"; };
 		8BBF76AE2C6BDAD2005EC2D2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -247,6 +249,7 @@
 			children = (
 				8BBF76E12C6E7C23005EC2D2 /* Helpers.swift */,
 				8BBF774F2C702087005EC2D2 /* BlockSettingsHelpers.swift */,
+				8BADB4102C73F28900E0DCDC /* TokenHelpers.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -444,6 +447,7 @@
 				8BBF76CF2C6D1DCF005EC2D2 /* AppSelectionSettingView.swift in Sources */,
 				8BBF77502C702087005EC2D2 /* BlockSettingsHelpers.swift in Sources */,
 				8BBF76DB2C6D6A35005EC2D2 /* KeyboardReadable+Notifications.swift in Sources */,
+				8BADB4112C73F28900E0DCDC /* TokenHelpers.swift in Sources */,
 				8BBF76D62C6D643D005EC2D2 /* OpenMethods.swift in Sources */,
 				8BBF76D42C6D5C81005EC2D2 /* AppGroupSettingsModel.swift in Sources */,
 				8BBF76E22C6E7C23005EC2D2 /* Helpers.swift in Sources */,
