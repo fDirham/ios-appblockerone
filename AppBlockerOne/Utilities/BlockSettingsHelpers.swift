@@ -13,10 +13,13 @@ let BLOCKED_CATEGORIES_KEY = "blocked_cat"
 let managedSettingsStore = ManagedSettingsStore()
 
 func blockApps(faSelection: FamilyActivitySelection) throws {
+    try blockApps(appTokens: faSelection.applicationTokens, webTokens: faSelection.webDomainTokens, catTokens: faSelection.categoryTokens)
+}
+
+func blockApps(appTokens newBlockedApps: Set<ApplicationToken> = Set(), webTokens newBlockedWeb: Set<WebDomainToken> = Set(), catTokens newBlockedCat: Set<ActivityCategoryToken> = Set()) throws {
     let store = managedSettingsStore
     
     // Block apps
-    let newBlockedApps = faSelection.applicationTokens
     if !newBlockedApps.isEmpty{
         var toAdd: Set<ApplicationToken> = newBlockedApps
         if let currApps = store.shield.applications {
@@ -25,7 +28,6 @@ func blockApps(faSelection: FamilyActivitySelection) throws {
         store.shield.applications = toAdd
     }
     
-    let newBlockedWeb = faSelection.webDomainTokens
     if !newBlockedWeb.isEmpty{
         var toAdd: Set<WebDomainToken> = newBlockedWeb
         if let currWeb = store.shield.webDomains {
@@ -35,7 +37,6 @@ func blockApps(faSelection: FamilyActivitySelection) throws {
     }
     
     
-    let newBlockedCat = faSelection.categoryTokens
     if !newBlockedCat.isEmpty{
         // Read from user defaults
         var toAdd: Set<ActivityCategoryToken> = Set()
@@ -53,10 +54,10 @@ func blockApps(faSelection: FamilyActivitySelection) throws {
 }
 
 func unblockApps(faSelection: FamilyActivitySelection) throws {
-    try unblockApps(newBlockedApps: faSelection.applicationTokens, newBlockedWeb: faSelection.webDomainTokens, newBlockedCategories: faSelection.categoryTokens)
+    try unblockApps(appTokens: faSelection.applicationTokens, webTokens: faSelection.webDomainTokens, catTokens: faSelection.categoryTokens)
 }
 
-func unblockApps(newBlockedApps: Set<ApplicationToken> = Set(), newBlockedWeb: Set<WebDomainToken> = Set(), newBlockedCategories: Set<ActivityCategoryToken> = Set()) throws {
+func unblockApps(appTokens newBlockedApps: Set<ApplicationToken> = Set(), webTokens newBlockedWeb: Set<WebDomainToken> = Set(), catTokens newBlockedCat: Set<ActivityCategoryToken> = Set()) throws {
     let store = managedSettingsStore
     
     // Unblock apps
@@ -79,7 +80,6 @@ func unblockApps(newBlockedApps: Set<ApplicationToken> = Set(), newBlockedWeb: S
     }
     
     
-    let newBlockedCat = newBlockedCategories
     if !newBlockedCat.isEmpty{
         // Read from user defaults
         if let blockedCatRaw = UserDefaults(suiteName: "group.appblockerone")!.string(forKey: BLOCKED_CATEGORIES_KEY) {

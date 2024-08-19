@@ -10,6 +10,7 @@ import FamilyControls
 import CoreData
 import OSLog
 import DeviceActivity
+import ManagedSettings
 
 @Observable class AppGroupSettingsModel {
     var coreDataContext: NSManagedObjectContext
@@ -99,16 +100,13 @@ import DeviceActivity
         // Save
         do {
             try _createNewCDObj()
-            try _syncCDObjWithSelf()
-            try coreDataContext.save()
-            try _onSave()
         } catch {
             let nsError = error as NSError
             Logger().error("Unresolved error \(nsError), \(nsError.userInfo)")
             return (false, "Failed to save, please try again later")
         }
 
-        return (true, nil)
+        return _handleSave()
     }
     
     func handleSaveEdit() -> (Bool, String?) {
@@ -117,13 +115,38 @@ import DeviceActivity
         if errorMsg != nil {
             return (false, errorMsg)
         }
-        
-        // Save
+
+        return _handleSave()
+    }
+    
+    func _handleSave() -> (Bool, String?) {
         do {
-            try _beforeSaveSync()
+            let tokenSplit = try _splitTokensBeforeSync()
             try _syncCDObjWithSelf()
             try coreDataContext.save()
-            try _onSave()
+            
+            // Block and unblock those added
+            try blockApps(appTokens: tokenSplit.added.appTokens, webTokens: tokenSplit.added.webTokens, catTokens: tokenSplit.added.catTokens)
+            try unblockApps(appTokens: tokenSplit.removed.appTokens, webTokens: tokenSplit.removed.webTokens, catTokens: tokenSplit.removed.catTokens)
+            
+            let saveName = "ms_" + cdObj!.id!.uuidString
+            
+            // Save in user defaults
+            let saveVal = try encodeJSONObj(faSelection)
+            UserDefaults(suiteName: "group.appblockerone")!.set(saveVal, forKey: saveName)
+            
+            // Schedule in device activity
+            let center = DeviceActivityCenter()
+            let startComponents = _getTimeSettingComponents(s_blockSchedule_start)
+            let endComponents = _getTimeSettingComponents(s_blockSchedule_end)
+            
+            let schedule = DeviceActivitySchedule(
+                intervalStart: DateComponents(hour: startComponents.hours, minute: startComponents.minutes), intervalEnd: DateComponents(hour: endComponents.hours, minute: endComponents.minutes), repeats: true
+            )
+            
+            // Start monitoring
+            let deviceActivityName = DeviceActivityName(saveName)
+            try center.startMonitoring(deviceActivityName, during: schedule) // NOTE this overrides previously scheduled so we should be good
         } catch {
             let nsError = error as NSError
             Logger().error("Unresolved error \(nsError), \(nsError.userInfo)")
@@ -133,7 +156,13 @@ import DeviceActivity
         return (true, nil)
     }
     
-    private func _beforeSaveSync() throws {
+    private struct TokenSplit {
+        var appTokens: Set<ApplicationToken>
+        var webTokens: Set<WebDomainToken>
+        var catTokens: Set<ActivityCategoryToken>
+    }
+    
+    private func _splitTokensBeforeSync() throws -> (added: TokenSplit, removed: TokenSplit){
         let cdoFa: FamilyActivitySelection = try decodeJSONObj(cdObj!.faSelection!)
         
         // See what has been deleted
@@ -141,41 +170,22 @@ import DeviceActivity
         let deletedWebTokens = cdoFa.webDomainTokens.subtracting(faSelection.webDomainTokens)
         let deletedCatTokens = cdoFa.categoryTokens.subtracting(faSelection.categoryTokens)
         
-        try unblockApps(newBlockedApps: deletedAppTokens, newBlockedWeb: deletedWebTokens, newBlockedCategories: deletedCatTokens)
+        // See what has been added
+        let addedAppTokens = faSelection.applicationTokens.subtracting(cdoFa.applicationTokens)
+        let addedWebTokens = faSelection.webDomainTokens.subtracting(cdoFa.webDomainTokens)
+        let addedCatTokens = faSelection.categoryTokens.subtracting(cdoFa.categoryTokens)
+        
+        return (added: TokenSplit(
+            appTokens: addedAppTokens,
+            webTokens: addedWebTokens,
+            catTokens: addedCatTokens
+        ), removed: TokenSplit(
+            appTokens: deletedAppTokens,
+            webTokens: deletedWebTokens,
+            catTokens: deletedCatTokens
+        ))
+    }
 
-        // TODO: Do stuff with deleted
-        
-    }
-    
-    private func _onSave() throws {
-        if cdObj == nil{
-            fatalError("Trying to save app settings with empty cdObj")
-        }
-        
-        let center = DeviceActivityCenter()
-        let saveName = "ms_" + cdObj!.id!.uuidString
-        
-        // Save in user defaults
-        let saveVal = try encodeJSONObj(faSelection)
-        UserDefaults(suiteName: "group.appblockerone")!.set(saveVal, forKey: saveName)
-        
-        // Schedule
-        let deviceActivityName = DeviceActivityName(saveName)
-        let startComponents = _getTimeSettingComponents(s_blockSchedule_start)
-        let endComponents = _getTimeSettingComponents(s_blockSchedule_end)
-        
-        let schedule = DeviceActivitySchedule(
-            intervalStart: DateComponents(hour: startComponents.hours, minute: startComponents.minutes), intervalEnd: DateComponents(hour: endComponents.hours, minute: endComponents.minutes), repeats: true
-        )
-        
-        // Block right away
-        try blockApps(faSelection: faSelection)
-        
-        // Stop current then start again
-        center.stopMonitoring([deviceActivityName])
-        try center.startMonitoring(deviceActivityName, during: schedule)
-    }
-    
     private func _validateSettings() -> String? {
         if groupName == "" {
             return "Group needs a name"

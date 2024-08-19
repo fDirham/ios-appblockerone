@@ -14,4 +14,8 @@
         <attribute name="s_strictBlock" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="timestamp" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
+    <entity name="BlockedItems" representedClassName="BlockedItems" syncable="YES" codeGenerationType="class">
+        <attribute name="groupId" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+    </entity>
 </model>
