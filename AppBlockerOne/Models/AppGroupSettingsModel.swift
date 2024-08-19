@@ -91,37 +91,27 @@ import ManagedSettings
     }
     
     func handleSaveNew() -> (Bool, String?){
-        // Validate
-        let errorMsg = _validateSettings()
-        if errorMsg != nil {
-            return (false, errorMsg)
-        }
-        
-        // Save
-        do {
-            try _createNewCDObj()
-        } catch {
-            let nsError = error as NSError
-            Logger().error("Unresolved error \(nsError), \(nsError.userInfo)")
-            return (false, "Failed to save, please try again later")
-        }
-
         return _handleSave()
     }
     
     func handleSaveEdit() -> (Bool, String?) {
-        // Validate
-        let errorMsg = _validateSettings()
-        if errorMsg != nil {
-            return (false, errorMsg)
-        }
-
         return _handleSave()
     }
     
     private func _handleSave() -> (Bool, String?) {
         do {
+            // Validate
             let tokenSplit = try _splitTokensBeforeSync()
+            
+            let errorMsg = _validateSettings(tokenSplit: tokenSplit)
+            if errorMsg != nil {
+                return (false, errorMsg)
+            }
+            
+            if cdObj == nil {
+                try _createNewCDObj()
+            }
+                
             try _syncCDObjWithSelf()
             try _createBlockedItemTokensOnSave(added: tokenSplit.added, removed: tokenSplit.removed)
             try coreDataContext.save()
@@ -179,6 +169,7 @@ import ManagedSettings
                 let idStr = try getIdFromToken(token)
                 let predicate = NSPredicate(format: "selectionId == %@", idStr)
                 let request = NSFetchRequest<BlockedItem>(entityName: "BlockedItem")
+                request.predicate = predicate
                 let result = try coreDataContext.fetch(request)
                 if let biObj = result.first {
                     coreDataContext.delete(biObj)
@@ -221,7 +212,7 @@ import ManagedSettings
         ))
     }
 
-    private func _validateSettings() -> String? {
+    private func _validateSettings(tokenSplit: (added: TokenSplit, removed: TokenSplit)) -> String? {
         if groupName == "" {
             return "Group needs a name"
         }
@@ -231,6 +222,40 @@ import ManagedSettings
         let emptyFa = faSelection.applicationTokens.isEmpty && faSelection.webDomainTokens.isEmpty && faSelection.categoryTokens.isEmpty
         if emptyFa {
             return "Please select one or more apps for this group"
+        }
+        
+        // Validate no duplicates
+        do {
+            func dupeCheckTokens<T>(_ tokenSet: Set<Token<T>>) throws -> String? {
+                for token in tokenSet {
+                    let idStr = try getIdFromToken(token)
+                    // Query for blocked items
+                    let predicate = NSPredicate(format: "selectionId == %@", idStr)
+                    let request = NSFetchRequest<BlockedItem>(entityName: "BlockedItem")
+                    request.predicate = predicate
+                    let result = try coreDataContext.fetch(request)
+                    if !result.isEmpty {
+                        return "One of the apps chosen is already in another group. Please remove it."
+                    }
+                }
+                return nil
+            }
+            
+            let dupeErrApp = try dupeCheckTokens(tokenSplit.added.appTokens)
+            if dupeErrApp != nil {
+                return dupeErrApp
+            }
+            let dupeErrWeb = try dupeCheckTokens(tokenSplit.added.webTokens)
+            if dupeErrWeb != nil {
+                return dupeErrWeb
+            }
+            let dupeErrCat = try dupeCheckTokens(tokenSplit.added.catTokens)
+            if dupeErrCat != nil {
+                return dupeErrCat
+            }
+        }
+        catch {
+            return "Something went wrong checking duplicates \(error.localizedDescription)"
         }
         
         return nil
