@@ -48,15 +48,18 @@ func blockApps(faSelection: FamilyActivitySelection) throws {
         store.shield.webDomainCategories = .specific(toAdd)
         
         let saveString = try encodeJSONObj(toAdd)
-        UserDefaults(suiteName: "group.appblockerone")!.set(toAdd, forKey: BLOCKED_CATEGORIES_KEY)
+        UserDefaults(suiteName: "group.appblockerone")!.set(saveString, forKey: BLOCKED_CATEGORIES_KEY)
     }
 }
 
 func unblockApps(faSelection: FamilyActivitySelection) throws {
+    try unblockApps(newBlockedApps: faSelection.applicationTokens, newBlockedWeb: faSelection.webDomainTokens, newBlockedCategories: faSelection.categoryTokens)
+}
+
+func unblockApps(newBlockedApps: Set<ApplicationToken> = Set(), newBlockedWeb: Set<WebDomainToken> = Set(), newBlockedCategories: Set<ActivityCategoryToken> = Set()) throws {
     let store = managedSettingsStore
     
     // Unblock apps
-    let newBlockedApps = faSelection.applicationTokens
     if !newBlockedApps.isEmpty{
         if let currApps = store.shield.applications {
             store.shield.applications = currApps.subtracting(newBlockedApps)
@@ -66,7 +69,6 @@ func unblockApps(faSelection: FamilyActivitySelection) throws {
         }
     }
     
-    let newBlockedWeb = faSelection.webDomainTokens
     if !newBlockedWeb.isEmpty{
         if let currWeb = store.shield.webDomains {
             store.shield.webDomains = currWeb.subtracting(newBlockedWeb)
@@ -77,7 +79,7 @@ func unblockApps(faSelection: FamilyActivitySelection) throws {
     }
     
     
-    let newBlockedCat = faSelection.categoryTokens
+    let newBlockedCat = newBlockedCategories
     if !newBlockedCat.isEmpty{
         // Read from user defaults
         if let blockedCatRaw = UserDefaults(suiteName: "group.appblockerone")!.string(forKey: BLOCKED_CATEGORIES_KEY) {
@@ -87,7 +89,7 @@ func unblockApps(faSelection: FamilyActivitySelection) throws {
             store.shield.webDomainCategories = .specific(toAdd)
             
             let saveString = try encodeJSONObj(toAdd)
-            UserDefaults(suiteName: "group.appblockerone")!.set(toAdd, forKey: BLOCKED_CATEGORIES_KEY)
+            UserDefaults(suiteName: "group.appblockerone")!.set(saveString, forKey: BLOCKED_CATEGORIES_KEY)
         }
         else {
             store.shield.applicationCategories = nil

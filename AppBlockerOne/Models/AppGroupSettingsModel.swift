@@ -134,17 +134,23 @@ import DeviceActivity
     }
     
     private func _beforeSaveSync() throws {
-        // Unblock apps in cdo
         let cdoFa: FamilyActivitySelection = try decodeJSONObj(cdObj!.faSelection!)
-        try unblockApps(faSelection: cdoFa)
+        
+        // See what has been deleted
+        let deletedAppTokens = cdoFa.applicationTokens.subtracting(faSelection.applicationTokens)
+        let deletedWebTokens = cdoFa.webDomainTokens.subtracting(faSelection.webDomainTokens)
+        let deletedCatTokens = cdoFa.categoryTokens.subtracting(faSelection.categoryTokens)
+        
+        try unblockApps(newBlockedApps: deletedAppTokens, newBlockedWeb: deletedWebTokens, newBlockedCategories: deletedCatTokens)
+
+        // TODO: Do stuff with deleted
+        
     }
     
     private func _onSave() throws {
         if cdObj == nil{
             fatalError("Trying to save app settings with empty cdObj")
         }
-        
-        print("Triggering on save")
         
         let center = DeviceActivityCenter()
         let saveName = "ms_" + cdObj!.id!.uuidString
