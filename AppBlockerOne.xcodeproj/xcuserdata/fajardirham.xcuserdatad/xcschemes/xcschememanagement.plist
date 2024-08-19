@@ -6,8 +6,30 @@
 	<dict>
 		<key>AppBlockerOne.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+		<key>iosDeviceActivityMonitor.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>isShown</key>
+			<true/>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>8BBF76A82C6BDAD2005EC2D2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8BBF77392C6FFEAF005EC2D2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

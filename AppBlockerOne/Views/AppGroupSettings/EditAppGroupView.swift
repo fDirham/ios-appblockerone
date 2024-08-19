@@ -21,9 +21,6 @@ struct EditAppGroupView: View {
             return sm.handleSaveEdit()
         }, navTitle: "Edit")
         .environment(sm)
-        .onDisappear {
-            var _ = try? sm._syncCDObjWithSelf()
-        }
     }
 }
 

@@ -20,14 +20,49 @@
 		8BBF76D42C6D5C81005EC2D2 /* AppGroupSettingsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76D32C6D5C81005EC2D2 /* AppGroupSettingsModel.swift */; };
 		8BBF76D62C6D643D005EC2D2 /* OpenMethods.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76D52C6D643D005EC2D2 /* OpenMethods.swift */; };
 		8BBF76D82C6D662A005EC2D2 /* NewAppGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76D72C6D662A005EC2D2 /* NewAppGroupView.swift */; };
-		8BBF76DB2C6D6A35005EC2D2 /* KeyboardReadable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76DA2C6D6A35005EC2D2 /* KeyboardReadable+Extensions.swift */; };
-		8BBF76DD2C6D6EE8005EC2D2 /* Comparable+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76DC2C6D6EE8005EC2D2 /* Comparable+Extensions.swift */; };
+		8BBF76DB2C6D6A35005EC2D2 /* KeyboardReadable+Notifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76DA2C6D6A35005EC2D2 /* KeyboardReadable+Notifications.swift */; };
+		8BBF76DD2C6D6EE8005EC2D2 /* Comparable+Clamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76DC2C6D6EE8005EC2D2 /* Comparable+Clamp.swift */; };
 		8BBF76DF2C6E6EFF005EC2D2 /* FamilyActivityTokensView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76DE2C6E6EFF005EC2D2 /* FamilyActivityTokensView.swift */; };
 		8BBF76E22C6E7C23005EC2D2 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76E12C6E7C23005EC2D2 /* Helpers.swift */; };
 		8BBF76E62C6E85A9005EC2D2 /* mockFaSelection.json in Resources */ = {isa = PBXBuildFile; fileRef = 8BBF76E52C6E85A9005EC2D2 /* mockFaSelection.json */; };
 		8BBF76ED2C6EAD04005EC2D2 /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8BBF76EB2C6EACEA005EC2D2 /* Poppins-Bold.ttf */; };
 		8BBF76F52C6EB346005EC2D2 /* EditAppGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76F42C6EB346005EC2D2 /* EditAppGroupView.swift */; };
+		8BBF77322C6FFA31005EC2D2 /* String+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF77312C6FFA31005EC2D2 /* String+Error.swift */; };
+		8BBF773B2C6FFEAF005EC2D2 /* DeviceActivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BBF77222C6FDF5E005EC2D2 /* DeviceActivity.framework */; };
+		8BBF773E2C6FFEAF005EC2D2 /* DeviceActivityMonitorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF773D2C6FFEAF005EC2D2 /* DeviceActivityMonitorExtension.swift */; };
+		8BBF77432C6FFEAF005EC2D2 /* iosDeviceActivityMonitor.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8BBF773A2C6FFEAF005EC2D2 /* iosDeviceActivityMonitor.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8BBF77472C6FFECE005EC2D2 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76B52C6BDAD5005EC2D2 /* Persistence.swift */; };
+		8BBF77482C6FFED1005EC2D2 /* AppBlockerOne.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76B72C6BDAD5005EC2D2 /* AppBlockerOne.xcdatamodeld */; };
+		8BBF77492C700391005EC2D2 /* String+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF77312C6FFA31005EC2D2 /* String+Error.swift */; };
+		8BBF774A2C700395005EC2D2 /* Comparable+Clamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76DC2C6D6EE8005EC2D2 /* Comparable+Clamp.swift */; };
+		8BBF774B2C700E42005EC2D2 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76E12C6E7C23005EC2D2 /* Helpers.swift */; };
+		8BBF77502C702087005EC2D2 /* BlockSettingsHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF774F2C702087005EC2D2 /* BlockSettingsHelpers.swift */; };
+		8BBF77512C702087005EC2D2 /* BlockSettingsHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF774F2C702087005EC2D2 /* BlockSettingsHelpers.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8BBF77412C6FFEAF005EC2D2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8BBF76A12C6BDAD2005EC2D2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8BBF77392C6FFEAF005EC2D2;
+			remoteInfo = iosDeviceActivityMonitor;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8BBF770B2C6FD340005EC2D2 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				8BBF77432C6FFEAF005EC2D2 /* iosDeviceActivityMonitor.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		8BBF76A92C6BDAD2005EC2D2 /* AppBlockerOne.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppBlockerOne.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -45,14 +80,23 @@
 		8BBF76D32C6D5C81005EC2D2 /* AppGroupSettingsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroupSettingsModel.swift; sourceTree = "<group>"; };
 		8BBF76D52C6D643D005EC2D2 /* OpenMethods.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenMethods.swift; sourceTree = "<group>"; };
 		8BBF76D72C6D662A005EC2D2 /* NewAppGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAppGroupView.swift; sourceTree = "<group>"; };
-		8BBF76DA2C6D6A35005EC2D2 /* KeyboardReadable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardReadable+Extensions.swift"; sourceTree = "<group>"; };
-		8BBF76DC2C6D6EE8005EC2D2 /* Comparable+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+Extensions.swift"; sourceTree = "<group>"; };
+		8BBF76DA2C6D6A35005EC2D2 /* KeyboardReadable+Notifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "KeyboardReadable+Notifications.swift"; sourceTree = "<group>"; };
+		8BBF76DC2C6D6EE8005EC2D2 /* Comparable+Clamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+Clamp.swift"; sourceTree = "<group>"; };
 		8BBF76DE2C6E6EFF005EC2D2 /* FamilyActivityTokensView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyActivityTokensView.swift; sourceTree = "<group>"; };
 		8BBF76E12C6E7C23005EC2D2 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		8BBF76E52C6E85A9005EC2D2 /* mockFaSelection.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = mockFaSelection.json; sourceTree = "<group>"; };
 		8BBF76EB2C6EACEA005EC2D2 /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
 		8BBF76F02C6EADA1005EC2D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8BBF76F42C6EB346005EC2D2 /* EditAppGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAppGroupView.swift; sourceTree = "<group>"; };
+		8BBF76FC2C6FD340005EC2D2 /* ManagedSettings.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ManagedSettings.framework; path = System/Library/Frameworks/ManagedSettings.framework; sourceTree = SDKROOT; };
+		8BBF76FE2C6FD340005EC2D2 /* ManagedSettingsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ManagedSettingsUI.framework; path = System/Library/Frameworks/ManagedSettingsUI.framework; sourceTree = SDKROOT; };
+		8BBF77222C6FDF5E005EC2D2 /* DeviceActivity.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DeviceActivity.framework; path = System/Library/Frameworks/DeviceActivity.framework; sourceTree = SDKROOT; };
+		8BBF77312C6FFA31005EC2D2 /* String+Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Error.swift"; sourceTree = "<group>"; };
+		8BBF773A2C6FFEAF005EC2D2 /* iosDeviceActivityMonitor.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = iosDeviceActivityMonitor.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BBF773D2C6FFEAF005EC2D2 /* DeviceActivityMonitorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceActivityMonitorExtension.swift; sourceTree = "<group>"; };
+		8BBF773F2C6FFEAF005EC2D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8BBF77402C6FFEAF005EC2D2 /* iosDeviceActivityMonitor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iosDeviceActivityMonitor.entitlements; sourceTree = "<group>"; };
+		8BBF774F2C702087005EC2D2 /* BlockSettingsHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockSettingsHelpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +107,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8BBF77372C6FFEAF005EC2D2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8BBF773B2C6FFEAF005EC2D2 /* DeviceActivity.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -70,6 +122,8 @@
 			isa = PBXGroup;
 			children = (
 				8BBF76AB2C6BDAD2005EC2D2 /* AppBlockerOne */,
+				8BBF773C2C6FFEAF005EC2D2 /* iosDeviceActivityMonitor */,
+				8BBF76FB2C6FD340005EC2D2 /* Frameworks */,
 				8BBF76AA2C6BDAD2005EC2D2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -78,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				8BBF76A92C6BDAD2005EC2D2 /* AppBlockerOne.app */,
+				8BBF773A2C6FFEAF005EC2D2 /* iosDeviceActivityMonitor.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -142,8 +197,9 @@
 		8BBF76D92C6D6A23005EC2D2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				8BBF76DA2C6D6A35005EC2D2 /* KeyboardReadable+Extensions.swift */,
-				8BBF76DC2C6D6EE8005EC2D2 /* Comparable+Extensions.swift */,
+				8BBF76DA2C6D6A35005EC2D2 /* KeyboardReadable+Notifications.swift */,
+				8BBF76DC2C6D6EE8005EC2D2 /* Comparable+Clamp.swift */,
+				8BBF77312C6FFA31005EC2D2 /* String+Error.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -152,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				8BBF76E12C6E7C23005EC2D2 /* Helpers.swift */,
+				8BBF774F2C702087005EC2D2 /* BlockSettingsHelpers.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -175,6 +232,26 @@
 			path = AppGroupSettings;
 			sourceTree = "<group>";
 		};
+		8BBF76FB2C6FD340005EC2D2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8BBF76FC2C6FD340005EC2D2 /* ManagedSettings.framework */,
+				8BBF76FE2C6FD340005EC2D2 /* ManagedSettingsUI.framework */,
+				8BBF77222C6FDF5E005EC2D2 /* DeviceActivity.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8BBF773C2C6FFEAF005EC2D2 /* iosDeviceActivityMonitor */ = {
+			isa = PBXGroup;
+			children = (
+				8BBF773D2C6FFEAF005EC2D2 /* DeviceActivityMonitorExtension.swift */,
+				8BBF773F2C6FFEAF005EC2D2 /* Info.plist */,
+				8BBF77402C6FFEAF005EC2D2 /* iosDeviceActivityMonitor.entitlements */,
+			);
+			path = iosDeviceActivityMonitor;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -185,15 +262,34 @@
 				8BBF76A52C6BDAD2005EC2D2 /* Sources */,
 				8BBF76A62C6BDAD2005EC2D2 /* Frameworks */,
 				8BBF76A72C6BDAD2005EC2D2 /* Resources */,
+				8BBF770B2C6FD340005EC2D2 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				8BBF77422C6FFEAF005EC2D2 /* PBXTargetDependency */,
 			);
 			name = AppBlockerOne;
 			productName = AppBlockerOne;
 			productReference = 8BBF76A92C6BDAD2005EC2D2 /* AppBlockerOne.app */;
 			productType = "com.apple.product-type.application";
+		};
+		8BBF77392C6FFEAF005EC2D2 /* iosDeviceActivityMonitor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8BBF77442C6FFEAF005EC2D2 /* Build configuration list for PBXNativeTarget "iosDeviceActivityMonitor" */;
+			buildPhases = (
+				8BBF77362C6FFEAF005EC2D2 /* Sources */,
+				8BBF77372C6FFEAF005EC2D2 /* Frameworks */,
+				8BBF77382C6FFEAF005EC2D2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = iosDeviceActivityMonitor;
+			productName = iosDeviceActivityMonitor;
+			productReference = 8BBF773A2C6FFEAF005EC2D2 /* iosDeviceActivityMonitor.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -206,6 +302,9 @@
 				LastUpgradeCheck = 1540;
 				TargetAttributes = {
 					8BBF76A82C6BDAD2005EC2D2 = {
+						CreatedOnToolsVersion = 15.4;
+					};
+					8BBF77392C6FFEAF005EC2D2 = {
 						CreatedOnToolsVersion = 15.4;
 					};
 				};
@@ -224,6 +323,7 @@
 			projectRoot = "";
 			targets = (
 				8BBF76A82C6BDAD2005EC2D2 /* AppBlockerOne */,
+				8BBF77392C6FFEAF005EC2D2 /* iosDeviceActivityMonitor */,
 			);
 		};
 /* End PBXProject section */
@@ -240,6 +340,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8BBF77382C6FFEAF005EC2D2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -250,15 +357,17 @@
 				8BBF76F52C6EB346005EC2D2 /* EditAppGroupView.swift in Sources */,
 				8BBF76B62C6BDAD5005EC2D2 /* Persistence.swift in Sources */,
 				8BBF76C42C6BE8A5005EC2D2 /* AppGroupSettingsView.swift in Sources */,
+				8BBF77322C6FFA31005EC2D2 /* String+Error.swift in Sources */,
 				8BBF76AF2C6BDAD2005EC2D2 /* ContentView.swift in Sources */,
 				8BBF76AD2C6BDAD2005EC2D2 /* AppBlockerOneApp.swift in Sources */,
 				8BBF76D12C6D1FB1005EC2D2 /* ReusableStyles.swift in Sources */,
 				8BBF76DF2C6E6EFF005EC2D2 /* FamilyActivityTokensView.swift in Sources */,
-				8BBF76DD2C6D6EE8005EC2D2 /* Comparable+Extensions.swift in Sources */,
+				8BBF76DD2C6D6EE8005EC2D2 /* Comparable+Clamp.swift in Sources */,
 				8BBF76C12C6BE725005EC2D2 /* GroupColor.swift in Sources */,
 				8BBF76D82C6D662A005EC2D2 /* NewAppGroupView.swift in Sources */,
 				8BBF76CF2C6D1DCF005EC2D2 /* AppSelectionSettingView.swift in Sources */,
-				8BBF76DB2C6D6A35005EC2D2 /* KeyboardReadable+Extensions.swift in Sources */,
+				8BBF77502C702087005EC2D2 /* BlockSettingsHelpers.swift in Sources */,
+				8BBF76DB2C6D6A35005EC2D2 /* KeyboardReadable+Notifications.swift in Sources */,
 				8BBF76D62C6D643D005EC2D2 /* OpenMethods.swift in Sources */,
 				8BBF76D42C6D5C81005EC2D2 /* AppGroupSettingsModel.swift in Sources */,
 				8BBF76E22C6E7C23005EC2D2 /* Helpers.swift in Sources */,
@@ -266,7 +375,29 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		8BBF77362C6FFEAF005EC2D2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8BBF774A2C700395005EC2D2 /* Comparable+Clamp.swift in Sources */,
+				8BBF774B2C700E42005EC2D2 /* Helpers.swift in Sources */,
+				8BBF773E2C6FFEAF005EC2D2 /* DeviceActivityMonitorExtension.swift in Sources */,
+				8BBF77492C700391005EC2D2 /* String+Error.swift in Sources */,
+				8BBF77472C6FFECE005EC2D2 /* Persistence.swift in Sources */,
+				8BBF77512C702087005EC2D2 /* BlockSettingsHelpers.swift in Sources */,
+				8BBF77482C6FFED1005EC2D2 /* AppBlockerOne.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8BBF77422C6FFEAF005EC2D2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8BBF77392C6FFEAF005EC2D2 /* iosDeviceActivityMonitor */;
+			targetProxy = 8BBF77412C6FFEAF005EC2D2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		8BBF76BA2C6BDAD5005EC2D2 /* Debug */ = {
@@ -391,6 +522,7 @@
 		8BBF76BD2C6BDAD5005EC2D2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = AppBlockerOne/AppBlockerOne.entitlements;
@@ -422,6 +554,7 @@
 		8BBF76BE2C6BDAD5005EC2D2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = AppBlockerOne/AppBlockerOne.entitlements;
@@ -450,6 +583,58 @@
 			};
 			name = Release;
 		};
+		8BBF77452C6FFEAF005EC2D2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = iosDeviceActivityMonitor/iosDeviceActivityMonitor.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 456G72PT96;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = iosDeviceActivityMonitor/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = iosDeviceActivityMonitor;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fbdco.AppBlockerOne.iosDeviceActivityMonitor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8BBF77462C6FFEAF005EC2D2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = iosDeviceActivityMonitor/iosDeviceActivityMonitor.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 456G72PT96;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = iosDeviceActivityMonitor/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = iosDeviceActivityMonitor;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fbdco.AppBlockerOne.iosDeviceActivityMonitor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -467,6 +652,15 @@
 			buildConfigurations = (
 				8BBF76BD2C6BDAD5005EC2D2 /* Debug */,
 				8BBF76BE2C6BDAD5005EC2D2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8BBF77442C6FFEAF005EC2D2 /* Build configuration list for PBXNativeTarget "iosDeviceActivityMonitor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8BBF77452C6FFEAF005EC2D2 /* Debug */,
+				8BBF77462C6FFEAF005EC2D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
