@@ -40,7 +40,7 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
     override func intervalDidStart(for activity: DeviceActivityName) {
         do {
             // Read from user defaults
-            let faRaw = UserDefaults(suiteName: "group.appblockerone")!.string(forKey: activity.rawValue)!
+            let faRaw = GroupUserDefaults().string(forKey: activity.rawValue)!
             let faSelection: FamilyActivitySelection = try decodeJSONObj(faRaw)
             
             // Block apps
@@ -55,7 +55,7 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
     override func intervalDidEnd(for activity: DeviceActivityName) {
         do {
             // Read from user defaults
-            let faRaw = UserDefaults(suiteName: "group.appblockerone")!.string(forKey: activity.rawValue)!
+            let faRaw = GroupUserDefaults().string(forKey: activity.rawValue)!
             let faSelection: FamilyActivitySelection = try decodeJSONObj(faRaw)
             
             // Unblock apps

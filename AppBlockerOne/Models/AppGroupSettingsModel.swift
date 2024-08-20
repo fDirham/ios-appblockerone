@@ -107,24 +107,25 @@ import ManagedSettings
             if errorMsg != nil {
                 return (false, errorMsg)
             }
-            
+                
             if cdObj == nil {
                 try _createNewCDObj()
             }
-                
+            
             try _syncCDObjWithSelf()
-            try _createBlockedItemTokensOnSave(added: tokenSplit.added, removed: tokenSplit.removed)
+            try _saveBlockedItemTokens(added: tokenSplit.added, removed: tokenSplit.removed)
             try coreDataContext.save()
             
             // Block and unblock those added
             try blockApps(appTokens: tokenSplit.added.appTokens, webTokens: tokenSplit.added.webTokens, catTokens: tokenSplit.added.catTokens)
             try unblockApps(appTokens: tokenSplit.removed.appTokens, webTokens: tokenSplit.removed.webTokens, catTokens: tokenSplit.removed.catTokens)
             
-            let saveName = "ms_" + cdObj!.id!.uuidString
+            let saveName = getScheduleDefaultKey(cdObj!.id!)!
             
-            // Save in user defaults
+            // Save as schedule default
             let saveVal = try encodeJSONObj(faSelection)
-            UserDefaults(suiteName: "group.appblockerone")!.set(saveVal, forKey: saveName)
+            let ud = GroupUserDefaults()
+            ud.set(saveVal, forKey: saveName)
             
             // Schedule in device activity
             let center = DeviceActivityCenter()
@@ -138,6 +139,12 @@ import ManagedSettings
             // Start monitoring
             let deviceActivityName = DeviceActivityName(saveName)
             try center.startMonitoring(deviceActivityName, during: schedule) // NOTE this overrides previously scheduled so we should be good
+            
+            // Save as group shield default
+            let gsKey = getGroupShieldDefaultKey(cdObj!.id!)!
+            let gsToSaveRaw = GroupShieldDefault(groupName: cdObj!.groupName!)
+            let gsToSave = try encodeJSONObj(gsToSaveRaw)
+            ud.set(gsToSave, forKey: gsKey)
         } catch {
             let nsError = error as NSError
             Logger().error("Unresolved error \(nsError), \(nsError.userInfo)")
@@ -147,15 +154,18 @@ import ManagedSettings
         return (true, nil)
     }
     
-    private func _createBlockedItemTokensOnSave(added: TokenSplit, removed: TokenSplit) throws {
+    private func _saveBlockedItemTokens(added: TokenSplit, removed: TokenSplit) throws {
+        if cdObj == nil {
+            throw "No cdObj instantiated"
+        }
+        
         // Add
         func addTokenSet<T>(_ tokenSet: Set<Token<T>>) throws {
-            try tokenSet.forEach{token in
-                let idStr = try getIdFromToken(token)
-                let newObj = BlockedItem(context: coreDataContext)
-                newObj.selectionId = idStr
-                newObj.id = UUID()
-                newObj.groupId = cdObj!.id!
+            tokenSet.forEach{token in
+                // Add in user defaults
+                if let userDefaultKey = getBlockedItemDefaultKey(token) {
+                    GroupUserDefaults().set(cdObj!.id!.uuidString, forKey: userDefaultKey)
+                }
             }
         }
         
@@ -165,14 +175,9 @@ import ManagedSettings
         
         // Remove
         func removeTokenSet<T>(_ tokenSet: Set<Token<T>>) throws {
-            try tokenSet.forEach{token in
-                let idStr = try getIdFromToken(token)
-                let predicate = NSPredicate(format: "selectionId == %@", idStr)
-                let request = NSFetchRequest<BlockedItem>(entityName: "BlockedItem")
-                request.predicate = predicate
-                let result = try coreDataContext.fetch(request)
-                if let biObj = result.first {
-                    coreDataContext.delete(biObj)
+            tokenSet.forEach{token in
+                if let userDefaultKey = getBlockedItemDefaultKey(token) {
+                    GroupUserDefaults().removeObject(forKey: userDefaultKey)
                 }
             }
         }
@@ -186,9 +191,19 @@ import ManagedSettings
         var appTokens: Set<ApplicationToken>
         var webTokens: Set<WebDomainToken>
         var catTokens: Set<ActivityCategoryToken>
+        
+        init(appTokens: Set<ApplicationToken> = Set(), webTokens: Set<WebDomainToken> = Set(), catTokens: Set<ActivityCategoryToken> = Set()) {
+            self.appTokens = appTokens
+            self.webTokens = webTokens
+            self.catTokens = catTokens
+        }
     }
     
     private func _splitTokensBeforeSync() throws -> (added: TokenSplit, removed: TokenSplit){
+        if cdObj == nil {
+            return (added: TokenSplit(), removed: TokenSplit())
+        }
+        
         let cdoFa: FamilyActivitySelection = try decodeJSONObj(cdObj!.faSelection!)
         
         // See what has been deleted
@@ -228,14 +243,11 @@ import ManagedSettings
         do {
             func dupeCheckTokens<T>(_ tokenSet: Set<Token<T>>) throws -> String? {
                 for token in tokenSet {
-                    let idStr = try getIdFromToken(token)
-                    // Query for blocked items
-                    let predicate = NSPredicate(format: "selectionId == %@", idStr)
-                    let request = NSFetchRequest<BlockedItem>(entityName: "BlockedItem")
-                    request.predicate = predicate
-                    let result = try coreDataContext.fetch(request)
-                    if !result.isEmpty {
-                        return "One of the apps chosen is already in another group. Please remove it."
+                    if let udKey = getBlockedItemDefaultKey(token){
+                        let res = GroupUserDefaults().string(forKey: udKey)
+                        if res != nil {
+                            return "One of your apps is already managed by another group."
+                        }
                     }
                 }
                 return nil

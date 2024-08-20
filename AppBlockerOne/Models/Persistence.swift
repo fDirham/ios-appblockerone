@@ -11,7 +11,7 @@ import FamilyControls
 
 struct PersistenceController {
     static let shared = PersistenceController()
-
+    
     static var preview: PersistenceController = {
         let result = PersistenceController(inMemory: true)
         let viewContext = result.container.viewContext
@@ -22,10 +22,10 @@ struct PersistenceController {
             do {
                 let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
                 newFaSelection = String(data: data, encoding: .utf8) ?? "FAILED"
-              } catch {
-                   // handle error
-                  print("failed to load data \(error.localizedDescription)")
-              }
+            } catch {
+                // handle error
+                print("failed to load data \(error.localizedDescription)")
+            }
         }
         else {
             print("mock path not found")
@@ -50,7 +50,7 @@ struct PersistenceController {
         return result
     }()
     
-    static var previewObj: AppGroup = {
+    static var previewObj: AppGroup  = {
         let newItem = AppGroup(context: Self.preview.container.viewContext)
         
         // Get mock family activity
@@ -59,10 +59,10 @@ struct PersistenceController {
             do {
                 let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .mappedIfSafe)
                 newFaSelection = String(data: data, encoding: .utf8) ?? "FAILED"
-              } catch {
-                   // handle error
-                  print("failed to load data \(error.localizedDescription)")
-              }
+            } catch {
+                // handle error
+                print("failed to load data \(error.localizedDescription)")
+            }
         }
         else {
             print("mock path not found")
@@ -75,17 +75,23 @@ struct PersistenceController {
         newItem.groupColor = ["blue", "red", "green", "orange"].randomElement()!
         newItem.s_blockingEnabled = true
         newItem.s_strictBlock = true
-
+        
         return newItem
     }()
     
-
+    
     let container: NSPersistentContainer
-
+    
     init(inMemory: Bool = false) {
         container = NSPersistentContainer(name: "AppBlockerOne")
         if inMemory {
             container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
+        }
+        else {
+            let containerURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.appblockerone")!
+            let storeURL = containerURL.appendingPathComponent("AppBlockerOne.sqlite")
+            let description = NSPersistentStoreDescription(url: storeURL)
+            container.persistentStoreDescriptions = [description]
         }
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {

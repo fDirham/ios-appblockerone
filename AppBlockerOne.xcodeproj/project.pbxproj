@@ -7,12 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B4A0DFF2C7412B9002722AB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76B52C6BDAD5005EC2D2 /* Persistence.swift */; };
+		8B4A0E012C751DE7002722AB /* UserDefaultHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4A0E002C751DE7002722AB /* UserDefaultHelpers.swift */; };
+		8B4A0E032C753602002722AB /* GroupUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4A0E022C753602002722AB /* GroupUserDefaults.swift */; };
+		8B4A0E042C7538E1002722AB /* GroupUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4A0E022C753602002722AB /* GroupUserDefaults.swift */; };
+		8B4A0E052C7538E1002722AB /* GroupUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4A0E022C753602002722AB /* GroupUserDefaults.swift */; };
+		8B4A0E062C7539F8002722AB /* UserDefaultHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4A0E002C751DE7002722AB /* UserDefaultHelpers.swift */; };
+		8B4A0E072C7539F9002722AB /* UserDefaultHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4A0E002C751DE7002722AB /* UserDefaultHelpers.swift */; };
+		8B4A0E092C753AE5002722AB /* GroupShieldDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4A0E082C753AE5002722AB /* GroupShieldDefault.swift */; };
+		8B4A0E0A2C753D7C002722AB /* GroupShieldDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4A0E082C753AE5002722AB /* GroupShieldDefault.swift */; };
+		8B4A0E0B2C753DBA002722AB /* TokenHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BADB4102C73F28900E0DCDC /* TokenHelpers.swift */; };
 		8BADB4022C73B4B400E0DCDC /* ManagedSettings.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BBF76FC2C6FD340005EC2D2 /* ManagedSettings.framework */; };
 		8BADB4032C73B4B400E0DCDC /* ManagedSettingsUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BBF76FE2C6FD340005EC2D2 /* ManagedSettingsUI.framework */; };
 		8BADB4062C73B4B400E0DCDC /* ShieldConfigurationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BADB4052C73B4B400E0DCDC /* ShieldConfigurationExtension.swift */; };
 		8BADB40B2C73B4B400E0DCDC /* iosShieldConfiguration.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8BADB4012C73B4B400E0DCDC /* iosShieldConfiguration.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8BADB40F2C73C0A600E0DCDC /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76E12C6E7C23005EC2D2 /* Helpers.swift */; };
 		8BADB4112C73F28900E0DCDC /* TokenHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BADB4102C73F28900E0DCDC /* TokenHelpers.swift */; };
+		8BADB4132C7407A500E0DCDC /* TokenHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BADB4102C73F28900E0DCDC /* TokenHelpers.swift */; };
+		8BADB4152C7408C000E0DCDC /* AppBlockerOne.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76B72C6BDAD5005EC2D2 /* AppBlockerOne.xcdatamodeld */; };
+		8BADB4162C740EAF00E0DCDC /* String+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF77312C6FFA31005EC2D2 /* String+Error.swift */; };
 		8BBF76AD2C6BDAD2005EC2D2 /* AppBlockerOneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76AC2C6BDAD2005EC2D2 /* AppBlockerOneApp.swift */; };
 		8BBF76AF2C6BDAD2005EC2D2 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76AE2C6BDAD2005EC2D2 /* ContentView.swift */; };
 		8BBF76B12C6BDAD5005EC2D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BBF76B02C6BDAD5005EC2D2 /* Assets.xcassets */; };
@@ -37,8 +50,6 @@
 		8BBF773B2C6FFEAF005EC2D2 /* DeviceActivity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BBF77222C6FDF5E005EC2D2 /* DeviceActivity.framework */; };
 		8BBF773E2C6FFEAF005EC2D2 /* DeviceActivityMonitorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF773D2C6FFEAF005EC2D2 /* DeviceActivityMonitorExtension.swift */; };
 		8BBF77432C6FFEAF005EC2D2 /* iosDeviceActivityMonitor.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8BBF773A2C6FFEAF005EC2D2 /* iosDeviceActivityMonitor.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		8BBF77472C6FFECE005EC2D2 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76B52C6BDAD5005EC2D2 /* Persistence.swift */; };
-		8BBF77482C6FFED1005EC2D2 /* AppBlockerOne.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76B72C6BDAD5005EC2D2 /* AppBlockerOne.xcdatamodeld */; };
 		8BBF77492C700391005EC2D2 /* String+Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF77312C6FFA31005EC2D2 /* String+Error.swift */; };
 		8BBF774A2C700395005EC2D2 /* Comparable+Clamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76DC2C6D6EE8005EC2D2 /* Comparable+Clamp.swift */; };
 		8BBF774B2C700E42005EC2D2 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76E12C6E7C23005EC2D2 /* Helpers.swift */; };
@@ -79,6 +90,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8B4A0E002C751DE7002722AB /* UserDefaultHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHelpers.swift; sourceTree = "<group>"; };
+		8B4A0E022C753602002722AB /* GroupUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupUserDefaults.swift; sourceTree = "<group>"; };
+		8B4A0E082C753AE5002722AB /* GroupShieldDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupShieldDefault.swift; sourceTree = "<group>"; };
 		8BADB4012C73B4B400E0DCDC /* iosShieldConfiguration.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = iosShieldConfiguration.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BADB4052C73B4B400E0DCDC /* ShieldConfigurationExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldConfigurationExtension.swift; sourceTree = "<group>"; };
 		8BADB4072C73B4B400E0DCDC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -212,6 +226,8 @@
 				8BBF76C02C6BE725005EC2D2 /* GroupColor.swift */,
 				8BBF76D32C6D5C81005EC2D2 /* AppGroupSettingsModel.swift */,
 				8BBF76D52C6D643D005EC2D2 /* OpenMethods.swift */,
+				8B4A0E022C753602002722AB /* GroupUserDefaults.swift */,
+				8B4A0E082C753AE5002722AB /* GroupShieldDefault.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -250,6 +266,7 @@
 				8BBF76E12C6E7C23005EC2D2 /* Helpers.swift */,
 				8BBF774F2C702087005EC2D2 /* BlockSettingsHelpers.swift */,
 				8BADB4102C73F28900E0DCDC /* TokenHelpers.swift */,
+				8B4A0E002C751DE7002722AB /* UserDefaultHelpers.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -424,8 +441,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BADB4162C740EAF00E0DCDC /* String+Error.swift in Sources */,
+				8BADB4132C7407A500E0DCDC /* TokenHelpers.swift in Sources */,
+				8B4A0E062C7539F8002722AB /* UserDefaultHelpers.swift in Sources */,
+				8B4A0E0A2C753D7C002722AB /* GroupShieldDefault.swift in Sources */,
 				8BADB4062C73B4B400E0DCDC /* ShieldConfigurationExtension.swift in Sources */,
+				8B4A0DFF2C7412B9002722AB /* Persistence.swift in Sources */,
+				8BADB4152C7408C000E0DCDC /* AppBlockerOne.xcdatamodeld in Sources */,
 				8BADB40F2C73C0A600E0DCDC /* Helpers.swift in Sources */,
+				8B4A0E042C7538E1002722AB /* GroupUserDefaults.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,15 +463,18 @@
 				8BBF77322C6FFA31005EC2D2 /* String+Error.swift in Sources */,
 				8BBF76AF2C6BDAD2005EC2D2 /* ContentView.swift in Sources */,
 				8BBF76AD2C6BDAD2005EC2D2 /* AppBlockerOneApp.swift in Sources */,
+				8B4A0E032C753602002722AB /* GroupUserDefaults.swift in Sources */,
 				8BBF76D12C6D1FB1005EC2D2 /* ReusableStyles.swift in Sources */,
 				8BBF76DF2C6E6EFF005EC2D2 /* FamilyActivityTokensView.swift in Sources */,
 				8BBF76DD2C6D6EE8005EC2D2 /* Comparable+Clamp.swift in Sources */,
+				8B4A0E092C753AE5002722AB /* GroupShieldDefault.swift in Sources */,
 				8BBF76C12C6BE725005EC2D2 /* GroupColor.swift in Sources */,
 				8BBF76D82C6D662A005EC2D2 /* NewAppGroupView.swift in Sources */,
 				8BBF76CF2C6D1DCF005EC2D2 /* AppSelectionSettingView.swift in Sources */,
 				8BBF77502C702087005EC2D2 /* BlockSettingsHelpers.swift in Sources */,
 				8BBF76DB2C6D6A35005EC2D2 /* KeyboardReadable+Notifications.swift in Sources */,
 				8BADB4112C73F28900E0DCDC /* TokenHelpers.swift in Sources */,
+				8B4A0E012C751DE7002722AB /* UserDefaultHelpers.swift in Sources */,
 				8BBF76D62C6D643D005EC2D2 /* OpenMethods.swift in Sources */,
 				8BBF76D42C6D5C81005EC2D2 /* AppGroupSettingsModel.swift in Sources */,
 				8BBF76E22C6E7C23005EC2D2 /* Helpers.swift in Sources */,
@@ -459,13 +486,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B4A0E052C7538E1002722AB /* GroupUserDefaults.swift in Sources */,
+				8B4A0E0B2C753DBA002722AB /* TokenHelpers.swift in Sources */,
 				8BBF774A2C700395005EC2D2 /* Comparable+Clamp.swift in Sources */,
+				8B4A0E072C7539F9002722AB /* UserDefaultHelpers.swift in Sources */,
 				8BBF774B2C700E42005EC2D2 /* Helpers.swift in Sources */,
 				8BBF773E2C6FFEAF005EC2D2 /* DeviceActivityMonitorExtension.swift in Sources */,
 				8BBF77492C700391005EC2D2 /* String+Error.swift in Sources */,
-				8BBF77472C6FFECE005EC2D2 /* Persistence.swift in Sources */,
 				8BBF77512C702087005EC2D2 /* BlockSettingsHelpers.swift in Sources */,
-				8BBF77482C6FFED1005EC2D2 /* AppBlockerOne.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
