@@ -41,12 +41,23 @@ class ShieldConfigurationExtension: ShieldConfigurationDataSource {
                 throw "Cannot decode group shield for app \(application.localizedDisplayName ?? "?")"
             }
             
-            let shieldTitle = ShieldConfiguration.Label(text: "Blocked by \(groupShield.groupName)", color: .red)
-            return ShieldConfiguration(backgroundColor: .black, title: shieldTitle)
+            let shieldTitle = ShieldConfiguration.Label(text: "Nope!", color: .fg)
+            let shieldSubtitle = ShieldConfiguration.Label(text: "Today, you have unblocked \"\(groupShield.groupName)\" apps 5/10 times, for a total of 1h 32 mins.", color: .fg)
+            let primaryButtonLabel = ShieldConfiguration.Label(text: "Nevermind", color: .black)
+            let secondaryButtonLabel = ShieldConfiguration.Label(text: "Let me in!", color: .accent)
+            return ShieldConfiguration(
+                backgroundBlurStyle: .systemUltraThinMaterial,
+                backgroundColor: .bg,
+                title: shieldTitle,
+                subtitle: shieldSubtitle,
+                primaryButtonLabel: primaryButtonLabel,
+                primaryButtonBackgroundColor: .accent,
+                secondaryButtonLabel: secondaryButtonLabel
+            )
         }
         catch {
-            let shieldTitle = ShieldConfiguration.Label(text: "ERROR \(error.localizedDescription)", color: .white)
-            return ShieldConfiguration(backgroundColor: .black, title: shieldTitle)
+            let secondaryButtonLabel = ShieldConfiguration.Label(text: "Error \(error.localizedDescription)", color: .black)
+            return ShieldConfiguration(backgroundColor: .bg)
         }
     }
     
