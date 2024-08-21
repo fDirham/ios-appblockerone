@@ -50,3 +50,14 @@ func getGroupShieldDefaultKey(_ groupId: String?) -> String? {
     }
     return nil
 }
+
+func getShieldMemoryDefaultKey<T>(_ token: Token<T>) -> String? {
+    do {
+        let prefix = "sm"
+        let tokenId = try getIdFromToken(token)
+        return prefix + "_" + tokenId
+    }
+    catch{
+        return nil
+    }
+}

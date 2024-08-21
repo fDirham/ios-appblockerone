@@ -123,9 +123,8 @@ import ManagedSettings
             let saveName = getScheduleDefaultKey(cdObj!.id!)!
             
             // Save as schedule default
-            let saveVal = try encodeJSONObj(faSelection)
             let ud = GroupUserDefaults()
-            ud.set(saveVal, forKey: saveName)
+            try ud.setObj(faSelection, forKey: saveName)
             
             // Schedule in device activity
             let center = DeviceActivityCenter()
@@ -142,9 +141,8 @@ import ManagedSettings
             
             // Save as group shield default
             let gsKey = getGroupShieldDefaultKey(cdObj!.id!)!
-            let gsToSaveRaw = GroupShieldDefault(groupName: cdObj!.groupName!)
-            let gsToSave = try encodeJSONObj(gsToSaveRaw)
-            ud.set(gsToSave, forKey: gsKey)
+            let gsToSave = GroupShieldDefault(groupName: cdObj!.groupName!)
+            try ud.setObj(gsToSave, forKey: gsKey)
         } catch {
             let nsError = error as NSError
             Logger().error("Unresolved error \(nsError), \(nsError.userInfo)")

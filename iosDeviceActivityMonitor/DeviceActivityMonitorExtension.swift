@@ -36,7 +36,7 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
             }
         }
     }
-    
+
     override func intervalDidStart(for activity: DeviceActivityName) {
         do {
             // Read from user defaults
