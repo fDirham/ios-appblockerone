@@ -58,6 +58,7 @@ import ManagedSettings
             cdObj!.s_blockSchedule_start = Int16(self.s_blockSchedule_start)
             cdObj!.s_blockSchedule_end = Int16(self.s_blockSchedule_end)
             cdObj!.s_openMethod = self.s_openMethod.rawValue
+            cdObj!.s_blockingEnabled = self.s_blockingEnabled
             cdObj!.s_strictBlock = self.s_strictBlock
             cdObj!.s_maxOpensPerDay = Int16(self.s_maxOpensPerDay)
             cdObj!.s_durationPerOpenM = Int16(self.s_durationPerOpenM)

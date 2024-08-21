@@ -17,10 +17,10 @@ class ShieldConfigurationExtension: ShieldConfigurationDataSource {
             let d = try readShieldUserDefaultEssentials(appToken: application.token)
             
             // Instantiate title and subtitle
-            var titleText = "Blocked" // TODO: More stylistic text
+            let titleText = "Blocked" // TODO: More stylistic text
             var subtitleText = "Today, you have unblocked \"\(d.groupShield.groupName)\" apps 5/10 times, for a total of 1h 32 mins."
-            var primaryButtonText = "Nevermind"
-            var secondaryButtonText = "Let me in!"
+            let primaryButtonText = "Nevermind"
+            let secondaryButtonText = "Let me in!"
             
             if let shieldMemory: ShieldMemory = d.shieldMemory  {
                 if shieldMemory.backTapCount > 0 {
