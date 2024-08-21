@@ -24,11 +24,15 @@ class ShieldActionExtension: ShieldActionDelegate {
                 shieldMemory.backTapCount += 1
                 let MAX_TAPS = 5
                 if shieldMemory.backTapCount >= MAX_TAPS {
+                    // Unblock!
+                    var toUnblock: Set<ApplicationToken> = Set()
+                    toUnblock.insert(application)
+                    try unblockApps(appTokens: toUnblock)
+                    
                     // Delete shield memory
                     let ud = GroupUserDefaults()
                     ud.removeObject(forKey: d.keys.smKey)
-                    
-                    scheduleNotification(title: "Should unblock", msg: "success")
+
                     completionHandler(.none)
                 }
                 else{

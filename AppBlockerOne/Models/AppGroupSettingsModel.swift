@@ -121,11 +121,12 @@ import ManagedSettings
             try blockApps(appTokens: tokenSplit.added.appTokens, webTokens: tokenSplit.added.webTokens, catTokens: tokenSplit.added.catTokens)
             try unblockApps(appTokens: tokenSplit.removed.appTokens, webTokens: tokenSplit.removed.webTokens, catTokens: tokenSplit.removed.catTokens)
             
-            let saveName = getScheduleDefaultKey(cdObj!.id!)!
+            let sKey = getScheduleDefaultKey(cdObj!.id!)!
             
             // Save as schedule default
             let ud = GroupUserDefaults()
-            try ud.setObj(faSelection, forKey: saveName)
+            let scheduleDefault = ScheduleDefault(faSelection: faSelection)
+            try ud.setObj(scheduleDefault, forKey: sKey)
             
             // Schedule in device activity
             let center = DeviceActivityCenter()
@@ -137,7 +138,7 @@ import ManagedSettings
             )
             
             // Start monitoring
-            let deviceActivityName = DeviceActivityName(saveName)
+            let deviceActivityName = DeviceActivityName(sKey)
             try center.startMonitoring(deviceActivityName, during: schedule) // NOTE this overrides previously scheduled so we should be good
             
             // Save as group shield default

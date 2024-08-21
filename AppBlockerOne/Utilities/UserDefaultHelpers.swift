@@ -4,6 +4,7 @@
 //
 //  Created by Fajar Dirham on 8/20/24.
 //
+// TODO: Move these to their own respective files in UserDefaultModels
 
 import Foundation
 import ManagedSettings
