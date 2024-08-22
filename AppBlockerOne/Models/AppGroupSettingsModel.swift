@@ -28,7 +28,7 @@ import ManagedSettings
     var cdObj: AppGroup? = nil
     
     private static let RANGE_MAX_OPENS_PER_DAY = 1...100
-    private static let RANGE_DURATION_PER_OPEN_M = 1...300
+    private static let RANGE_DURATION_PER_OPEN_M = 15...300
 
     init(coreDataContext: NSManagedObjectContext){
         self.coreDataContext = coreDataContext
@@ -100,6 +100,8 @@ import ManagedSettings
     }
     
     private func _handleSave() -> (Bool, String?) {
+        handleKeyboardClose()
+        
         do {
             // Split tokens to find what has been modified
             let modifiedTokenBatch: AddRemoveTokenBatch = try _getModifiedTokensBeforeSync()
@@ -148,7 +150,12 @@ import ManagedSettings
             
             // Save as group shield default
             let gsKey = getGroupShieldDefaultKey(cdObj!.id!)!
-            let gsToSave = GroupShieldDefault(groupName: cdObj!.groupName!, strictBlock: s_strictBlock)
+            let gsToSave = GroupShieldDefault(
+                groupName: cdObj!.groupName!, 
+                strictBlock: s_strictBlock,
+                durationPerOpenM: s_durationPerOpenM,
+                maxOpensPerDay: s_maxOpensPerDay
+            )
             try ud.setObj(gsToSave, forKey: gsKey)
 
             // Schedule in device activity
@@ -349,7 +356,17 @@ import ManagedSettings
         
         // Validate that schedules make sense
         if abs(s_blockSchedule_end - s_blockSchedule_start) < 100 {
-            return "Schedule is too short, minimum 1 hour"
+            return "Schedule is too short, minimum is 1 hour."
+        }
+        
+        // Validate duration per open makes sense
+        if s_durationPerOpenM < 15 {
+            return "Minimum duration per open is 15 minutes."
+        }
+        
+        // Validate max opens per day
+        if !s_strictBlock && s_maxOpensPerDay < 1 {
+            return "If strict mode is off, max opens per day needs to be at least 1"
         }
         
         return nil

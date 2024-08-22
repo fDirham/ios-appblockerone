@@ -23,8 +23,8 @@ class ShieldActionExtension: ShieldActionDelegate {
                 let d = try readShieldUserDefaultEssentials(appToken: application)
                 var shieldMemory = d.shieldMemory ?? ShieldMemory()
                 shieldMemory.backTapCount += 1
-                let MAX_TAPS = 5
-                if shieldMemory.backTapCount >= MAX_TAPS {
+                let maxTaps = d.groupShield.maxOpensPerDay
+                if shieldMemory.backTapCount >= maxTaps {
                     // Unblock!
                     var toUnblock: Set<ApplicationToken> = Set()
                     toUnblock.insert(application)
@@ -43,7 +43,7 @@ class ShieldActionExtension: ShieldActionDelegate {
                     startInterval.hour = calendar.component(.hour, from: currDate)
                     startInterval.minute = calendar.component(.minute, from: currDate)
                     
-                    let UNBLOCK_MINUTES = 20 // TODO: Change this depending on settings, min 15
+                    let UNBLOCK_MINUTES = d.groupShield.durationPerOpenM
                     let unblockS: Double = Double(UNBLOCK_MINUTES * 60)
                     let endDate = Date(timeIntervalSinceNow: unblockS)
                     var endInterval = DateComponents()

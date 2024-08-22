@@ -24,7 +24,7 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
                 
                 // Read from user defaults
                 guard let scheduleDefault: ScheduleDefault = try? ud.getObj(forKey: activity.rawValue) else {
-                    throw "Failed to decode schedule default"
+                    throw "Failed to decode schedule default for did start"
                 }
                 
                 let groupId = getMainContentOfUserDefaultKey(udKey: activity.rawValue)
@@ -50,7 +50,7 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
             if isActivitySchedule(activity) {
                 // Read from user defaults
                 guard let scheduleDefault: ScheduleDefault = try? ud.getObj(forKey: activity.rawValue) else {
-                    throw "Failed to decode schedule default"
+                    throw "Failed to decode schedule default for did end"
                 }
                 
                 // Set SEF

@@ -18,16 +18,17 @@ class ShieldConfigurationExtension: ShieldConfigurationDataSource {
             
             // Instantiate title and subtitle
             let titleText = "Blocked" // TODO: More stylistic text
-            var subtitleText = "Today, you have unblocked \"\(d.groupShield.groupName)\" apps 5/10 times, for a total of 1h 32 mins."
+            let numOpened = 0
+            let maxOpened = d.groupShield.maxOpensPerDay
+            var subtitleText = "Today, you have unblocked \"\(d.groupShield.groupName)\" apps \(numOpened)/\(maxOpened) times, for a total of 1h 32 mins."
             let primaryButtonText = "Nevermind"
             let secondaryButtonText = "Let me in!"
             
             if let shieldMemory: ShieldMemory = d.shieldMemory  {
                 if shieldMemory.backTapCount > 0 {
-                    let MAX_TAP_COUNT = 5 // TODO: Make this a setting
+                    let MAX_TAP_COUNT = maxOpened
                     let leftovers = MAX_TAP_COUNT - shieldMemory.backTapCount
-                    subtitleText = "Are you sure? Tap \(leftovers) more times to confirm..."
-                    // TODO: Change title text too
+                    subtitleText = "Are you sure? Tap \(leftovers) more times \nto confirm..."
                 }
             }
             
