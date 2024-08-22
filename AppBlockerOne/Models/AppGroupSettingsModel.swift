@@ -130,13 +130,13 @@ import ManagedSettings
                 )
                 let addAllTokenBatch: AddRemoveTokenBatch = (added: added, removed: TokenSplit())
                 try _addAndRemoveBlockedItemTokens(arTokenBatch: addAllTokenBatch)
-                try _onSaveBlockUnblock(arTokenBatch: addAllTokenBatch)
             }
             else{
                 try _addAndRemoveBlockedItemTokens(arTokenBatch: modifiedTokenBatch)
-                try _onSaveBlockUnblock(arTokenBatch: modifiedTokenBatch)
             }
             
+            try _onSaveBlockUnblock()
+
             try _syncCDObjWithSelf()
             try coreDataContext.save()
 
@@ -206,7 +206,11 @@ import ManagedSettings
         return (true, nil)
     }
     
-    private func _onSaveBlockUnblock(arTokenBatch: AddRemoveTokenBatch) throws {
+    private func _onSaveBlockUnblock() throws {
+        // Unblock all previously
+        let cdoFa: FamilyActivitySelection = try decodeJSONObj(cdObj!.faSelection!)
+        try unblockApps(faSelection: cdoFa)
+
         // Check current time
         let currDate = Date.now
         let calendar = Calendar.current
@@ -218,13 +222,9 @@ import ManagedSettings
             let shouldBlock = s_blockSchedule_start <= currTimeSetting && currTimeSetting <= s_blockSchedule_end
             
             if shouldBlock {
-                let added = arTokenBatch.added
-                try blockApps(appTokens: added.appTokens, webTokens: added.webTokens, catTokens: added.catTokens)
+                try blockApps(faSelection: faSelection)
             }
         }
-        
-        let removed = arTokenBatch.removed
-        try unblockApps(appTokens: removed.appTokens, webTokens: removed.webTokens, catTokens: removed.catTokens)
     }
     
     private func _addAndRemoveBlockedItemTokens(arTokenBatch: AddRemoveTokenBatch) throws {
@@ -345,6 +345,11 @@ import ManagedSettings
         }
         catch {
             return "Something went wrong checking duplicates \(error.localizedDescription)"
+        }
+        
+        // Validate that schedules make sense
+        if abs(s_blockSchedule_end - s_blockSchedule_start) < 100 {
+            return "Schedule is too short, minimum 1 hour"
         }
         
         return nil
