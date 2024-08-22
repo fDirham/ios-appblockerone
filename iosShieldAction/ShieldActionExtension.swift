@@ -8,6 +8,7 @@
 import ManagedSettings
 import UIKit
 import SwiftUI
+import DeviceActivity
 
 // Override the functions below to customize the shield actions used in various situations.
 // The system provides a default response for any functions that your subclass doesn't override.
@@ -34,6 +35,32 @@ class ShieldActionExtension: ShieldActionDelegate {
                     ud.removeObject(forKey: d.keys.smKey)
 
                     completionHandler(.none)
+                    
+                    // Set schedule
+                    let calendar = Calendar.current
+                    let currDate = Date()
+                    var startInterval = DateComponents()
+                    startInterval.hour = calendar.component(.hour, from: currDate)
+                    startInterval.minute = calendar.component(.minute, from: currDate)
+                    
+                    let UNBLOCK_MINUTES = 20 // TODO: Change this depending on settings, min 15
+                    let unblockS: Double = Double(UNBLOCK_MINUTES * 60)
+                    let endDate = Date(timeIntervalSinceNow: unblockS)
+                    var endInterval = DateComponents()
+                    endInterval.hour = calendar.component(.hour, from: endDate)
+                    endInterval.minute = calendar.component(.minute, from: endDate)
+
+                    let schedule = DeviceActivitySchedule(
+                        intervalStart: startInterval, intervalEnd: endInterval, repeats: false
+                    )
+                    
+                    // Start monitoring
+                    let groupId = d.blockedItem
+                    let tbKey = getTempBlockDefaultKey(groupId)!
+                    let deviceActivityName = DeviceActivityName(tbKey)
+                    
+                    let center = DeviceActivityCenter()
+                    try center.startMonitoring(deviceActivityName, during: schedule)
                 }
                 else{
                     // Save shield memory

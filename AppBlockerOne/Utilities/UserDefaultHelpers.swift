@@ -62,3 +62,27 @@ func getShieldMemoryDefaultKey<T>(_ token: Token<T>) -> String? {
         return nil
     }
 }
+
+
+func getMainContentOfUserDefaultKey(udKey: String) -> String{
+    if let underscoreIdx = udKey.firstIndex(of: "_") {
+        let startIdx = udKey.index(underscoreIdx, offsetBy: 1)
+        return String(udKey[startIdx..<udKey.endIndex])
+    } else{
+        return udKey
+    }
+}
+
+func getScheduleEndFlagDefaultKey(_ groupId: String?) -> String? {
+    if let groupId = groupId {
+        return "sef_\(groupId)"
+    }
+    return nil
+}
+
+func getTempBlockDefaultKey(_ groupId: String?) -> String? {
+    if let groupId = groupId {
+        return "tb_\(groupId)"
+    }
+    return nil
+}
