@@ -34,7 +34,10 @@ class ShieldConfigurationExtension: ShieldConfigurationDataSource {
             let shieldTitle = ShieldConfiguration.Label(text: titleText, color: .fg)
             let shieldSubtitle = ShieldConfiguration.Label(text: subtitleText, color: .fg)
             let primaryButtonLabel = ShieldConfiguration.Label(text: primaryButtonText, color: .black)
-            let secondaryButtonLabel = ShieldConfiguration.Label(text: secondaryButtonText, color: .black)
+            var secondaryButtonLabel: ShieldConfiguration.Label? = ShieldConfiguration.Label(text: secondaryButtonText, color: .black)
+            if d.groupShield.strictBlock {
+                secondaryButtonLabel = nil
+            }
             
             return ShieldConfiguration(
                 backgroundBlurStyle: .systemUltraThinMaterial,

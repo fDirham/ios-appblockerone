@@ -9,4 +9,5 @@ import Foundation
 
 struct GroupShieldDefault: Codable {
     var groupName: String
+    var strictBlock: Bool
 }

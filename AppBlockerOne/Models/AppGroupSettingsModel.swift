@@ -102,7 +102,7 @@ import ManagedSettings
     private func _handleSave() -> (Bool, String?) {
         do {
             // Split tokens to find what has been modified
-            let modifiedTokenBatch: AddRemoveTokenBatch = try _splitTokensBeforeSync()
+            let modifiedTokenBatch: AddRemoveTokenBatch = try _getModifiedTokensBeforeSync()
             
             // Validate
             let errorMsg = _validateSettings(modifiedTokenBatch: modifiedTokenBatch)
@@ -114,42 +114,12 @@ import ManagedSettings
                 try _createNewCDObj()
             }
             
-            let isJustEnabled = _isJustEnabled()
-            
-            // We are disabling everything here
-            if !s_blockingEnabled {
-                // Remove from defaults entirely
-                let groupId: UUID = cdObj!.id!
-                let sKey = getScheduleDefaultKey(groupId)!
-                let gsKey = getGroupShieldDefaultKey(groupId)!
-                let tbKey = getTempBlockDefaultKey(groupId)!
-                
-                let ud = GroupUserDefaults()
-                ud.removeObject(forKey: sKey)
-                ud.removeObject(forKey: gsKey)
-                ud.removeObject(forKey: tbKey)
-                
-                // Remove blocked items
-                let cdoFa: FamilyActivitySelection = try decodeJSONObj(cdObj!.faSelection!)
-                let removeAllTokenBatch = (added: TokenSplit(), removed: TokenSplit(appTokens: cdoFa.applicationTokens, webTokens: cdoFa.webDomainTokens, catTokens: cdoFa.categoryTokens))
-                try _addAndRemoveBlockedItemTokens(arTokenBatch: removeAllTokenBatch)
-                
-                // Unblock all apps
-                try unblockApps(faSelection: cdoFa)
+            let isJustEnabled = !(cdObj!.s_blockingEnabled) && s_blockingEnabled
 
-                // Make sure it's not monitored in device activity
-                let center = DeviceActivityCenter()
-                let sActivityName = DeviceActivityName(sKey)
-                let tbActivityName = DeviceActivityName(tbKey)
-                center.stopMonitoring([sActivityName, tbActivityName])
-                
-                // Sync with core data
-                try _syncCDObjWithSelf()
-                try coreDataContext.save()
-                
-                return (true, nil)
+            if !s_blockingEnabled {
+                // We are disabling everything here
+                return try _onBlockingDisabledSave()
             }
-            
             
             // Add to blocked items + block unblock immediately
             if isJustEnabled {
@@ -178,7 +148,7 @@ import ManagedSettings
             
             // Save as group shield default
             let gsKey = getGroupShieldDefaultKey(cdObj!.id!)!
-            let gsToSave = GroupShieldDefault(groupName: cdObj!.groupName!)
+            let gsToSave = GroupShieldDefault(groupName: cdObj!.groupName!, strictBlock: s_strictBlock)
             try ud.setObj(gsToSave, forKey: gsKey)
 
             // Schedule in device activity
@@ -203,12 +173,37 @@ import ManagedSettings
         return (true, nil)
     }
     
-    private func _isJustEnabled() -> Bool{
-        if cdObj == nil {
-            return false
-        }
+    private func _onBlockingDisabledSave() throws -> (Bool, String?){
+        // Remove from defaults entirely
+        let groupId: UUID = cdObj!.id!
+        let sKey = getScheduleDefaultKey(groupId)!
+        let gsKey = getGroupShieldDefaultKey(groupId)!
+        let tbKey = getTempBlockDefaultKey(groupId)!
         
-        return !cdObj!.s_blockingEnabled && s_blockingEnabled
+        let ud = GroupUserDefaults()
+        ud.removeObject(forKey: sKey)
+        ud.removeObject(forKey: gsKey)
+        ud.removeObject(forKey: tbKey)
+        
+        // Remove blocked items
+        let cdoFa: FamilyActivitySelection = try decodeJSONObj(cdObj!.faSelection!)
+        let removeAllTokenBatch = (added: TokenSplit(), removed: TokenSplit(appTokens: cdoFa.applicationTokens, webTokens: cdoFa.webDomainTokens, catTokens: cdoFa.categoryTokens))
+        try _addAndRemoveBlockedItemTokens(arTokenBatch: removeAllTokenBatch)
+        
+        // Unblock all apps
+        try unblockApps(faSelection: cdoFa)
+
+        // Make sure it's not monitored in device activity
+        let center = DeviceActivityCenter()
+        let sActivityName = DeviceActivityName(sKey)
+        let tbActivityName = DeviceActivityName(tbKey)
+        center.stopMonitoring([sActivityName, tbActivityName])
+        
+        // Sync with core data
+        try _syncCDObjWithSelf()
+        try coreDataContext.save()
+        
+        return (true, nil)
     }
     
     private func _onSaveBlockUnblock(arTokenBatch: AddRemoveTokenBatch) throws {
@@ -280,7 +275,7 @@ import ManagedSettings
         }
     }
     
-    private func _splitTokensBeforeSync() throws -> AddRemoveTokenBatch{
+    private func _getModifiedTokensBeforeSync() throws -> AddRemoveTokenBatch{
         if cdObj == nil {
             return (added: TokenSplit(), removed: TokenSplit())
         }
