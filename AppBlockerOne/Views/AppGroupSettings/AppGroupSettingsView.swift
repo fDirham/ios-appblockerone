@@ -43,16 +43,23 @@ struct AppGroupSettingsView: View, KeyboardReadable {
                         SettingGroupView("Apps") {
                             AppSelectionSettingView(faSelection: $sm.faSelection)
                         }
-                        SettingGroupView("Block settings", spacing: 12) {
+                        SettingGroupView("Block", spacing: 12) {
                             BooleanSettingsView("Blocking enabled", value: $sm.s_blockingEnabled)
                             BooleanSettingsView("Strict block", value: $sm.s_strictBlock)
+                        }
+                        SettingGroupView("Temporary open", spacing: 12) {
                             NumberSettingsView("Maximum opens per day", value: $sm.s_maxOpensPerDay)
                             NumberSettingsView("Duration per open (minutes)", value: $sm.s_durationPerOpenM)
                             OpenMethodsPickerSettingsView("Open method", value: $sm.s_openMethod, optionsList: OpenMethods.allCases)
                         }
-                        SettingGroupView("Block schedule", spacing: 12) {
+                        SettingGroupView("Schedule", spacing: 12) {
                             TimeSettingView("Start", rawIntValue: $sm.s_blockSchedule_start )
                             TimeSettingView("End", rawIntValue: $sm.s_blockSchedule_end )
+                        }
+                        .padding(.bottom, 30)
+                        Button(action: {}) {
+                            Text("Delete")
+                                .foregroundStyle(Color.danger)
                         }
                         Spacer()
                     }

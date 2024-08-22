@@ -80,6 +80,10 @@ func getScheduleEndFlagDefaultKey(_ groupId: String?) -> String? {
     return nil
 }
 
+func getTempBlockDefaultKey(_ groupId: UUID) -> String? {
+    return getTempBlockDefaultKey(groupId.uuidString)
+}
+
 func getTempBlockDefaultKey(_ groupId: String?) -> String? {
     if let groupId = groupId {
         return "tb_\(groupId)"

@@ -101,10 +101,11 @@ import ManagedSettings
     
     private func _handleSave() -> (Bool, String?) {
         do {
-            // Validate
-            let tokenSplit = try _splitTokensBeforeSync()
+            // Split tokens to find what has been modified
+            let addRemoveTokenSplit: AddRemoveTokenSplit = try _splitTokensBeforeSync()
             
-            let errorMsg = _validateSettings(tokenSplit: tokenSplit)
+            // Validate
+            let errorMsg = _validateSettings(addRemoveTokenSplit: addRemoveTokenSplit)
             if errorMsg != nil {
                 return (false, errorMsg)
             }
@@ -113,21 +114,73 @@ import ManagedSettings
                 try _createNewCDObj()
             }
             
+            let isJustEnabled = _isJustEnabled()
+            
+            // We are disabling everything here
+            if !s_blockingEnabled {
+                // Remove from defaults entirely
+                let groupId: UUID = cdObj!.id!
+                let sKey = getScheduleDefaultKey(groupId)!
+                let gsKey = getGroupShieldDefaultKey(groupId)!
+                let tbKey = getTempBlockDefaultKey(groupId)!
+                
+                let ud = GroupUserDefaults()
+                ud.removeObject(forKey: sKey)
+                ud.removeObject(forKey: gsKey)
+                ud.removeObject(forKey: tbKey)
+                
+                // Remove blocked items
+                let cdoFa: FamilyActivitySelection = try decodeJSONObj(cdObj!.faSelection!)
+                let removeAllTokenSplit = (added: TokenSplit(), removed: TokenSplit(appTokens: cdoFa.applicationTokens, webTokens: cdoFa.webDomainTokens, catTokens: cdoFa.categoryTokens))
+                try _addAndRemoveBlockedItemTokens(addRemoveTokenSplit: removeAllTokenSplit)
+                
+                // Unblock all apps
+                try unblockApps(faSelection: cdoFa)
+
+                // Make sure it's not monitored in device activity
+                let center = DeviceActivityCenter()
+                let sActivityName = DeviceActivityName(sKey)
+                let tbActivityName = DeviceActivityName(tbKey)
+                center.stopMonitoring([sActivityName, tbActivityName])
+                
+                // Sync with core data
+                try _syncCDObjWithSelf()
+                try coreDataContext.save()
+                
+                return (true, nil)
+            }
+            
+            
+            // Add to blocked items + block unblock immediately
+            if isJustEnabled {
+                let added = TokenSplit(
+                    appTokens: faSelection.applicationTokens,
+                    webTokens: faSelection.webDomainTokens,
+                    catTokens: faSelection.categoryTokens
+                )
+                let arTokenSplit: AddRemoveTokenSplit = (added: added, removed: TokenSplit())
+                try _addAndRemoveBlockedItemTokens(addRemoveTokenSplit: arTokenSplit)
+                try _onSaveBlockUnblock(addRemoveTokenSplit: arTokenSplit)
+            }
+            else{
+                try _addAndRemoveBlockedItemTokens(addRemoveTokenSplit: addRemoveTokenSplit)
+                try _onSaveBlockUnblock(addRemoveTokenSplit: addRemoveTokenSplit)
+            }
+            
             try _syncCDObjWithSelf()
-            try _saveBlockedItemTokens(added: tokenSplit.added, removed: tokenSplit.removed)
             try coreDataContext.save()
-            
-            // Block and unblock those added
-            try blockApps(appTokens: tokenSplit.added.appTokens, webTokens: tokenSplit.added.webTokens, catTokens: tokenSplit.added.catTokens)
-            try unblockApps(appTokens: tokenSplit.removed.appTokens, webTokens: tokenSplit.removed.webTokens, catTokens: tokenSplit.removed.catTokens)
-            
-            let sKey = getScheduleDefaultKey(cdObj!.id!)!
-            
+
             // Save as schedule default
             let ud = GroupUserDefaults()
             let scheduleDefault = ScheduleDefault(faSelection: faSelection)
+            let sKey = getScheduleDefaultKey(cdObj!.id!)!
             try ud.setObj(scheduleDefault, forKey: sKey)
             
+            // Save as group shield default
+            let gsKey = getGroupShieldDefaultKey(cdObj!.id!)!
+            let gsToSave = GroupShieldDefault(groupName: cdObj!.groupName!)
+            try ud.setObj(gsToSave, forKey: gsKey)
+
             // Schedule in device activity
             let center = DeviceActivityCenter()
             let startComponents = _getTimeSettingComponents(s_blockSchedule_start)
@@ -141,10 +194,6 @@ import ManagedSettings
             let deviceActivityName = DeviceActivityName(sKey)
             try center.startMonitoring(deviceActivityName, during: schedule) // NOTE this overrides previously scheduled so we should be good
             
-            // Save as group shield default
-            let gsKey = getGroupShieldDefaultKey(cdObj!.id!)!
-            let gsToSave = GroupShieldDefault(groupName: cdObj!.groupName!)
-            try ud.setObj(gsToSave, forKey: gsKey)
         } catch {
             let nsError = error as NSError
             Logger().error("Unresolved error \(nsError), \(nsError.userInfo)")
@@ -154,7 +203,36 @@ import ManagedSettings
         return (true, nil)
     }
     
-    private func _saveBlockedItemTokens(added: TokenSplit, removed: TokenSplit) throws {
+    private func _isJustEnabled() -> Bool{
+        if cdObj == nil {
+            return false
+        }
+        
+        return !cdObj!.s_blockingEnabled && s_blockingEnabled
+    }
+    
+    private func _onSaveBlockUnblock(addRemoveTokenSplit: AddRemoveTokenSplit) throws {
+        // Check current time
+        let currDate = Date.now
+        let calendar = Calendar.current
+        let hour = calendar.component(.hour, from: currDate)
+        let hourStr = String("0\(hour)".suffix(2))
+        let minute = calendar.component(.minute, from: currDate)
+        let minStr = String("0\(minute)".suffix(2))
+        if let currTimeSetting = Int(hourStr + minStr) {
+            let shouldBlock = s_blockSchedule_start <= currTimeSetting && currTimeSetting <= s_blockSchedule_end
+            
+            if shouldBlock {
+                let added = addRemoveTokenSplit.added
+                try blockApps(appTokens: added.appTokens, webTokens: added.webTokens, catTokens: added.catTokens)
+            }
+        }
+        
+        let removed = addRemoveTokenSplit.removed
+        try unblockApps(appTokens: removed.appTokens, webTokens: removed.webTokens, catTokens: removed.catTokens)
+    }
+    
+    private func _addAndRemoveBlockedItemTokens(addRemoveTokenSplit: AddRemoveTokenSplit) throws {
         if cdObj == nil {
             throw "No cdObj instantiated"
         }
@@ -169,6 +247,7 @@ import ManagedSettings
             }
         }
         
+        let added = addRemoveTokenSplit.added
         try addTokenSet(added.appTokens)
         try addTokenSet(added.webTokens)
         try addTokenSet(added.catTokens)
@@ -182,11 +261,13 @@ import ManagedSettings
             }
         }
         
+        let removed = addRemoveTokenSplit.removed
         try removeTokenSet(removed.appTokens)
         try removeTokenSet(removed.webTokens)
         try removeTokenSet(removed.catTokens)
     }
     
+    private typealias AddRemoveTokenSplit = (added: TokenSplit, removed: TokenSplit)
     private struct TokenSplit {
         var appTokens: Set<ApplicationToken>
         var webTokens: Set<WebDomainToken>
@@ -199,7 +280,7 @@ import ManagedSettings
         }
     }
     
-    private func _splitTokensBeforeSync() throws -> (added: TokenSplit, removed: TokenSplit){
+    private func _splitTokensBeforeSync() throws -> AddRemoveTokenSplit{
         if cdObj == nil {
             return (added: TokenSplit(), removed: TokenSplit())
         }
@@ -227,7 +308,7 @@ import ManagedSettings
         ))
     }
 
-    private func _validateSettings(tokenSplit: (added: TokenSplit, removed: TokenSplit)) -> String? {
+    private func _validateSettings(addRemoveTokenSplit: AddRemoveTokenSplit) -> String? {
         if groupName == "" {
             return "Group needs a name"
         }
@@ -253,15 +334,16 @@ import ManagedSettings
                 return nil
             }
             
-            let dupeErrApp = try dupeCheckTokens(tokenSplit.added.appTokens)
+            let addedTokenSplit = addRemoveTokenSplit.added
+            let dupeErrApp = try dupeCheckTokens(addedTokenSplit.appTokens)
             if dupeErrApp != nil {
                 return dupeErrApp
             }
-            let dupeErrWeb = try dupeCheckTokens(tokenSplit.added.webTokens)
+            let dupeErrWeb = try dupeCheckTokens(addedTokenSplit.webTokens)
             if dupeErrWeb != nil {
                 return dupeErrWeb
             }
-            let dupeErrCat = try dupeCheckTokens(tokenSplit.added.catTokens)
+            let dupeErrCat = try dupeCheckTokens(addedTokenSplit.catTokens)
             if dupeErrCat != nil {
                 return dupeErrCat
             }
