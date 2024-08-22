@@ -102,10 +102,10 @@ import ManagedSettings
     private func _handleSave() -> (Bool, String?) {
         do {
             // Split tokens to find what has been modified
-            let addRemoveTokenSplit: AddRemoveTokenSplit = try _splitTokensBeforeSync()
+            let modifiedTokenBatch: AddRemoveTokenBatch = try _splitTokensBeforeSync()
             
             // Validate
-            let errorMsg = _validateSettings(addRemoveTokenSplit: addRemoveTokenSplit)
+            let errorMsg = _validateSettings(modifiedTokenBatch: modifiedTokenBatch)
             if errorMsg != nil {
                 return (false, errorMsg)
             }
@@ -131,8 +131,8 @@ import ManagedSettings
                 
                 // Remove blocked items
                 let cdoFa: FamilyActivitySelection = try decodeJSONObj(cdObj!.faSelection!)
-                let removeAllTokenSplit = (added: TokenSplit(), removed: TokenSplit(appTokens: cdoFa.applicationTokens, webTokens: cdoFa.webDomainTokens, catTokens: cdoFa.categoryTokens))
-                try _addAndRemoveBlockedItemTokens(addRemoveTokenSplit: removeAllTokenSplit)
+                let removeAllTokenBatch = (added: TokenSplit(), removed: TokenSplit(appTokens: cdoFa.applicationTokens, webTokens: cdoFa.webDomainTokens, catTokens: cdoFa.categoryTokens))
+                try _addAndRemoveBlockedItemTokens(arTokenBatch: removeAllTokenBatch)
                 
                 // Unblock all apps
                 try unblockApps(faSelection: cdoFa)
@@ -158,13 +158,13 @@ import ManagedSettings
                     webTokens: faSelection.webDomainTokens,
                     catTokens: faSelection.categoryTokens
                 )
-                let arTokenSplit: AddRemoveTokenSplit = (added: added, removed: TokenSplit())
-                try _addAndRemoveBlockedItemTokens(addRemoveTokenSplit: arTokenSplit)
-                try _onSaveBlockUnblock(addRemoveTokenSplit: arTokenSplit)
+                let addAllTokenBatch: AddRemoveTokenBatch = (added: added, removed: TokenSplit())
+                try _addAndRemoveBlockedItemTokens(arTokenBatch: addAllTokenBatch)
+                try _onSaveBlockUnblock(arTokenBatch: addAllTokenBatch)
             }
             else{
-                try _addAndRemoveBlockedItemTokens(addRemoveTokenSplit: addRemoveTokenSplit)
-                try _onSaveBlockUnblock(addRemoveTokenSplit: addRemoveTokenSplit)
+                try _addAndRemoveBlockedItemTokens(arTokenBatch: modifiedTokenBatch)
+                try _onSaveBlockUnblock(arTokenBatch: modifiedTokenBatch)
             }
             
             try _syncCDObjWithSelf()
@@ -211,7 +211,7 @@ import ManagedSettings
         return !cdObj!.s_blockingEnabled && s_blockingEnabled
     }
     
-    private func _onSaveBlockUnblock(addRemoveTokenSplit: AddRemoveTokenSplit) throws {
+    private func _onSaveBlockUnblock(arTokenBatch: AddRemoveTokenBatch) throws {
         // Check current time
         let currDate = Date.now
         let calendar = Calendar.current
@@ -223,16 +223,16 @@ import ManagedSettings
             let shouldBlock = s_blockSchedule_start <= currTimeSetting && currTimeSetting <= s_blockSchedule_end
             
             if shouldBlock {
-                let added = addRemoveTokenSplit.added
+                let added = arTokenBatch.added
                 try blockApps(appTokens: added.appTokens, webTokens: added.webTokens, catTokens: added.catTokens)
             }
         }
         
-        let removed = addRemoveTokenSplit.removed
+        let removed = arTokenBatch.removed
         try unblockApps(appTokens: removed.appTokens, webTokens: removed.webTokens, catTokens: removed.catTokens)
     }
     
-    private func _addAndRemoveBlockedItemTokens(addRemoveTokenSplit: AddRemoveTokenSplit) throws {
+    private func _addAndRemoveBlockedItemTokens(arTokenBatch: AddRemoveTokenBatch) throws {
         if cdObj == nil {
             throw "No cdObj instantiated"
         }
@@ -247,7 +247,7 @@ import ManagedSettings
             }
         }
         
-        let added = addRemoveTokenSplit.added
+        let added = arTokenBatch.added
         try addTokenSet(added.appTokens)
         try addTokenSet(added.webTokens)
         try addTokenSet(added.catTokens)
@@ -261,13 +261,13 @@ import ManagedSettings
             }
         }
         
-        let removed = addRemoveTokenSplit.removed
+        let removed = arTokenBatch.removed
         try removeTokenSet(removed.appTokens)
         try removeTokenSet(removed.webTokens)
         try removeTokenSet(removed.catTokens)
     }
     
-    private typealias AddRemoveTokenSplit = (added: TokenSplit, removed: TokenSplit)
+    private typealias AddRemoveTokenBatch = (added: TokenSplit, removed: TokenSplit)
     private struct TokenSplit {
         var appTokens: Set<ApplicationToken>
         var webTokens: Set<WebDomainToken>
@@ -280,7 +280,7 @@ import ManagedSettings
         }
     }
     
-    private func _splitTokensBeforeSync() throws -> AddRemoveTokenSplit{
+    private func _splitTokensBeforeSync() throws -> AddRemoveTokenBatch{
         if cdObj == nil {
             return (added: TokenSplit(), removed: TokenSplit())
         }
@@ -308,7 +308,7 @@ import ManagedSettings
         ))
     }
 
-    private func _validateSettings(addRemoveTokenSplit: AddRemoveTokenSplit) -> String? {
+    private func _validateSettings(modifiedTokenBatch: AddRemoveTokenBatch) -> String? {
         if groupName == "" {
             return "Group needs a name"
         }
@@ -334,7 +334,7 @@ import ManagedSettings
                 return nil
             }
             
-            let addedTokenSplit = addRemoveTokenSplit.added
+            let addedTokenSplit = modifiedTokenBatch.added
             let dupeErrApp = try dupeCheckTokens(addedTokenSplit.appTokens)
             if dupeErrApp != nil {
                 return dupeErrApp
