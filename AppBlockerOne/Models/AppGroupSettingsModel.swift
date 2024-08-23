@@ -181,12 +181,19 @@ import ManagedSettings
     }
     
     private func _onBlockingDisabledSave() throws -> (Bool, String?){
-        // Remove from defaults entirely
+        
         let groupId: UUID = cdObj!.id!
         let sKey = getScheduleDefaultKey(groupId)!
         let gsKey = getGroupShieldDefaultKey(groupId)!
         let tbKey = getTempBlockDefaultKey(groupId)!
         
+        // Make sure it's not monitored in device activity
+        let center = DeviceActivityCenter()
+        let sActivityName = DeviceActivityName(sKey)
+        let tbActivityName = DeviceActivityName(tbKey)
+        center.stopMonitoring([sActivityName, tbActivityName])
+
+        // Remove from defaults entirely
         let ud = GroupUserDefaults()
         ud.removeObject(forKey: sKey)
         ud.removeObject(forKey: gsKey)
@@ -200,12 +207,6 @@ import ManagedSettings
         // Unblock all apps
         try unblockApps(faSelection: cdoFa)
 
-        // Make sure it's not monitored in device activity
-        let center = DeviceActivityCenter()
-        let sActivityName = DeviceActivityName(sKey)
-        let tbActivityName = DeviceActivityName(tbKey)
-        center.stopMonitoring([sActivityName, tbActivityName])
-        
         // Sync with core data
         try _syncCDObjWithSelf()
         try coreDataContext.save()

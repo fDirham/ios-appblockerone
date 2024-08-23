@@ -18,25 +18,34 @@ class ShieldConfigurationExtension: ShieldConfigurationDataSource {
             
             // Instantiate title and subtitle
             let titleText = "Blocked" // TODO: More stylistic text
-            let numOpened = 0
+            let numOpened = try d.blockStats?.getBlockItemStat(forToken: application.token!)?.countTodayOpened ?? 0
             let maxOpened = d.groupShield.maxOpensPerDay
-            var subtitleText = "Today, you have unblocked \"\(d.groupShield.groupName)\" apps \(numOpened)/\(maxOpened) times, for a total of 1h 32 mins."
+            let isStrictBlock = d.groupShield.strictBlock || numOpened >= maxOpened
+            let unblockTotalTimeM = d.groupShield.durationPerOpenM * numOpened
+            
+            var subtitleText = "Today, you have unblocked \"\(d.groupShield.groupName)\" apps \(numOpened)/\(maxOpened) times, for a total of \(unblockTotalTimeM) mins."
             let primaryButtonText = "Nevermind"
             let secondaryButtonText = "Let me in!"
             
-            if let shieldMemory: ShieldMemory = d.shieldMemory  {
-                if shieldMemory.backTapCount > 0 {
-                    let MAX_TAP_COUNT = maxOpened
-                    let leftovers = MAX_TAP_COUNT - shieldMemory.backTapCount
-                    subtitleText = "Are you sure? Tap \(leftovers) more times \nto confirm..."
+            if !isStrictBlock {
+                if let shieldMemory: ShieldMemory = d.shieldMemory  {
+                    if shieldMemory.backTapCount > 0 {
+                        let MAX_TAP_COUNT = maxOpened
+                        let leftovers = MAX_TAP_COUNT - shieldMemory.backTapCount
+                        subtitleText = "Are you sure? Tap \(leftovers) more times \nto confirm..."
+                    }
                 }
+            }
+            else {
+                subtitleText = "Stay calm, be focused..."
             }
             
             let shieldTitle = ShieldConfiguration.Label(text: titleText, color: .fg)
             let shieldSubtitle = ShieldConfiguration.Label(text: subtitleText, color: .fg)
             let primaryButtonLabel = ShieldConfiguration.Label(text: primaryButtonText, color: .black)
             var secondaryButtonLabel: ShieldConfiguration.Label? = ShieldConfiguration.Label(text: secondaryButtonText, color: .black)
-            if d.groupShield.strictBlock {
+            
+            if isStrictBlock {
                 secondaryButtonLabel = nil
             }
             

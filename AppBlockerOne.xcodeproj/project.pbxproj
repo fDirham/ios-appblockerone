@@ -87,6 +87,14 @@
 		8BBF774B2C700E42005EC2D2 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76E12C6E7C23005EC2D2 /* Helpers.swift */; };
 		8BBF77502C702087005EC2D2 /* BlockSettingsHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF774F2C702087005EC2D2 /* BlockSettingsHelpers.swift */; };
 		8BBF77512C702087005EC2D2 /* BlockSettingsHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF774F2C702087005EC2D2 /* BlockSettingsHelpers.swift */; };
+		8BE1AA192C77FDDA0065DC1B /* BlockStatsDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA182C77FDDA0065DC1B /* BlockStatsDefault.swift */; };
+		8BE1AA1A2C77FDDA0065DC1B /* BlockStatsDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA182C77FDDA0065DC1B /* BlockStatsDefault.swift */; };
+		8BE1AA1B2C77FDDA0065DC1B /* BlockStatsDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA182C77FDDA0065DC1B /* BlockStatsDefault.swift */; };
+		8BE1AA1C2C77FDDA0065DC1B /* BlockStatsDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA182C77FDDA0065DC1B /* BlockStatsDefault.swift */; };
+		8BE1AA1E2C78077D0065DC1B /* ScheduleHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA1D2C78077D0065DC1B /* ScheduleHelpers.swift */; };
+		8BE1AA1F2C78077D0065DC1B /* ScheduleHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA1D2C78077D0065DC1B /* ScheduleHelpers.swift */; };
+		8BE1AA202C78077D0065DC1B /* ScheduleHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA1D2C78077D0065DC1B /* ScheduleHelpers.swift */; };
+		8BE1AA212C78077D0065DC1B /* ScheduleHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA1D2C78077D0065DC1B /* ScheduleHelpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -189,6 +197,8 @@
 		8BBF773F2C6FFEAF005EC2D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8BBF77402C6FFEAF005EC2D2 /* iosDeviceActivityMonitor.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iosDeviceActivityMonitor.entitlements; sourceTree = "<group>"; };
 		8BBF774F2C702087005EC2D2 /* BlockSettingsHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockSettingsHelpers.swift; sourceTree = "<group>"; };
+		8BE1AA182C77FDDA0065DC1B /* BlockStatsDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockStatsDefault.swift; sourceTree = "<group>"; };
+		8BE1AA1D2C78077D0065DC1B /* ScheduleHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleHelpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -252,6 +262,7 @@
 				8B4A0E322C766FBD002722AB /* ShieldMemory.swift */,
 				8B4A0E4E2C76B0EF002722AB /* ScheduleDefault.swift */,
 				8B4A0E512C76B45F002722AB /* ScheduleEndFlagDefault.swift */,
+				8BE1AA182C77FDDA0065DC1B /* BlockStatsDefault.swift */,
 			);
 			path = UserDefaultModels;
 			sourceTree = "<group>";
@@ -377,6 +388,7 @@
 				8B4A0E002C751DE7002722AB /* UserDefaultHelpers.swift */,
 				8B4A0E412C769A8C002722AB /* NotificationHelpers.swift */,
 				8B4A0E462C76A674002722AB /* ShieldUserDefaultReaderUtilities.swift */,
+				8BE1AA1D2C78077D0065DC1B /* ScheduleHelpers.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -619,12 +631,14 @@
 				8B4A0E4B2C76AD5E002722AB /* BlockSettingsHelpers.swift in Sources */,
 				8B4A0E402C7689B7002722AB /* TokenHelpers.swift in Sources */,
 				8B4A0E3F2C76887A002722AB /* String+Error.swift in Sources */,
+				8BE1AA1C2C77FDDA0065DC1B /* BlockStatsDefault.swift in Sources */,
 				8B4A0E312C766F6B002722AB /* UserDefaultHelpers.swift in Sources */,
 				8B4A0E1E2C754CC3002722AB /* GroupUserDefaults.swift in Sources */,
 				8B4A0E152C754CA2002722AB /* ShieldActionExtension.swift in Sources */,
 				8B4A0E442C769A8C002722AB /* NotificationHelpers.swift in Sources */,
 				8B4A0E362C767005002722AB /* Helpers.swift in Sources */,
 				8B4A0E492C76A674002722AB /* ShieldUserDefaultReaderUtilities.swift in Sources */,
+				8BE1AA212C78077D0065DC1B /* ScheduleHelpers.swift in Sources */,
 				8B4A0E3E2C7680FF002722AB /* UserDefaults+JSONCoding.swift in Sources */,
 				8B4A0E352C766FBD002722AB /* ShieldMemory.swift in Sources */,
 				8B4A0E4A2C76A708002722AB /* GroupShieldDefault.swift in Sources */,
@@ -646,6 +660,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BE1AA202C78077D0065DC1B /* ScheduleHelpers.swift in Sources */,
 				8BADB4162C740EAF00E0DCDC /* String+Error.swift in Sources */,
 				8BADB4132C7407A500E0DCDC /* TokenHelpers.swift in Sources */,
 				8B4A0E062C7539F8002722AB /* UserDefaultHelpers.swift in Sources */,
@@ -653,6 +668,7 @@
 				8B4A0E0A2C753D7C002722AB /* GroupShieldDefault.swift in Sources */,
 				8B4A0E3D2C7680FF002722AB /* UserDefaults+JSONCoding.swift in Sources */,
 				8BADB4062C73B4B400E0DCDC /* ShieldConfigurationExtension.swift in Sources */,
+				8BE1AA1B2C77FDDA0065DC1B /* BlockStatsDefault.swift in Sources */,
 				8B4A0DFF2C7412B9002722AB /* Persistence.swift in Sources */,
 				8B4A0E482C76A674002722AB /* ShieldUserDefaultReaderUtilities.swift in Sources */,
 				8BADB4152C7408C000E0DCDC /* AppBlockerOne.xcdatamodeld in Sources */,
@@ -687,6 +703,8 @@
 				8BBF76CF2C6D1DCF005EC2D2 /* AppSelectionSettingView.swift in Sources */,
 				8BBF77502C702087005EC2D2 /* BlockSettingsHelpers.swift in Sources */,
 				8BBF76DB2C6D6A35005EC2D2 /* KeyboardReadable+Notifications.swift in Sources */,
+				8BE1AA192C77FDDA0065DC1B /* BlockStatsDefault.swift in Sources */,
+				8BE1AA1E2C78077D0065DC1B /* ScheduleHelpers.swift in Sources */,
 				8BADB4112C73F28900E0DCDC /* TokenHelpers.swift in Sources */,
 				8B4A0E012C751DE7002722AB /* UserDefaultHelpers.swift in Sources */,
 				8BBF76D62C6D643D005EC2D2 /* OpenMethods.swift in Sources */,
@@ -703,12 +721,14 @@
 				8B4A0E4C2C76AE90002722AB /* UserDefaults+JSONCoding.swift in Sources */,
 				8B4A0E502C76B0EF002722AB /* ScheduleDefault.swift in Sources */,
 				8B4A0E532C76B45F002722AB /* ScheduleEndFlagDefault.swift in Sources */,
+				8BE1AA1A2C77FDDA0065DC1B /* BlockStatsDefault.swift in Sources */,
 				8B4A0E052C7538E1002722AB /* GroupUserDefaults.swift in Sources */,
 				8B4A0E0B2C753DBA002722AB /* TokenHelpers.swift in Sources */,
 				8BBF774A2C700395005EC2D2 /* Comparable+Clamp.swift in Sources */,
 				8B4A0E072C7539F9002722AB /* UserDefaultHelpers.swift in Sources */,
 				8BBF774B2C700E42005EC2D2 /* Helpers.swift in Sources */,
 				8BBF773E2C6FFEAF005EC2D2 /* DeviceActivityMonitorExtension.swift in Sources */,
+				8BE1AA1F2C78077D0065DC1B /* ScheduleHelpers.swift in Sources */,
 				8BBF77492C700391005EC2D2 /* String+Error.swift in Sources */,
 				8B4A0E452C769A8F002722AB /* NotificationHelpers.swift in Sources */,
 				8BBF77512C702087005EC2D2 /* BlockSettingsHelpers.swift in Sources */,

@@ -20,7 +20,8 @@ func getScheduleDefaultKey(_ groupId: String?) -> String? {
     return nil
 }
 
-func getBlockedItemDefaultKey<T>(_ token: Token<T>) -> String? {
+typealias BlockItemDefaultKey = String
+func getBlockedItemDefaultKey<T>(_ token: Token<T>) -> BlockItemDefaultKey? {
     do {
         var prefix = ""
         if type(of: token) == ApplicationToken.self {
@@ -89,4 +90,8 @@ func getTempBlockDefaultKey(_ groupId: String?) -> String? {
         return "tb_\(groupId)"
     }
     return nil
+}
+
+func getBlockStatsDefaultKey() -> String {
+    return "blockstats_"
 }
