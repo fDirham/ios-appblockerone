@@ -95,6 +95,10 @@
 		8BE1AA1F2C78077D0065DC1B /* ScheduleHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA1D2C78077D0065DC1B /* ScheduleHelpers.swift */; };
 		8BE1AA202C78077D0065DC1B /* ScheduleHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA1D2C78077D0065DC1B /* ScheduleHelpers.swift */; };
 		8BE1AA212C78077D0065DC1B /* ScheduleHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA1D2C78077D0065DC1B /* ScheduleHelpers.swift */; };
+		8BE1AA232C7907AB0065DC1B /* BlockedItemDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA222C7907AB0065DC1B /* BlockedItemDefault.swift */; };
+		8BE1AA242C7907AB0065DC1B /* BlockedItemDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA222C7907AB0065DC1B /* BlockedItemDefault.swift */; };
+		8BE1AA252C7907AB0065DC1B /* BlockedItemDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA222C7907AB0065DC1B /* BlockedItemDefault.swift */; };
+		8BE1AA262C7907AB0065DC1B /* BlockedItemDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA222C7907AB0065DC1B /* BlockedItemDefault.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -199,6 +203,7 @@
 		8BBF774F2C702087005EC2D2 /* BlockSettingsHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockSettingsHelpers.swift; sourceTree = "<group>"; };
 		8BE1AA182C77FDDA0065DC1B /* BlockStatsDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockStatsDefault.swift; sourceTree = "<group>"; };
 		8BE1AA1D2C78077D0065DC1B /* ScheduleHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleHelpers.swift; sourceTree = "<group>"; };
+		8BE1AA222C7907AB0065DC1B /* BlockedItemDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedItemDefault.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -263,6 +268,7 @@
 				8B4A0E4E2C76B0EF002722AB /* ScheduleDefault.swift */,
 				8B4A0E512C76B45F002722AB /* ScheduleEndFlagDefault.swift */,
 				8BE1AA182C77FDDA0065DC1B /* BlockStatsDefault.swift */,
+				8BE1AA222C7907AB0065DC1B /* BlockedItemDefault.swift */,
 			);
 			path = UserDefaultModels;
 			sourceTree = "<group>";
@@ -385,10 +391,10 @@
 				8BBF76E12C6E7C23005EC2D2 /* Helpers.swift */,
 				8BBF774F2C702087005EC2D2 /* BlockSettingsHelpers.swift */,
 				8BADB4102C73F28900E0DCDC /* TokenHelpers.swift */,
+				8BE1AA1D2C78077D0065DC1B /* ScheduleHelpers.swift */,
 				8B4A0E002C751DE7002722AB /* UserDefaultHelpers.swift */,
 				8B4A0E412C769A8C002722AB /* NotificationHelpers.swift */,
 				8B4A0E462C76A674002722AB /* ShieldUserDefaultReaderUtilities.swift */,
-				8BE1AA1D2C78077D0065DC1B /* ScheduleHelpers.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -631,6 +637,7 @@
 				8B4A0E4B2C76AD5E002722AB /* BlockSettingsHelpers.swift in Sources */,
 				8B4A0E402C7689B7002722AB /* TokenHelpers.swift in Sources */,
 				8B4A0E3F2C76887A002722AB /* String+Error.swift in Sources */,
+				8BE1AA262C7907AB0065DC1B /* BlockedItemDefault.swift in Sources */,
 				8BE1AA1C2C77FDDA0065DC1B /* BlockStatsDefault.swift in Sources */,
 				8B4A0E312C766F6B002722AB /* UserDefaultHelpers.swift in Sources */,
 				8B4A0E1E2C754CC3002722AB /* GroupUserDefaults.swift in Sources */,
@@ -671,6 +678,7 @@
 				8BE1AA1B2C77FDDA0065DC1B /* BlockStatsDefault.swift in Sources */,
 				8B4A0DFF2C7412B9002722AB /* Persistence.swift in Sources */,
 				8B4A0E482C76A674002722AB /* ShieldUserDefaultReaderUtilities.swift in Sources */,
+				8BE1AA252C7907AB0065DC1B /* BlockedItemDefault.swift in Sources */,
 				8BADB4152C7408C000E0DCDC /* AppBlockerOne.xcdatamodeld in Sources */,
 				8BADB40F2C73C0A600E0DCDC /* Helpers.swift in Sources */,
 				8B4A0E042C7538E1002722AB /* GroupUserDefaults.swift in Sources */,
@@ -685,6 +693,7 @@
 				8BBF76F52C6EB346005EC2D2 /* EditAppGroupView.swift in Sources */,
 				8BBF76B62C6BDAD5005EC2D2 /* Persistence.swift in Sources */,
 				8BBF76C42C6BE8A5005EC2D2 /* AppGroupSettingsView.swift in Sources */,
+				8BE1AA232C7907AB0065DC1B /* BlockedItemDefault.swift in Sources */,
 				8BBF77322C6FFA31005EC2D2 /* String+Error.swift in Sources */,
 				8BBF76AF2C6BDAD2005EC2D2 /* ContentView.swift in Sources */,
 				8B4A0E3C2C7680FF002722AB /* UserDefaults+JSONCoding.swift in Sources */,
@@ -721,6 +730,7 @@
 				8B4A0E4C2C76AE90002722AB /* UserDefaults+JSONCoding.swift in Sources */,
 				8B4A0E502C76B0EF002722AB /* ScheduleDefault.swift in Sources */,
 				8B4A0E532C76B45F002722AB /* ScheduleEndFlagDefault.swift in Sources */,
+				8BE1AA242C7907AB0065DC1B /* BlockedItemDefault.swift in Sources */,
 				8BE1AA1A2C77FDDA0065DC1B /* BlockStatsDefault.swift in Sources */,
 				8B4A0E052C7538E1002722AB /* GroupUserDefaults.swift in Sources */,
 				8B4A0E0B2C753DBA002722AB /* TokenHelpers.swift in Sources */,

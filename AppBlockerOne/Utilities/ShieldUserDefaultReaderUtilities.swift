@@ -8,7 +8,7 @@
 import Foundation
 import ManagedSettings
 
-func readShieldUserDefaultEssentials<T>(appToken: Token<T>?) throws -> (blockedItem: String, groupShield: GroupShieldDefault, shieldMemory: ShieldMemory?, blockStats: BlockStatsDefault?, keys: (smKey: String, gsKey: String, bsKey: String)){
+func readShieldUserDefaultEssentials<T>(appToken: Token<T>?) throws -> (blockedItem: BlockedItemDefault, groupShield: GroupShieldDefault, shieldMemory: ShieldMemory?, blockStats: BlockStatsDefault?, keys: (smKey: String, gsKey: String, bsKey: String)){
     guard let token = appToken else {
         throw "Cannot find app token"
     }
@@ -18,11 +18,11 @@ func readShieldUserDefaultEssentials<T>(appToken: Token<T>?) throws -> (blockedI
     }
     
     let ud = GroupUserDefaults()
-    guard let blockedItem = ud.string(forKey: blockedItemKey) else {
+    guard let blockedItem: BlockedItemDefault = try ud.getObj(forKey: blockedItemKey) else {
         throw "Cannot find blocked item obj for app"
     }
     
-    guard let gsKey = getGroupShieldDefaultKey(blockedItem) else {
+    guard let gsKey = getGroupShieldDefaultKey(blockedItem.groupId) else {
         throw "Cannot generate group shield key"
     }
     

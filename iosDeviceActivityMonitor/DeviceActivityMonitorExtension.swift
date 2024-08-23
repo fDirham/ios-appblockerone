@@ -13,12 +13,12 @@ import FamilyControls
 // Optionally override any of the functions below.
 // Make sure that your class name matches the NSExtensionPrincipalClass in your Info.plist.
 class DeviceActivityMonitorExtension: DeviceActivityMonitor {
-    private func isScheduleActivity(_ activity: DeviceActivityName) -> Bool {
-        return activity.rawValue.starts(with: "s_")
+    private func isBlockScheduleActivity(_ activity: DeviceActivityName) -> Bool {
+        return activity.rawValue.starts(with: "bs_")
     }
     
-    private func isTempBlockActivity(_ activity: DeviceActivityName) -> Bool {
-        return activity.rawValue.starts(with: "tb_")
+    private func isTempUnblockActivity(_ activity: DeviceActivityName) -> Bool {
+        return activity.rawValue.starts(with: "tu_")
     }
     
     private func isWipeBlockStatsActivity(_ activity: DeviceActivityName) -> Bool {
@@ -27,22 +27,28 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
 
     override func intervalDidStart(for activity: DeviceActivityName) {
         do {
-            if isScheduleActivity(activity) {
+            if isBlockScheduleActivity(activity) {
                 let ud = GroupUserDefaults()
                 
                 // Read from user defaults
-                guard let scheduleDefault: ScheduleDefault = try? ud.getObj(forKey: activity.rawValue) else {
+                let groupId = getMainContentsOfDAName(daName: activity)
+                guard let sKey = getScheduleDefaultKey(groupId) else {
+                    throw "Can't generate schedule default key"
+                }
+                
+                guard let scheduleDefault: ScheduleDefault = try? ud.getObj(forKey: sKey) else {
                     throw "Failed to decode schedule default for did start"
                 }
                 
-                let groupId = getMainContentOfUserDefaultKey(udKey: activity.rawValue)
+                // Block apps
+                try blockApps(faSelection: scheduleDefault.faSelection)
+                
                 guard let sefKey = getScheduleEndFlagDefaultKey(groupId) else {
                     throw "Can't generate SEF key"
                 }
                 ud.set(false, forKey: sefKey)
                 
-                // Block apps
-                try blockApps(faSelection: scheduleDefault.faSelection)
+                scheduleNotification(title: "DAM", msg: "Started block schedule")
             }
         }
         catch {
@@ -52,17 +58,22 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
     }
     
     override func intervalDidEnd(for activity: DeviceActivityName) {
+        scheduleNotification(title: "DAM", msg: "Ending activity: \(activity.rawValue)")
         do {
             let ud = GroupUserDefaults()
             
-            if isScheduleActivity(activity) {
+            if isBlockScheduleActivity(activity) {
                 // Read from user defaults
-                guard let scheduleDefault: ScheduleDefault = try? ud.getObj(forKey: activity.rawValue) else {
+                let groupId = getMainContentsOfDAName(daName: activity)
+                guard let sKey = getScheduleDefaultKey(groupId) else {
+                    throw "Can't generate schedule default key"
+                }
+                
+                guard let scheduleDefault: ScheduleDefault = try? ud.getObj(forKey: sKey) else {
                     throw "Failed to decode schedule default for did end \(activity.rawValue)"
                 }
                 
                 // Set SEF
-                let groupId = getMainContentOfUserDefaultKey(udKey: activity.rawValue)
                 guard let sefKey = getScheduleEndFlagDefaultKey(groupId) else {
                     throw "Can't generate SEF key"
                 }
@@ -70,10 +81,19 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
 
                 // Unblock apps
                 try unblockApps(faSelection: scheduleDefault.faSelection)
+                
+                scheduleNotification(title: "DAM", msg: "Ended block schedule")
             }
-            else if isTempBlockActivity(activity) { // Temp block scheduled
-                // Make sure schedule hasn't ended yet
-                let groupId = getMainContentOfUserDefaultKey(udKey: activity.rawValue)
+            else if isTempUnblockActivity(activity) { // Temp block scheduled
+                // Make sure schedule hasn't ended yet by checking blocked items
+                let tokenId = getMainContentsOfDAName(daName: activity)
+                let biKey = getBlockedItemDefaultKey(tokenId)
+                
+                guard let blockedItem: BlockedItemDefault = try ud.getObj(forKey: biKey) else {
+                    throw "Cannot find blocked item default"
+                }
+
+                let groupId = blockedItem.groupId
                 guard let sefKey = getScheduleEndFlagDefaultKey(groupId) else {
                     throw "Can't generate SEF key"
                 }
@@ -81,16 +101,22 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
                     return
                 }
                 
-                let sKey = getScheduleDefaultKey(groupId)!
-                guard let scheduleDefault: ScheduleDefault = try? ud.getObj(forKey: sKey) else {
-                    throw "Failed to decode schedule default"
+                // Block apps if we need to
+                if blockedItem.appToken != nil {
+                    try blockApps(appTokens: Set([blockedItem.appToken!]))
+                }
+                if blockedItem.webToken != nil {
+                    try blockApps(webTokens: Set([blockedItem.webToken!]))
+                }
+                if blockedItem.catToken != nil {
+                    try blockApps(catTokens: Set([blockedItem.catToken!]))
                 }
                 
-                // Block apps
-                try blockApps(faSelection: scheduleDefault.faSelection)
+                scheduleNotification(title: "DAM", msg: "Ended temp unblock period")
             }
             else if isWipeBlockStatsActivity(activity) {
                 ud.removeObject(forKey: getBlockStatsDefaultKey())
+                scheduleNotification(title: "DAM", msg: "Wiped block stats \(activity.rawValue)")
             }
         }
         catch {

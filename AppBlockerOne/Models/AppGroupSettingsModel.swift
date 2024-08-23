@@ -168,7 +168,7 @@ import ManagedSettings
             )
             
             // Start monitoring
-            let deviceActivityName = DeviceActivityName(sKey)
+            let deviceActivityName = getBlockScheduleDAName(groupId: cdObj!.id!)
             try center.startMonitoring(deviceActivityName, during: schedule) // NOTE this overrides previously scheduled so we should be good
             
         } catch {
@@ -181,29 +181,32 @@ import ManagedSettings
     }
     
     private func _onBlockingDisabledSave() throws -> (Bool, String?){
-        
         let groupId: UUID = cdObj!.id!
-        let sKey = getScheduleDefaultKey(groupId)!
-        let gsKey = getGroupShieldDefaultKey(groupId)!
-        let tbKey = getTempBlockDefaultKey(groupId)!
-        
-        // Make sure it's not monitored in device activity
-        let center = DeviceActivityCenter()
-        let sActivityName = DeviceActivityName(sKey)
-        let tbActivityName = DeviceActivityName(tbKey)
-        center.stopMonitoring([sActivityName, tbActivityName])
+        let cdoFa: FamilyActivitySelection = try decodeJSONObj(cdObj!.faSelection!)
+        let faSelectionTokenSplit = TokenSplit(appTokens: cdoFa.applicationTokens, webTokens: cdoFa.webDomainTokens, catTokens: cdoFa.categoryTokens)
 
-        // Remove from defaults entirely
+        // Remove temp unblocks
+        try _removeAllTempUnblockSchedules(tokenSplit: faSelectionTokenSplit)
+        
+        // Stop monitoring in DAM
+        let center = DeviceActivityCenter()
+        let sActivityName = getBlockScheduleDAName(groupId: groupId)
+        center.stopMonitoring([sActivityName])
+        
+        // Delete user defaults
+        let sKey = getScheduleDefaultKey(groupId)!
+        let sefKey = getScheduleEndFlagDefaultKey(groupId)!
+        let gsKey = getGroupShieldDefaultKey(groupId)!
+        
         let ud = GroupUserDefaults()
         ud.removeObject(forKey: sKey)
+        ud.removeObject(forKey: sefKey)
         ud.removeObject(forKey: gsKey)
-        ud.removeObject(forKey: tbKey)
-        
+
         // Remove blocked items
-        let cdoFa: FamilyActivitySelection = try decodeJSONObj(cdObj!.faSelection!)
-        let removeAllTokenBatch = (added: TokenSplit(), removed: TokenSplit(appTokens: cdoFa.applicationTokens, webTokens: cdoFa.webDomainTokens, catTokens: cdoFa.categoryTokens))
+        let removeAllTokenBatch = (added: TokenSplit(), removed: faSelectionTokenSplit)
         try _addAndRemoveBlockedItemTokens(arTokenBatch: removeAllTokenBatch)
-        
+
         // Unblock all apps
         try unblockApps(faSelection: cdoFa)
 
@@ -216,8 +219,10 @@ import ManagedSettings
     
     private func _onSaveBlockUnblock() throws {
         // Unblock all previously
-        let cdoFa: FamilyActivitySelection = try decodeJSONObj(cdObj!.faSelection!)
-        try unblockApps(faSelection: cdoFa)
+        if let cdoFaRaw: String = cdObj!.faSelection {
+            let cdoFa: FamilyActivitySelection = try decodeJSONObj(cdoFaRaw)
+            try unblockApps(faSelection: cdoFa)
+        }
 
         // Check current time
         let currDate = Date.now
@@ -228,11 +233,29 @@ import ManagedSettings
         let minStr = String("0\(minute)".suffix(2))
         if let currTimeSetting = Int(hourStr + minStr) {
             let shouldBlock = s_blockSchedule_start <= currTimeSetting && currTimeSetting <= s_blockSchedule_end
-            
             if shouldBlock {
                 try blockApps(faSelection: faSelection)
             }
         }
+    }
+    
+    private func _removeAllTempUnblockSchedules(tokenSplit: TokenSplit) throws {
+        let center = DeviceActivityCenter()
+        
+        func removeTempUnblock<T>(tokenSet: Set<Token<T>>) throws {
+            var toStopMonitoring: Array<DeviceActivityName> = []
+            try tokenSet.forEach{token in
+                guard let daName = getTempUnblockDAName(token: token) else {
+                    throw "Can't get temp unblock DA name for token"
+                }
+                toStopMonitoring.append(daName)
+            }
+            center.stopMonitoring(toStopMonitoring)
+        }
+        
+        try removeTempUnblock(tokenSet: tokenSplit.appTokens)
+        try removeTempUnblock(tokenSet: tokenSplit.webTokens)
+        try removeTempUnblock(tokenSet: tokenSplit.catTokens)
     }
     
     private func _addAndRemoveBlockedItemTokens(arTokenBatch: AddRemoveTokenBatch) throws {
@@ -242,10 +265,21 @@ import ManagedSettings
         
         // Add
         func addTokenSet<T>(_ tokenSet: Set<Token<T>>) throws {
-            tokenSet.forEach{token in
+            let ud = GroupUserDefaults()
+            try tokenSet.forEach{token in
                 // Add in user defaults
                 if let userDefaultKey = getBlockedItemDefaultKey(token) {
-                    GroupUserDefaults().set(cdObj!.id!.uuidString, forKey: userDefaultKey)
+                    var biItem = BlockedItemDefault(groupId: cdObj!.id!.uuidString)
+                    if type(of: token) == ApplicationToken.self {
+                        biItem.appToken = token as? ApplicationToken
+                    }
+                    else if type(of: token) == WebDomainToken.self {
+                        biItem.webToken = token as? WebDomainToken
+                    }
+                    else if type(of: token) == ActivityCategoryToken.self {
+                        biItem.catToken = token as? ActivityCategoryToken
+                    }
+                    try ud.setObj(biItem, forKey: userDefaultKey)
                 }
             }
         }
@@ -257,9 +291,10 @@ import ManagedSettings
         
         // Remove
         func removeTokenSet<T>(_ tokenSet: Set<Token<T>>) throws {
+            let ud = GroupUserDefaults()
             tokenSet.forEach{token in
                 if let userDefaultKey = getBlockedItemDefaultKey(token) {
-                    GroupUserDefaults().removeObject(forKey: userDefaultKey)
+                    ud.removeObject(forKey: userDefaultKey)
                 }
             }
         }

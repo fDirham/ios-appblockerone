@@ -36,7 +36,7 @@ class ShieldActionExtension: ShieldActionDelegate {
                     ud.removeObject(forKey: d.keys.smKey)
                     
                     // Set schedule
-                    try scheduleTempUnblock(unblockDurationM: d.groupShield.durationPerOpenM, groupId: d.blockedItem)
+                    try scheduleTempUnblock(unblockDurationM: d.groupShield.durationPerOpenM, itemToken: application)
                     
                     // Add to block stats
                     let isNewBlockStats = d.blockStats == nil
@@ -83,7 +83,7 @@ class ShieldActionExtension: ShieldActionDelegate {
         completionHandler(.close)
     }
     
-    private func scheduleTempUnblock(unblockDurationM: Int, groupId: String) throws {
+    private func scheduleTempUnblock<T>(unblockDurationM: Int, itemToken: Token<T>) throws {
         let calendar = Calendar.current
         let currDate = Date()
         var startInterval = DateComponents()
@@ -102,8 +102,9 @@ class ShieldActionExtension: ShieldActionDelegate {
         )
         
         // Start monitoring
-        let tbKey = getTempBlockDefaultKey(groupId)!
-        let deviceActivityName = DeviceActivityName(tbKey)
+        guard let deviceActivityName = getTempUnblockDAName(token: itemToken) else {
+            throw "Cannot get temp unblock DA name"
+        }
         
         let center = DeviceActivityCenter()
         try center.startMonitoring(deviceActivityName, during: schedule)

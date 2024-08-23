@@ -23,14 +23,14 @@ class ShieldConfigurationExtension: ShieldConfigurationDataSource {
             let isStrictBlock = d.groupShield.strictBlock || numOpened >= maxOpened
             let unblockTotalTimeM = d.groupShield.durationPerOpenM * numOpened
             
-            var subtitleText = "Today, you have unblocked \"\(d.groupShield.groupName)\" apps \(numOpened)/\(maxOpened) times, for a total of \(unblockTotalTimeM) mins."
+            var subtitleText = "Today, you have unblocked \(application.localizedDisplayName ?? "this app")  \(numOpened)/\(maxOpened) times, for a total of \(unblockTotalTimeM) mins."
             let primaryButtonText = "Nevermind"
             let secondaryButtonText = "Let me in!"
             
             if !isStrictBlock {
                 if let shieldMemory: ShieldMemory = d.shieldMemory  {
                     if shieldMemory.backTapCount > 0 {
-                        let MAX_TAP_COUNT = maxOpened
+                        let MAX_TAP_COUNT = 5
                         let leftovers = MAX_TAP_COUNT - shieldMemory.backTapCount
                         subtitleText = "Are you sure? Tap \(leftovers) more times \nto confirm..."
                     }

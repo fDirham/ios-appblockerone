@@ -23,23 +23,16 @@ func getScheduleDefaultKey(_ groupId: String?) -> String? {
 typealias BlockItemDefaultKey = String
 func getBlockedItemDefaultKey<T>(_ token: Token<T>) -> BlockItemDefaultKey? {
     do {
-        var prefix = ""
-        if type(of: token) == ApplicationToken.self {
-            prefix = "bia_"
-        }
-        else if type(of: token) == WebDomainToken.self {
-            prefix = "biw_"
-        }
-        else if type(of: token) == ActivityCategoryToken.self {
-            prefix = "bic"
-        }
-        
         let tokenId = try getIdFromToken(token)
-        return prefix + "_" + tokenId
+        return getBlockedItemDefaultKey(tokenId)
     }
     catch{
         return nil
     }
+}
+
+func getBlockedItemDefaultKey(_ tokenId: String) -> BlockItemDefaultKey {
+    return "bi_" + tokenId
 }
 
 func getGroupShieldDefaultKey(_ groupId: UUID) -> String? {
@@ -74,20 +67,13 @@ func getMainContentOfUserDefaultKey(udKey: String) -> String{
     }
 }
 
+func getScheduleEndFlagDefaultKey(_ groupId: UUID) -> String? {
+    return getScheduleEndFlagDefaultKey(groupId.uuidString)
+}
+
 func getScheduleEndFlagDefaultKey(_ groupId: String?) -> String? {
     if let groupId = groupId {
         return "sef_\(groupId)"
-    }
-    return nil
-}
-
-func getTempBlockDefaultKey(_ groupId: UUID) -> String? {
-    return getTempBlockDefaultKey(groupId.uuidString)
-}
-
-func getTempBlockDefaultKey(_ groupId: String?) -> String? {
-    if let groupId = groupId {
-        return "tb_\(groupId)"
     }
     return nil
 }
