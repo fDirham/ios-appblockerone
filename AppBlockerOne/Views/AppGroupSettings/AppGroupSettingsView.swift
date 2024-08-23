@@ -25,6 +25,19 @@ struct AppGroupSettingsView: View, KeyboardReadable {
         })
     }
 
+    
+    private var showStrictBlockOption: Bool {
+        return sm.s_blockingEnabled
+    }
+    
+    private var showTemporaryOpenGroup: Bool {
+        return !sm.s_strictBlock && sm.s_blockingEnabled
+    }
+
+    private var showScheduleGroup: Bool {
+        return sm.s_blockingEnabled
+    }
+
     var body: some View {
         @Bindable var sm = sm
         
@@ -44,19 +57,25 @@ struct AppGroupSettingsView: View, KeyboardReadable {
                             AppSelectionSettingView(faSelection: $sm.faSelection)
                         }
                         SettingGroupView("Block", spacing: 12) {
-                            BooleanSettingsView("Blocking enabled", value: $sm.s_blockingEnabled)
-                            BooleanSettingsView("Strict block", value: $sm.s_strictBlock)
+                            BooleanSettingsView("Blocking enabled", value: $sm.s_blockingEnabled.animation(Animation.smooth(duration: 0.4)))
+                            if showStrictBlockOption{
+                                BooleanSettingsView("Strict block", value: $sm.s_strictBlock.animation(Animation.smooth(duration: 0.4)))
+                            }
                         }
-                        SettingGroupView("Temporary open", spacing: 12) {
-                            NumberSettingsView("Maximum opens per day", value: $sm.s_maxOpensPerDay)
-                            NumberSettingsView("Duration per open (minutes)", value: $sm.s_durationPerOpenM)
-                            OpenMethodsPickerSettingsView("Open method", value: $sm.s_openMethod, optionsList: OpenMethods.allCases)
+                        if showTemporaryOpenGroup {
+                            SettingGroupView("Temporary open", spacing: 12) {
+                                NumberSettingsView("Maximum opens per day", value: $sm.s_maxOpensPerDay)
+                                NumberSettingsView("Duration per open (minutes)", value: $sm.s_durationPerOpenM)
+                                OpenMethodsPickerSettingsView("Open method", value: $sm.s_openMethod, optionsList: OpenMethods.allCases)
+                            }
                         }
-                        SettingGroupView("Schedule", spacing: 12) {
-                            TimeSettingView("Start", rawIntValue: $sm.s_blockSchedule_start )
-                            TimeSettingView("End", rawIntValue: $sm.s_blockSchedule_end )
+                        if showScheduleGroup {
+                            SettingGroupView("Schedule", spacing: 12) {
+                                TimeSettingView("Start", rawIntValue: $sm.s_blockSchedule_start )
+                                TimeSettingView("End", rawIntValue: $sm.s_blockSchedule_end )
+                            }
+                            .padding(.bottom, 30)
                         }
-                        .padding(.bottom, 30)
                         Button(action: {}) {
                             Text("Delete")
                                 .foregroundStyle(Color.danger)
