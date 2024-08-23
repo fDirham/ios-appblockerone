@@ -9,8 +9,8 @@ import SwiftUI
 import CoreData
 
 struct NewAppGroupView: View {
-    @State private var sm: AppGroupSettingsModel
     @Environment(\.managedObjectContext) private var viewContext
+    @State private var sm: AppGroupSettingsModel
 
     init(coreDataContext: NSManagedObjectContext){
         sm = AppGroupSettingsModel(coreDataContext: coreDataContext)

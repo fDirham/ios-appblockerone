@@ -15,38 +15,58 @@ import DeviceActivity
 // Make sure that your class name matches the NSExtensionPrincipalClass in your Info.plist.
 class ShieldActionExtension: ShieldActionDelegate {
     override func handle(action: ShieldAction, for application: ApplicationToken, completionHandler: @escaping (ShieldActionResponse) -> Void) {
+        mainHandler(action: action, for: application, completionHandler: completionHandler)
+    }
+    
+    override func handle(action: ShieldAction, for webDomain: WebDomainToken, completionHandler: @escaping (ShieldActionResponse) -> Void) {
+        mainHandler(action: action, for: webDomain, completionHandler: completionHandler)
+    }
+    
+    override func handle(action: ShieldAction, for category: ActivityCategoryToken, completionHandler: @escaping (ShieldActionResponse) -> Void) {
+        mainHandler(action: action, for: category, completionHandler: completionHandler)
+    }
+    
+    private func mainHandler<T>(action: ShieldAction, for itemToken: Token<T>, completionHandler: @escaping (ShieldActionResponse) -> Void){
         switch action {
         case .primaryButtonPressed:
             completionHandler(.close)
         case .secondaryButtonPressed:
             do{
-                let d = try readShieldUserDefaultEssentials(appToken: application)
+                let d = try readShieldUserDefaultEssentials(appToken: itemToken)
                 var shieldMemory = d.shieldMemory ?? ShieldMemory()
                 shieldMemory.backTapCount += 1
                 let maxTaps = 5
                 if shieldMemory.backTapCount >= maxTaps {
                     // Unblock app
-                    // TODO: Unblock all apps in group or somehow handle this special case
-                    var toUnblock: Set<ApplicationToken> = Set()
-                    toUnblock.insert(application)
-                    try unblockApps(appTokens: toUnblock)
-                    
+                    if type(of: itemToken) == ApplicationToken.self {
+                        let toUnblock: Set<ApplicationToken> = Set([itemToken as! ApplicationToken])
+                        try unblockApps(appTokens: toUnblock)
+                    }
+                    else if type(of: itemToken) == WebDomainToken.self {
+                        let toUnblock: Set<WebDomainToken> = Set([itemToken as! WebDomainToken])
+                        try unblockApps(webTokens: toUnblock)
+                    }
+                    else if type(of: itemToken) == ActivityCategoryToken.self {
+                        let toUnblock: Set<ActivityCategoryToken> = Set([itemToken as! ActivityCategoryToken])
+                        try unblockApps(catTokens: toUnblock)
+                    }
+
                     // Delete shield memory
                     let ud = GroupUserDefaults()
                     ud.removeObject(forKey: d.keys.smKey)
                     
                     // Set schedule
-                    try scheduleTempUnblock(unblockDurationM: d.groupShield.durationPerOpenM, itemToken: application)
+                    try scheduleTempUnblock(unblockDurationM: d.groupShield.durationPerOpenM, itemToken: itemToken)
                     
                     // Add to block stats
                     let isNewBlockStats = d.blockStats == nil
     
                     var blockStats = d.blockStats ?? BlockStatsDefault(blockDict: [:])
-                    var blockItemStat = try blockStats.getBlockItemStat(forToken: application) ?? BlockItemStat(countTodayOpened: 0)
+                    var blockItemStat = try blockStats.getBlockItemStat(forToken: itemToken) ?? BlockItemStat(countTodayOpened: 0)
                     blockItemStat.countTodayOpened += 1
                     
                     // Save
-                    try blockStats.setBlockItemStat(blockItemStat, forToken: application)
+                    try blockStats.setBlockItemStat(blockItemStat, forToken: itemToken)
                     try ud.setObj(blockStats, forKey: d.keys.bsKey)
                     
                     // Schedule to wipe if new
@@ -65,22 +85,13 @@ class ShieldActionExtension: ShieldActionDelegate {
                 }
             }
             catch{
+                // TODO: Have this only show up in debug
                 scheduleNotification(title: "action error", msg: error.localizedDescription)
                 completionHandler(.none)
             }
         @unknown default:
             fatalError()
         }
-    }
-    
-    override func handle(action: ShieldAction, for webDomain: WebDomainToken, completionHandler: @escaping (ShieldActionResponse) -> Void) {
-        // Handle the action as needed.
-        completionHandler(.close)
-    }
-    
-    override func handle(action: ShieldAction, for category: ActivityCategoryToken, completionHandler: @escaping (ShieldActionResponse) -> Void) {
-        // Handle the action as needed.
-        completionHandler(.close)
     }
     
     private func scheduleTempUnblock<T>(unblockDurationM: Int, itemToken: Token<T>) throws {

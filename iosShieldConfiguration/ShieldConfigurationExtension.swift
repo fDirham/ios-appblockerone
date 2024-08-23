@@ -13,17 +13,50 @@ import ManagedSettingsUI
 // Make sure that your class name matches the NSExtensionPrincipalClass in your Info.plist.
 class ShieldConfigurationExtension: ShieldConfigurationDataSource {
     override func configuration(shielding application: Application) -> ShieldConfiguration {
+        guard let itemToken = application.token else {
+            return fallbackConfig(debugText: "Cannot get item token")
+        }
+        let itemName = application.localizedDisplayName ?? "this app"
+        return masterConfig(itemToken: itemToken, itemName: itemName)
+    }
+    
+    override func configuration(shielding application: Application, in category: ActivityCategory) -> ShieldConfiguration {
+        guard let itemToken = category.token else {
+            return fallbackConfig(debugText: "Cannot get item token")
+        }
+        let itemName = category.localizedDisplayName != nil ? "apps in the \(category.localizedDisplayName!) category" : "apps of the same category"
+        return masterConfig(itemToken: itemToken, itemName: itemName)
+    }
+    
+    override func configuration(shielding webDomain: WebDomain) -> ShieldConfiguration {
+        guard let itemToken = webDomain.token else {
+            return fallbackConfig(debugText: "Cannot get item token")
+        }
+        let itemName = "this site"
+        return masterConfig(itemToken: itemToken, itemName: itemName)
+    }
+    
+    override func configuration(shielding webDomain: WebDomain, in category: ActivityCategory) -> ShieldConfiguration {
+        // Customize the shield as needed for web domains shielded because of their category.
+        guard let itemToken = category.token else {
+            return fallbackConfig(debugText: "Cannot get item token")
+        }
+        let itemName = category.localizedDisplayName != nil ? "sites in the \(category.localizedDisplayName!) category" : "sites of the same category"
+        return masterConfig(itemToken: itemToken, itemName: itemName)
+    }
+    
+    private func masterConfig<T>(itemToken: Token<T>, itemName: String) -> ShieldConfiguration {
         do {
-            let d = try readShieldUserDefaultEssentials(appToken: application.token)
+            let d = try readShieldUserDefaultEssentials(appToken: itemToken)
             
             // Instantiate title and subtitle
             let titleText = "Blocked" // TODO: More stylistic text
-            let numOpened = try d.blockStats?.getBlockItemStat(forToken: application.token!)?.countTodayOpened ?? 0
+            let numOpened = try d.blockStats?.getBlockItemStat(forToken: itemToken)?.countTodayOpened ?? 0
             let maxOpened = d.groupShield.maxOpensPerDay
             let isStrictBlock = d.groupShield.strictBlock || numOpened >= maxOpened
             let unblockTotalTimeM = d.groupShield.durationPerOpenM * numOpened
             
-            var subtitleText = "Today, you have unblocked \(application.localizedDisplayName ?? "this app")  \(numOpened)/\(maxOpened) times, for a total of \(unblockTotalTimeM) mins."
+            var subtitleText = "Today, you have unblocked \(itemName) \(numOpened)/\(maxOpened) times, for a total of \(unblockTotalTimeM) mins."
             let primaryButtonText = "Nevermind"
             let secondaryButtonText = "Let me in!"
             
@@ -60,25 +93,13 @@ class ShieldConfigurationExtension: ShieldConfigurationDataSource {
             )
         }
         catch {
-            let subtitleLabel = ShieldConfiguration.Label(text: "Error \(error.localizedDescription)", color: .black)
-            return ShieldConfiguration(backgroundColor: .bg, subtitle: subtitleLabel)
+            return fallbackConfig(debugText: error.localizedDescription)
         }
     }
     
-    override func configuration(shielding application: Application, in category: ActivityCategory) -> ShieldConfiguration {
-        let subtitle = ShieldConfiguration.Label(text: "CATEGORY \(category.localizedDisplayName ?? "?")", color: .black)
-        let toReturn = ShieldConfiguration(backgroundColor: .white, subtitle: subtitle)
-
-        return toReturn
-    }
-    
-    override func configuration(shielding webDomain: WebDomain) -> ShieldConfiguration {
-        // Customize the shield as needed for web domains.
-        ShieldConfiguration()
-    }
-    
-    override func configuration(shielding webDomain: WebDomain, in category: ActivityCategory) -> ShieldConfiguration {
-        // Customize the shield as needed for web domains shielded because of their category.
-        ShieldConfiguration()
+    private func fallbackConfig(debugText: String?) -> ShieldConfiguration{
+        let subtitleText = debugText ?? "Error"
+        let subtitleLabel = ShieldConfiguration.Label(text: subtitleText, color: .black)
+        return ShieldConfiguration(backgroundColor: .bg, subtitle: subtitleLabel)
     }
 }

@@ -10,21 +10,23 @@ import FamilyControls
 
 struct AppGroupSettingsView: View, KeyboardReadable {
     @Environment(AppGroupSettingsModel.self) private var sm
-    @State private var errorAlertMsg: String = ""
     @Environment(\.presentationMode) var presentationMode
-    let onSave: () -> (Bool, String?)
-    let navTitle: String
+    @State private var settingsError = SettingsError()
+    @State private var showSave: Bool = true
+    @State private var shakeForm: Bool = false
     
+    let onSave: () -> (Bool, SettingsError?)
+    let navTitle: String
+
     private var isShowAlert: Binding<Bool> {
         Binding(get: {
-            return !errorAlertMsg.isEmpty
+            return settingsError.alertMsg != nil
         }, set: {
             if !$0 {
-                errorAlertMsg = ""
+                settingsError.alertMsg = nil
             }
         })
     }
-
     
     private var showStrictBlockOption: Bool {
         return sm.s_blockingEnabled
@@ -52,9 +54,11 @@ struct AppGroupSettingsView: View, KeyboardReadable {
                                 .padding()
                                 .settingBlockBG()
                                 .foregroundColor(.black)
+                            ErrorTextView(settingsError.groupName)
                         }
                         SettingGroupView("Apps") {
                             AppSelectionSettingView(faSelection: $sm.faSelection)
+                            ErrorTextView(settingsError.faSelection)
                         }
                         SettingGroupView("Block", spacing: 12) {
                             BooleanSettingsView("Blocking enabled", value: $sm.s_blockingEnabled.animation(Animation.smooth(duration: 0.4)))
@@ -65,7 +69,9 @@ struct AppGroupSettingsView: View, KeyboardReadable {
                         if showTemporaryOpenGroup {
                             SettingGroupView("Temporary open", spacing: 12) {
                                 NumberSettingsView("Maximum opens per day", value: $sm.s_maxOpensPerDay)
+                                ErrorTextView(settingsError.maxOpensPerDay)
                                 NumberSettingsView("Duration per open (minutes)", value: $sm.s_durationPerOpenM)
+                                ErrorTextView(settingsError.durationPerOpenM)
                                 OpenMethodsPickerSettingsView("Open method", value: $sm.s_openMethod, optionsList: OpenMethods.allCases)
                             }
                         }
@@ -73,6 +79,7 @@ struct AppGroupSettingsView: View, KeyboardReadable {
                             SettingGroupView("Schedule", spacing: 12) {
                                 TimeSettingView("Start", rawIntValue: $sm.s_blockSchedule_start )
                                 TimeSettingView("End", rawIntValue: $sm.s_blockSchedule_end )
+                                ErrorTextView(settingsError.schedule)
                             }
                             .padding(.bottom, 30)
                         }
@@ -82,6 +89,7 @@ struct AppGroupSettingsView: View, KeyboardReadable {
                         }
                         Spacer()
                     }
+                    .offset(x: shakeForm ? 50 : 0)
                     .onReceive(keyboardPublisher) { newIsKeyboardVisible in
                         if !newIsKeyboardVisible {
                             sm.handleKeyboardClose()
@@ -100,21 +108,38 @@ struct AppGroupSettingsView: View, KeyboardReadable {
                             }
                         }
                         ToolbarItem(placement: .topBarTrailing) {
-                            Button(action: {
-                                let saveRes = onSave()
-                                let isSuccess = saveRes.0
-                                if !isSuccess {
-                                    errorAlertMsg = saveRes.1 ?? "Empty error"
+                            if showSave {
+                                Button(action: {
+                                    let saveRes = onSave()
+                                    let isSuccess = saveRes.0
+                                    if !isSuccess {
+                                        if let newSettingsError = saveRes.1 {
+                                            settingsError = newSettingsError
+                                        }
+                                        shakeForm = true
+                                        withAnimation(Animation.spring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
+                                            shakeForm = false
+                                        }
+                                    }
+                                    else {
+                                        presentationMode.wrappedValue.dismiss()
+                                    }
+                                
+                                }){
+                                    Text("Save")
+                                        .foregroundStyle(Color.accent)
                                 }
-                                else {
-                                    presentationMode.wrappedValue.dismiss()
+                                .alert(
+                                    Text("Save failed"),
+                                    isPresented: isShowAlert
+                                ) {
+                                    Button("OK") {
+                                        // Handle the acknowledgement.
+                                    }
+                                } message: {
+                                    Text(settingsError.alertMsg ?? "")
                                 }
-                            
-                            }){
-                                Text("Save")
-                                    .foregroundStyle(Color.accent)
                             }
-                            .alert(errorAlertMsg, isPresented: isShowAlert) {}
                         }
                         ToolbarItemGroup(placement: .keyboard) {
                             HStack{
@@ -135,8 +160,31 @@ struct AppGroupSettingsView: View, KeyboardReadable {
                     .navigationBarBackButtonHidden(true)
                     .navigationTitle(navTitle)
                     .navigationBarTitleDisplayMode(.inline)
+                    .onReceive(keyboardPublisher) { newIsKeyboardVisible in
+                        withAnimation() {
+                            showSave = !newIsKeyboardVisible
+                        }
+                    }
                 }
             }
+    }
+}
+
+struct ErrorTextView: View {
+    var value: String?
+    
+    init(_ value: String?){
+        self.value = value
+    }
+    
+    var body: some View {
+        if value != nil {
+            Text(value!)
+                .foregroundStyle(Color.danger)
+        }
+        else {
+            EmptyView()
+        }
     }
 }
 
@@ -326,9 +374,14 @@ struct AppGroupSettingsView_Preview: PreviewProvider {
     struct Container: View {
         @State private var sm: AppGroupSettingsModel = AppGroupSettingsModel(coreDataContext: PersistenceController.preview.container.viewContext)
         
+        private func onSave() -> (Bool, SettingsError?){
+            return (false,
+            SettingsError(faSelection: "Empty apps", schedule: "Hmm...",alertMsg: "Save clicked with fake failures")
+            )
+        }
         var body: some View {
             NavigationStack{
-                AppGroupSettingsView(onSave: {return (false, "Save clicked!")}, navTitle: "Settings")
+                AppGroupSettingsView(onSave: onSave, navTitle: "Settings")
                     .environment(sm)
             }
         }

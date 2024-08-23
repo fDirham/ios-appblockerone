@@ -91,15 +91,15 @@ import ManagedSettings
         s_durationPerOpenM = s_durationPerOpenM.clamped(to: Self.RANGE_DURATION_PER_OPEN_M)
     }
     
-    func handleSaveNew() -> (Bool, String?){
+    func handleSaveNew() -> (Bool, SettingsError?){
         return _handleSave()
     }
     
-    func handleSaveEdit() -> (Bool, String?) {
+    func handleSaveEdit() -> (Bool, SettingsError?) {
         return _handleSave()
     }
     
-    private func _handleSave() -> (Bool, String?) {
+    private func _handleSave() -> (Bool, SettingsError?) {
         handleKeyboardClose()
         
         do {
@@ -107,9 +107,9 @@ import ManagedSettings
             let modifiedTokenBatch: AddRemoveTokenBatch = try _getModifiedTokensBeforeSync()
             
             // Validate
-            let errorMsg = _validateSettings(modifiedTokenBatch: modifiedTokenBatch)
-            if errorMsg != nil {
-                return (false, errorMsg)
+            let settingsError = _validateSettings(modifiedTokenBatch: modifiedTokenBatch)
+            if settingsError != nil {
+                return (false, settingsError)
             }
                 
             if cdObj == nil {
@@ -174,13 +174,13 @@ import ManagedSettings
         } catch {
             let nsError = error as NSError
             Logger().error("Unresolved error \(nsError), \(nsError.userInfo)")
-            return (false, "Failed to save, please try again later")
+            return (false, SettingsError(alertMsg: "Unresolveed error \(error.localizedDescription)"))
         }
 
         return (true, nil)
     }
     
-    private func _onBlockingDisabledSave() throws -> (Bool, String?){
+    private func _onBlockingDisabledSave() throws -> (Bool, SettingsError?){
         let groupId: UUID = cdObj!.id!
         let cdoFa: FamilyActivitySelection = try decodeJSONObj(cdObj!.faSelection!)
         let faSelectionTokenSplit = TokenSplit(appTokens: cdoFa.applicationTokens, webTokens: cdoFa.webDomainTokens, catTokens: cdoFa.categoryTokens)
@@ -346,16 +346,18 @@ import ManagedSettings
         ))
     }
 
-    private func _validateSettings(modifiedTokenBatch: AddRemoveTokenBatch) -> String? {
+    private func _validateSettings(modifiedTokenBatch: AddRemoveTokenBatch) -> SettingsError? {
+        var settingsError = SettingsError()
+        
         if groupName == "" {
-            return "Group needs a name"
+            settingsError.groupName = "Group needs a name"
         }
         if groupName.count > 15 {
-            return "Group name too long"
+            settingsError.groupName = "Group name too long"
         }
         let emptyFa = faSelection.applicationTokens.isEmpty && faSelection.webDomainTokens.isEmpty && faSelection.categoryTokens.isEmpty
         if emptyFa {
-            return "Please select one or more apps for this group"
+            settingsError.faSelection = "Please select one or more apps for this group"
         }
         
         // Validate no duplicates
@@ -375,37 +377,42 @@ import ManagedSettings
             let addedTokenSplit = modifiedTokenBatch.added
             let dupeErrApp = try dupeCheckTokens(addedTokenSplit.appTokens)
             if dupeErrApp != nil {
-                return dupeErrApp
+                settingsError.faSelection = dupeErrApp
             }
             let dupeErrWeb = try dupeCheckTokens(addedTokenSplit.webTokens)
             if dupeErrWeb != nil {
-                return dupeErrWeb
+                settingsError.faSelection = dupeErrApp
             }
             let dupeErrCat = try dupeCheckTokens(addedTokenSplit.catTokens)
             if dupeErrCat != nil {
-                return dupeErrCat
+                settingsError.faSelection = dupeErrApp
             }
         }
         catch {
-            return "Something went wrong checking duplicates \(error.localizedDescription)"
+            settingsError.faSelection = "Something went wrong checking duplicates \(error.localizedDescription)"
         }
         
         // Validate that schedules make sense
         if abs(s_blockSchedule_end - s_blockSchedule_start) < 100 {
-            return "Schedule is too short, minimum is 1 hour."
+            settingsError.schedule = "Schedule is too short, minimum is 1 hour."
         }
         
         // Validate duration per open makes sense
         if s_durationPerOpenM < 15 {
-            return "Minimum duration per open is 15 minutes."
+            settingsError.durationPerOpenM = "Minimum duration per open is 15 minutes."
         }
         
         // Validate max opens per day
         if !s_strictBlock && s_maxOpensPerDay < 1 {
-            return "If strict mode is off, max opens per day needs to be at least 1"
+            settingsError.maxOpensPerDay = "If strict mode is off, max opens per day needs to be at least 1"
         }
         
-        return nil
+        if settingsError.isNotError() {
+            return nil
+        }
+        
+        settingsError.alertMsg = "Some settings are invalid!"
+        return settingsError
     }
     
     private func _getTimeSettingComponents(_ settingsVal: Int) -> (hours: Int, minutes: Int) {

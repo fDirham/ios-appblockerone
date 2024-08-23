@@ -99,6 +99,7 @@
 		8BE1AA242C7907AB0065DC1B /* BlockedItemDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA222C7907AB0065DC1B /* BlockedItemDefault.swift */; };
 		8BE1AA252C7907AB0065DC1B /* BlockedItemDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA222C7907AB0065DC1B /* BlockedItemDefault.swift */; };
 		8BE1AA262C7907AB0065DC1B /* BlockedItemDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA222C7907AB0065DC1B /* BlockedItemDefault.swift */; };
+		8BE1AA282C793A770065DC1B /* SettingsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA272C793A770065DC1B /* SettingsError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -204,6 +205,7 @@
 		8BE1AA182C77FDDA0065DC1B /* BlockStatsDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockStatsDefault.swift; sourceTree = "<group>"; };
 		8BE1AA1D2C78077D0065DC1B /* ScheduleHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleHelpers.swift; sourceTree = "<group>"; };
 		8BE1AA222C7907AB0065DC1B /* BlockedItemDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedItemDefault.swift; sourceTree = "<group>"; };
+		8BE1AA272C793A770065DC1B /* SettingsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -350,6 +352,7 @@
 				8BBF76B72C6BDAD5005EC2D2 /* AppBlockerOne.xcdatamodeld */,
 				8BBF76C02C6BE725005EC2D2 /* GroupColor.swift */,
 				8BBF76D32C6D5C81005EC2D2 /* AppGroupSettingsModel.swift */,
+				8BE1AA272C793A770065DC1B /* SettingsError.swift */,
 				8BBF76D52C6D643D005EC2D2 /* OpenMethods.swift */,
 				8B4A0E4D2C76B0BD002722AB /* UserDefaultModels */,
 			);
@@ -705,6 +708,7 @@
 				8B4A0E522C76B45F002722AB /* ScheduleEndFlagDefault.swift in Sources */,
 				8B4A0E332C766FBD002722AB /* ShieldMemory.swift in Sources */,
 				8BBF76DD2C6D6EE8005EC2D2 /* Comparable+Clamp.swift in Sources */,
+				8BE1AA282C793A770065DC1B /* SettingsError.swift in Sources */,
 				8B4A0E092C753AE5002722AB /* GroupShieldDefault.swift in Sources */,
 				8BBF76C12C6BE725005EC2D2 /* GroupColor.swift in Sources */,
 				8BBF76D82C6D662A005EC2D2 /* NewAppGroupView.swift in Sources */,
