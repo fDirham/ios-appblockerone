@@ -59,30 +59,17 @@ struct ContentView: View {
                 }
         }
     }
-    
-    //    private func deleteItems(offsets: IndexSet) {
-    //        withAnimation {
-    //            offsets.map { items[$0] }.forEach(viewContext.delete)
-    //
-    //            do {
-    //                try viewContext.save()
-    //            } catch {
-    //                // Replace this implementation with code to handle the error appropriately.
-    //                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-    //                let nsError = error as NSError
-    //                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-    //            }
-    //        }
-    //    }
 }
 
 struct AppGroupBlockView: View {
     let appGroup: AppGroup
-    
-    
     let columns = Array(repeating: GridItem(.flexible(), spacing: 0), count: 3)
     
     private var faSelection: FamilyActivitySelection {
+        if appGroup.faSelection == nil {
+            return FamilyActivitySelection()
+        }
+        
         do{
             return try decodeJSONObj(appGroup.faSelection ?? "")
         }
@@ -105,8 +92,8 @@ struct AppGroupBlockView: View {
             }
             .frame(width: frameSize, height: frameSize, alignment: .top)
             .padding()
-            .roundedBG(fill: getColor(colorString: appGroup.groupColor!), cornerRadius: 12)
-            Text(appGroup.groupName!)
+            .roundedBG(fill: getColor(colorString: appGroup.groupColor ?? "red"), cornerRadius: 12)
+            Text(appGroup.groupName ?? "")
                 .foregroundStyle(Color.fg)
                 .frame(maxWidth: frameSize)
         }

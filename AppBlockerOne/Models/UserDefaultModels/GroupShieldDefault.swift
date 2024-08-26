@@ -12,4 +12,5 @@ struct GroupShieldDefault: Codable {
     var strictBlock: Bool
     var durationPerOpenM: Int
     var maxOpensPerDay: Int
+    var maxTaps: Int
 }

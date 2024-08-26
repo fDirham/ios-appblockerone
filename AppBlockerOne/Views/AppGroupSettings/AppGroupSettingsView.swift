@@ -14,6 +14,7 @@ struct AppGroupSettingsView: View, KeyboardReadable {
     @State private var settingsError = SettingsError()
     @State private var showSave: Bool = true
     @State private var shakeForm: Bool = false
+    @State private var confirmDelete: Bool = false
     
     let onSave: () -> (Bool, SettingsError?)
     let navTitle: String
@@ -61,7 +62,6 @@ struct AppGroupSettingsView: View, KeyboardReadable {
                             ErrorTextView(settingsError.faSelection)
                         }
                         SettingGroupView("Block", spacing: 12) {
-                            BooleanSettingsView("Blocking enabled", value: $sm.s_blockingEnabled.animation(Animation.smooth(duration: 0.4)))
                             if showStrictBlockOption{
                                 BooleanSettingsView("Strict block", value: $sm.s_strictBlock.animation(Animation.smooth(duration: 0.4)))
                             }
@@ -83,7 +83,9 @@ struct AppGroupSettingsView: View, KeyboardReadable {
                             }
                             .padding(.bottom, 30)
                         }
-                        Button(action: {}) {
+                        Button(action: {
+                            confirmDelete = true
+                        }) {
                             Text("Delete")
                                 .foregroundStyle(Color.danger)
                         }
@@ -97,6 +99,26 @@ struct AppGroupSettingsView: View, KeyboardReadable {
                     }
                     .padding(.horizontal)
                     .padding(.top, 16)
+                    .confirmationDialog("Delete group", isPresented: $confirmDelete) {
+                        Button(action: {
+                            let deleteRes = sm.handleDelete()
+                            let isSuccess = deleteRes.0
+                            if isSuccess {
+                                presentationMode.wrappedValue.dismiss()
+                            }
+                            else {
+                                if let errorMsg = deleteRes.1 {
+                                   print(errorMsg)
+                                }
+                            }
+                        }) {
+                            Text("Yes")
+                                .foregroundStyle(Color.danger)
+                        }
+                        Button("Cancel", role: .cancel) { }
+                    } message: {
+                        Text("Are you sure you want to delete \(sm.groupName)")
+                    }
                     .toolbar {
                         ToolbarItem(placement: .topBarLeading) {
                             Button(action: {

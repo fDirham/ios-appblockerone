@@ -29,13 +29,17 @@ class ShieldActionExtension: ShieldActionDelegate {
     private func mainHandler<T>(action: ShieldAction, for itemToken: Token<T>, completionHandler: @escaping (ShieldActionResponse) -> Void){
         switch action {
         case .primaryButtonPressed:
+            if let smKey = getShieldMemoryDefaultKey(itemToken) {
+                let ud = GroupUserDefaults()
+                ud.removeObject(forKey: smKey)
+            }
             completionHandler(.close)
         case .secondaryButtonPressed:
             do{
                 let d = try readShieldUserDefaultEssentials(appToken: itemToken)
                 var shieldMemory = d.shieldMemory ?? ShieldMemory()
                 shieldMemory.backTapCount += 1
-                let maxTaps = 5
+                let maxTaps = d.groupShield.maxTaps
                 if shieldMemory.backTapCount >= maxTaps {
                     // Unblock app
                     if type(of: itemToken) == ApplicationToken.self {

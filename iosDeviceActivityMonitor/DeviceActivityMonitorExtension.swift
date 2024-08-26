@@ -54,7 +54,6 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
         catch {
             scheduleNotification(title: "ERROR", msg: "App blocker failed \(error.localizedDescription)")
         }
-            
     }
     
     override func intervalDidEnd(for activity: DeviceActivityName) {
@@ -65,6 +64,7 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
             if isBlockScheduleActivity(activity) {
                 // Read from user defaults
                 let groupId = getMainContentsOfDAName(daName: activity)
+                
                 guard let sKey = getScheduleDefaultKey(groupId) else {
                     throw "Can't generate schedule default key"
                 }
@@ -85,10 +85,10 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
                 scheduleNotification(title: "DAM", msg: "Ended block schedule")
             }
             else if isTempUnblockActivity(activity) { // Temp block scheduled
-                // Make sure schedule hasn't ended yet by checking blocked items
                 let tokenId = getMainContentsOfDAName(daName: activity)
+
+                // Make sure schedule hasn't ended yet by checking blocked items
                 let biKey = getBlockedItemDefaultKey(tokenId)
-                
                 guard let blockedItem: BlockedItemDefault = try ud.getObj(forKey: biKey) else {
                     throw "Cannot find blocked item default"
                 }

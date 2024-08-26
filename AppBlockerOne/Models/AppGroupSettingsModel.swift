@@ -17,7 +17,7 @@ import ManagedSettings
     
     var groupName: String = ""
     var faSelection: FamilyActivitySelection = FamilyActivitySelection()
-    var s_blockingEnabled: Bool = true
+    var s_blockingEnabled: Bool = true // Always set to true lol
     var s_strictBlock: Bool = false
     var s_maxOpensPerDay = 6
     var s_durationPerOpenM = 30
@@ -99,6 +99,24 @@ import ManagedSettings
         return _handleSave()
     }
     
+    func handleDelete() -> (Bool, String?){
+        guard let cdObj = cdObj else {
+            return (true, nil)
+        }
+        
+        do {
+            try _onBlockingDisabledSave()
+            
+            // Delete self
+            coreDataContext.delete(cdObj)
+            try coreDataContext.save()
+        }
+        catch {
+            return (false, error.localizedDescription)
+        }
+        return (true, nil)
+    }
+    
     private func _handleSave() -> (Bool, SettingsError?) {
         handleKeyboardClose()
         
@@ -111,7 +129,8 @@ import ManagedSettings
             if settingsError != nil {
                 return (false, settingsError)
             }
-                
+            
+            let isNew = cdObj == nil
             if cdObj == nil {
                 try _createNewCDObj()
             }
@@ -120,11 +139,11 @@ import ManagedSettings
 
             if !s_blockingEnabled {
                 // We are disabling everything here
-                return try _onBlockingDisabledSave()
+                try _onBlockingDisabledSave()
             }
             
             // Add to blocked items + block unblock immediately
-            if isJustEnabled {
+            if isJustEnabled || isNew {
                 let added = TokenSplit(
                     appTokens: faSelection.applicationTokens,
                     webTokens: faSelection.webDomainTokens,
@@ -154,7 +173,8 @@ import ManagedSettings
                 groupName: cdObj!.groupName!, 
                 strictBlock: s_strictBlock,
                 durationPerOpenM: s_durationPerOpenM,
-                maxOpensPerDay: s_maxOpensPerDay
+                maxOpensPerDay: s_maxOpensPerDay,
+                maxTaps: s_openMethod == OpenMethods.TapOnce ? 1 : 5 // TODO: Handle more unblock methods
             )
             try ud.setObj(gsToSave, forKey: gsKey)
 
@@ -180,33 +200,29 @@ import ManagedSettings
         return (true, nil)
     }
     
-    private func _onBlockingDisabledSave() throws -> (Bool, SettingsError?){
+    private func _onBlockingDisabledSave() throws{
         let groupId: UUID = cdObj!.id!
         let cdoFa: FamilyActivitySelection = try decodeJSONObj(cdObj!.faSelection!)
         let faSelectionTokenSplit = TokenSplit(appTokens: cdoFa.applicationTokens, webTokens: cdoFa.webDomainTokens, catTokens: cdoFa.categoryTokens)
 
-        // Remove temp unblocks
-        try _removeAllTempUnblockSchedules(tokenSplit: faSelectionTokenSplit)
-        
-        // Stop monitoring in DAM
-        let center = DeviceActivityCenter()
-        let sActivityName = getBlockScheduleDAName(groupId: groupId)
-        center.stopMonitoring([sActivityName])
-        
-        // Delete user defaults
-        let sKey = getScheduleDefaultKey(groupId)!
-        let sefKey = getScheduleEndFlagDefaultKey(groupId)!
-        let gsKey = getGroupShieldDefaultKey(groupId)!
-        
+        // Get UD keys
         let ud = GroupUserDefaults()
+        guard let sKey = getScheduleDefaultKey(groupId) else { throw "Failed to get sKey key" }
+        guard let sefKey = getScheduleEndFlagDefaultKey(groupId) else { throw "Failed to get sefKey key" }
+        guard let gsKey = getGroupShieldDefaultKey(groupId) else { throw "Failed to get gsKey key" }
+
+        // Delete user defaults
         ud.removeObject(forKey: sKey)
         ud.removeObject(forKey: sefKey)
         ud.removeObject(forKey: gsKey)
+        
+        // Delete shield memory defaults
+        try _removeAllShieldMemoryDefaults(tokenSplit: faSelectionTokenSplit)
 
-        // Remove blocked items
+        // Delete blocked items
         let removeAllTokenBatch = (added: TokenSplit(), removed: faSelectionTokenSplit)
         try _addAndRemoveBlockedItemTokens(arTokenBatch: removeAllTokenBatch)
-
+        
         // Unblock all apps
         try unblockApps(faSelection: cdoFa)
 
@@ -214,7 +230,20 @@ import ManagedSettings
         try _syncCDObjWithSelf()
         try coreDataContext.save()
         
-        return (true, nil)
+
+        // Stop monitoring DAM activities a few seconds after
+        Task{
+            let seconds: Double = 3
+            try await Task.sleep(nanoseconds: UInt64(seconds * Double(NSEC_PER_SEC)))
+            
+            // Stop monitoring in DAM
+            let center = DeviceActivityCenter()
+            let sActivityName = getBlockScheduleDAName(groupId: groupId)
+            center.stopMonitoring([sActivityName])
+            
+            // Remove temp unblocks
+            try _removeAllTempUnblockSchedules(tokenSplit: faSelectionTokenSplit)
+        }
     }
     
     private func _onSaveBlockUnblock() throws {
@@ -258,6 +287,23 @@ import ManagedSettings
         try removeTempUnblock(tokenSet: tokenSplit.catTokens)
     }
     
+    private func _removeAllShieldMemoryDefaults(tokenSplit: TokenSplit) throws {
+        let ud = GroupUserDefaults()
+        
+        func removeSMDefault<T>(tokenSet: Set<Token<T>>) throws {
+            try tokenSet.forEach{token in
+                guard let smKey = getShieldMemoryDefaultKey(token) else {
+                    throw "Can't get gs key for token"
+                }
+                ud.removeObject(forKey: smKey)
+            }
+        }
+        
+        try removeSMDefault(tokenSet: tokenSplit.appTokens)
+        try removeSMDefault(tokenSet: tokenSplit.webTokens)
+        try removeSMDefault(tokenSet: tokenSplit.catTokens)
+    }
+
     private func _addAndRemoveBlockedItemTokens(arTokenBatch: AddRemoveTokenBatch) throws {
         if cdObj == nil {
             throw "No cdObj instantiated"
@@ -347,7 +393,7 @@ import ManagedSettings
     }
 
     private func _validateSettings(modifiedTokenBatch: AddRemoveTokenBatch) -> SettingsError? {
-        var settingsError = SettingsError()
+        let settingsError = SettingsError()
         
         if groupName == "" {
             settingsError.groupName = "Group needs a name"

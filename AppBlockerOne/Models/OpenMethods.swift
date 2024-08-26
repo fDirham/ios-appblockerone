@@ -9,5 +9,5 @@ import Foundation
 
 enum OpenMethods: String, CaseIterable {
     case Tap5 = "Tap 5 times"
-    case None = "None"
+    case TapOnce = "Tap once"
 }
