@@ -24,3 +24,11 @@ func decodeJSONObj<T: Decodable>(_ inJSONStr: String) throws -> T {
 var isPreview: Bool {
     ProcessInfo.processInfo.environment["XCODE_RUNNING_FOR_PREVIEWS"] == "1"
 }
+
+func debugPrint(_ message: String){
+#if DEBUG
+    print(message)
+#else
+    return
+#endif
+}

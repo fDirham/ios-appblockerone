@@ -89,8 +89,7 @@ class ShieldActionExtension: ShieldActionDelegate {
                 }
             }
             catch{
-                // TODO: Have this only show up in debug
-                scheduleNotification(title: "action error", msg: error.localizedDescription)
+                debugNotif(title: "SA ERROR", msg: error.localizedDescription)
                 completionHandler(.none)
             }
         @unknown default:

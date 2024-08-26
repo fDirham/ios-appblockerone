@@ -108,7 +108,7 @@ struct AppGroupSettingsView: View, KeyboardReadable {
                             }
                             else {
                                 if let errorMsg = deleteRes.1 {
-                                   print(errorMsg)
+                                   debugPrint(errorMsg)
                                 }
                             }
                         }) {

@@ -48,16 +48,16 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
                 }
                 ud.set(false, forKey: sefKey)
                 
-                scheduleNotification(title: "DAM", msg: "Started block schedule")
+                debugNotif(title: "DAM", msg: "Started block schedule")
             }
         }
         catch {
-            scheduleNotification(title: "ERROR", msg: "App blocker failed \(error.localizedDescription)")
+            debugNotif(title: "DAM ERROR", msg: "\(error.localizedDescription)")
         }
     }
     
     override func intervalDidEnd(for activity: DeviceActivityName) {
-        scheduleNotification(title: "DAM", msg: "Ending activity: \(activity.rawValue)")
+        debugNotif(title: "DAM", msg: "Ending activity: \(activity.rawValue)")
         do {
             let ud = GroupUserDefaults()
             
@@ -82,7 +82,7 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
                 // Unblock apps
                 try unblockApps(faSelection: scheduleDefault.faSelection)
                 
-                scheduleNotification(title: "DAM", msg: "Ended block schedule")
+                debugNotif(title: "DAM", msg: "Ended block schedule")
             }
             else if isTempUnblockActivity(activity) { // Temp block scheduled
                 let tokenId = getMainContentsOfDAName(daName: activity)
@@ -112,15 +112,15 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
                     try blockApps(catTokens: Set([blockedItem.catToken!]))
                 }
                 
-                scheduleNotification(title: "DAM", msg: "Ended temp unblock period")
+                debugNotif(title: "DAM", msg: "Ended temp unblock period")
             }
             else if isWipeBlockStatsActivity(activity) {
                 ud.removeObject(forKey: getBlockStatsDefaultKey())
-                scheduleNotification(title: "DAM", msg: "Wiped block stats \(activity.rawValue)")
+                debugNotif(title: "DAM", msg: "Wiped block stats \(activity.rawValue)")
             }
         }
         catch {
-            scheduleNotification(title: "ERROR", msg: "App blocker failed \(error.localizedDescription)")
+            debugNotif(title: "DAM ERROR", msg: "\(error.localizedDescription)")
         }
     }
 }

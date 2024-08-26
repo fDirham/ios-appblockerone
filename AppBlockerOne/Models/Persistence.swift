@@ -24,11 +24,11 @@ struct PersistenceController {
                 newFaSelection = String(data: data, encoding: .utf8) ?? "FAILED"
             } catch {
                 // handle error
-                print("failed to load data \(error.localizedDescription)")
+                debugPrint("failed to load data \(error.localizedDescription)")
             }
         }
         else {
-            print("mock path not found")
+            debugPrint("Mock path not found")
         }
         
         for i in 0..<10 {
@@ -61,11 +61,11 @@ struct PersistenceController {
                 newFaSelection = String(data: data, encoding: .utf8) ?? "FAILED"
             } catch {
                 // handle error
-                print("failed to load data \(error.localizedDescription)")
+                debugPrint("Failed to load data \(error.localizedDescription)")
             }
         }
         else {
-            print("mock path not found")
+            debugPrint("mock path not found")
         }
         
         newItem.timestamp = Date()

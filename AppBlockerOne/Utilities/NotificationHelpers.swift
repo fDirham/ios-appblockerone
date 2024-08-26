@@ -23,12 +23,19 @@ func scheduleNotification(title: String, msg bodyText: String) {
             
             center.add(request) { error in
                 if let error = error {
-                    print("Error scheduling notification: \(error)")
+                    debugPrint("Error scheduling notification: \(error)")
                 }
             }
         } else {
-            print("Permission denied. \(error?.localizedDescription ?? "")")
+            debugPrint("Permission denied. \(error?.localizedDescription ?? "")")
         }
     }
 }
 
+func debugNotif(title: String, msg: String){
+#if DEBUG
+    scheduleNotification(title: title, msg: msg)
+#else
+    return
+#endif
+}
