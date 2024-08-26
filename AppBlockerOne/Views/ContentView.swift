@@ -44,7 +44,7 @@ struct ContentView: View {
                     .padding(.horizontal)
                     .toolbar {
                         ToolbarItem(placement: .topBarLeading) {
-                            NavigationLink(destination: Text("TODO")) {
+                            NavigationLink(destination: HelpView()) {
                                 Text("Help")
                                     .foregroundStyle(.accent)
                             }
@@ -92,11 +92,17 @@ struct AppGroupBlockView: View {
             }
             .frame(width: frameSize, height: frameSize, alignment: .top)
             .padding()
-            .roundedBG(fill: getColor(colorString: appGroup.groupColor ?? "red"), cornerRadius: 12)
+            .roundedBG(fill: .accentColor, cornerRadius: 12)
+            .overlay( /// apply a rounded border
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(.accentShade, lineWidth: 5)
+            )
+            .padding(.leading, 5)
+
             Text(appGroup.groupName ?? "")
                 .foregroundStyle(Color.fg)
                 .frame(maxWidth: frameSize)
-        }
+            }
     }
     
 }

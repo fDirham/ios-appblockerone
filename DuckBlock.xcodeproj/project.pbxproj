@@ -100,6 +100,7 @@
 		8BE1AA252C7907AB0065DC1B /* BlockedItemDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA222C7907AB0065DC1B /* BlockedItemDefault.swift */; };
 		8BE1AA262C7907AB0065DC1B /* BlockedItemDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA222C7907AB0065DC1B /* BlockedItemDefault.swift */; };
 		8BE1AA282C793A770065DC1B /* SettingsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA272C793A770065DC1B /* SettingsError.swift */; };
+		8BE1AA2A2C7D43730065DC1B /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA292C7D43730065DC1B /* HelpView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -170,7 +171,7 @@
 		8BADB4072C73B4B400E0DCDC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8BADB4082C73B4B400E0DCDC /* iosShieldConfiguration.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = iosShieldConfiguration.entitlements; sourceTree = "<group>"; };
 		8BADB4102C73F28900E0DCDC /* TokenHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenHelpers.swift; sourceTree = "<group>"; };
-		8BBF76A92C6BDAD2005EC2D2 /* AppBlockerOne.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppBlockerOne.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BBF76A92C6BDAD2005EC2D2 /* DuckBlock.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DuckBlock.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BBF76AC2C6BDAD2005EC2D2 /* AppBlockerOneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBlockerOneApp.swift; sourceTree = "<group>"; };
 		8BBF76AE2C6BDAD2005EC2D2 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		8BBF76B02C6BDAD5005EC2D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -206,6 +207,7 @@
 		8BE1AA1D2C78077D0065DC1B /* ScheduleHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleHelpers.swift; sourceTree = "<group>"; };
 		8BE1AA222C7907AB0065DC1B /* BlockedItemDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedItemDefault.swift; sourceTree = "<group>"; };
 		8BE1AA272C793A770065DC1B /* SettingsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsError.swift; sourceTree = "<group>"; };
+		8BE1AA292C7D43730065DC1B /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -309,7 +311,7 @@
 		8BBF76AA2C6BDAD2005EC2D2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8BBF76A92C6BDAD2005EC2D2 /* AppBlockerOne.app */,
+				8BBF76A92C6BDAD2005EC2D2 /* DuckBlock.app */,
 				8BBF773A2C6FFEAF005EC2D2 /* iosDeviceActivityMonitor.appex */,
 				8BADB4012C73B4B400E0DCDC /* iosShieldConfiguration.appex */,
 				8B4A0E112C754CA2002722AB /* iosShieldAction.appex */,
@@ -364,6 +366,7 @@
 			children = (
 				8BBF76AE2C6BDAD2005EC2D2 /* ContentView.swift */,
 				8BBF76DE2C6E6EFF005EC2D2 /* FamilyActivityTokensView.swift */,
+				8BE1AA292C7D43730065DC1B /* HelpView.swift */,
 				8BBF76F32C6EB2DD005EC2D2 /* AppGroupSettings */,
 			);
 			path = Views;
@@ -413,9 +416,9 @@
 		8BBF76F32C6EB2DD005EC2D2 /* AppGroupSettings */ = {
 			isa = PBXGroup;
 			children = (
+				8BBF76C32C6BE8A5005EC2D2 /* AppGroupSettingsView.swift */,
 				8BBF76D72C6D662A005EC2D2 /* NewAppGroupView.swift */,
 				8BBF76F42C6EB346005EC2D2 /* EditAppGroupView.swift */,
-				8BBF76C32C6BE8A5005EC2D2 /* AppGroupSettingsView.swift */,
 				8BBF76CE2C6D1DCF005EC2D2 /* AppSelectionSettingView.swift */,
 			);
 			path = AppGroupSettings;
@@ -498,9 +501,9 @@
 			productReference = 8BADB4012C73B4B400E0DCDC /* iosShieldConfiguration.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		8BBF76A82C6BDAD2005EC2D2 /* AppBlockerOne */ = {
+		8BBF76A82C6BDAD2005EC2D2 /* DuckBlock */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8BBF76BC2C6BDAD5005EC2D2 /* Build configuration list for PBXNativeTarget "AppBlockerOne" */;
+			buildConfigurationList = 8BBF76BC2C6BDAD5005EC2D2 /* Build configuration list for PBXNativeTarget "DuckBlock" */;
 			buildPhases = (
 				8BBF76A52C6BDAD2005EC2D2 /* Sources */,
 				8BBF76A62C6BDAD2005EC2D2 /* Frameworks */,
@@ -514,9 +517,9 @@
 				8BADB40A2C73B4B400E0DCDC /* PBXTargetDependency */,
 				8B4A0E192C754CA2002722AB /* PBXTargetDependency */,
 			);
-			name = AppBlockerOne;
+			name = DuckBlock;
 			productName = AppBlockerOne;
-			productReference = 8BBF76A92C6BDAD2005EC2D2 /* AppBlockerOne.app */;
+			productReference = 8BBF76A92C6BDAD2005EC2D2 /* DuckBlock.app */;
 			productType = "com.apple.product-type.application";
 		};
 		8BBF77392C6FFEAF005EC2D2 /* iosDeviceActivityMonitor */ = {
@@ -565,7 +568,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 8BBF76A42C6BDAD2005EC2D2 /* Build configuration list for PBXProject "AppBlockerOne" */;
+			buildConfigurationList = 8BBF76A42C6BDAD2005EC2D2 /* Build configuration list for PBXProject "DuckBlock" */;
 			compatibilityVersion = "Xcode 14.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -580,7 +583,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8BBF76A82C6BDAD2005EC2D2 /* AppBlockerOne */,
+				8BBF76A82C6BDAD2005EC2D2 /* DuckBlock */,
 				8BBF77392C6FFEAF005EC2D2 /* iosDeviceActivityMonitor */,
 				8BADB4002C73B4B400E0DCDC /* iosShieldConfiguration */,
 				8B4A0E102C754CA2002722AB /* iosShieldAction */,
@@ -706,6 +709,7 @@
 				8BBF76D12C6D1FB1005EC2D2 /* ReusableStyles.swift in Sources */,
 				8BBF76DF2C6E6EFF005EC2D2 /* FamilyActivityTokensView.swift in Sources */,
 				8B4A0E522C76B45F002722AB /* ScheduleEndFlagDefault.swift in Sources */,
+				8BE1AA2A2C7D43730065DC1B /* HelpView.swift in Sources */,
 				8B4A0E332C766FBD002722AB /* ShieldMemory.swift in Sources */,
 				8BBF76DD2C6D6EE8005EC2D2 /* Comparable+Clamp.swift in Sources */,
 				8BE1AA282C793A770065DC1B /* SettingsError.swift in Sources */,
@@ -759,7 +763,7 @@
 		};
 		8B4A0E5D2C77AF8C002722AB /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8BBF76A82C6BDAD2005EC2D2 /* AppBlockerOne */;
+			target = 8BBF76A82C6BDAD2005EC2D2 /* DuckBlock */;
 			targetProxy = 8B4A0E5C2C77AF8C002722AB /* PBXContainerItemProxy */;
 		};
 		8BADB40A2C73B4B400E0DCDC /* PBXTargetDependency */ = {
@@ -846,7 +850,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AppBlockerOne.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AppBlockerOne";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DuckBlock.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DuckBlock";
 			};
 			name = Debug;
 		};
@@ -864,7 +868,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AppBlockerOne.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/AppBlockerOne";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DuckBlock.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DuckBlock";
 			};
 			name = Release;
 		};
@@ -1187,7 +1191,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8BBF76A42C6BDAD2005EC2D2 /* Build configuration list for PBXProject "AppBlockerOne" */ = {
+		8BBF76A42C6BDAD2005EC2D2 /* Build configuration list for PBXProject "DuckBlock" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8BBF76BA2C6BDAD5005EC2D2 /* Debug */,
@@ -1196,7 +1200,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8BBF76BC2C6BDAD5005EC2D2 /* Build configuration list for PBXNativeTarget "AppBlockerOne" */ = {
+		8BBF76BC2C6BDAD5005EC2D2 /* Build configuration list for PBXNativeTarget "DuckBlock" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8BBF76BD2C6BDAD5005EC2D2 /* Debug */,

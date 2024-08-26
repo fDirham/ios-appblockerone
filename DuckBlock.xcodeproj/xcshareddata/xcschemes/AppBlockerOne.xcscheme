@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "8BBF76A82C6BDAD2005EC2D2"
-               BuildableName = "AppBlockerOne.app"
-               BlueprintName = "AppBlockerOne"
-               ReferencedContainer = "container:AppBlockerOne.xcodeproj">
+               BuildableName = "DuckBlock.app"
+               BlueprintName = "DuckBlock"
+               ReferencedContainer = "container:DuckBlock.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -38,7 +38,7 @@
                BlueprintIdentifier = "8B4A0E572C77AF8B002722AB"
                BuildableName = "iosMainAppUnitTests.xctest"
                BlueprintName = "iosMainAppUnitTests"
-               ReferencedContainer = "container:AppBlockerOne.xcodeproj">
+               ReferencedContainer = "container:DuckBlock.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -58,9 +58,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8BBF76A82C6BDAD2005EC2D2"
-            BuildableName = "AppBlockerOne.app"
-            BlueprintName = "AppBlockerOne"
-            ReferencedContainer = "container:AppBlockerOne.xcodeproj">
+            BuildableName = "DuckBlock.app"
+            BlueprintName = "DuckBlock"
+            ReferencedContainer = "container:DuckBlock.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -75,9 +75,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "8BBF76A82C6BDAD2005EC2D2"
-            BuildableName = "AppBlockerOne.app"
-            BlueprintName = "AppBlockerOne"
-            ReferencedContainer = "container:AppBlockerOne.xcodeproj">
+            BuildableName = "DuckBlock.app"
+            BlueprintName = "DuckBlock"
+            ReferencedContainer = "container:DuckBlock.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

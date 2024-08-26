@@ -56,7 +56,7 @@ class ShieldConfigurationExtension: ShieldConfigurationDataSource {
             let isStrictBlock = d.groupShield.strictBlock || numOpened >= maxOpened
             let unblockTotalTimeM = d.groupShield.durationPerOpenM * numOpened
             
-            var subtitleText = "Today, you have unblocked \(itemName) \(numOpened)/\(maxOpened) times, for a total of \(unblockTotalTimeM) mins."
+            var subtitleText = "\(itemName) opens: \(numOpened)/\(maxOpened) times \n Total: \(unblockTotalTimeM) mins."
             let primaryButtonText = "Nevermind"
             let secondaryButtonText = "Let me in!"
             
@@ -65,7 +65,7 @@ class ShieldConfigurationExtension: ShieldConfigurationDataSource {
                     if shieldMemory.backTapCount > 0 {
                         let MAX_TAP_COUNT = 5
                         let leftovers = MAX_TAP_COUNT - shieldMemory.backTapCount
-                        subtitleText = "Are you sure? Tap \(leftovers) more times \nto confirm..."
+                        subtitleText = "Tap \(leftovers) more times \nto unblock..."
                     }
                 }
             }
