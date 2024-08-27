@@ -33,13 +33,8 @@ struct SplashView: View {
                                     .fontWeight(.bold)
                                 Button (action: {}){
                                     Text("Let's go")
-                                        .foregroundStyle(.fg)
-                                        .fontWeight(.semibold)
                                 }
-                                .padding()
-                                .frame(minWidth: 260)
-                                .background(Color.accentColor)
-                                .clipShape(Capsule())
+                                .pillButton()
                             }
                             .padding(.bottom, 100)
                         }

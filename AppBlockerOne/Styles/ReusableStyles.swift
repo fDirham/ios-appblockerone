@@ -31,6 +31,18 @@ struct SettingBlockBG: ViewModifier {
     }
 }
 
+struct PillButton: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .padding()
+            .frame(minWidth: 260)
+            .background(Color.accentColor)
+            .clipShape(Capsule())
+            .foregroundStyle(.fg)
+            .fontWeight(.semibold)
+    }
+}
+
 extension View {
     public func settingBlockBG ()-> some View {
         modifier(SettingBlockBG())
@@ -42,5 +54,9 @@ extension View {
     
     public func roundedBG (fill: Color, cornerRadius: CGFloat) -> some View {
         modifier(RoundedBG(fill: fill, cornerRadius: cornerRadius))
+    }
+    
+    public func pillButton() -> some View {
+        modifier(PillButton())
     }
 }

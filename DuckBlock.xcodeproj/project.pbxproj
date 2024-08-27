@@ -103,6 +103,8 @@
 		8BE1AA2A2C7D43730065DC1B /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA292C7D43730065DC1B /* HelpView.swift */; };
 		8BE1AA2D2C7E398A0065DC1B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA2C2C7E398A0065DC1B /* HomeView.swift */; };
 		8BE1AA2F2C7E3A7D0065DC1B /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA2E2C7E3A7D0065DC1B /* SplashView.swift */; };
+		8BE1AA312C7E483F0065DC1B /* PermissionsScreentimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA302C7E483F0065DC1B /* PermissionsScreentimeView.swift */; };
+		8BE1AA332C7E4B640065DC1B /* PermissionsNotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA322C7E4B640065DC1B /* PermissionsNotificationsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -212,6 +214,8 @@
 		8BE1AA292C7D43730065DC1B /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 		8BE1AA2C2C7E398A0065DC1B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		8BE1AA2E2C7E3A7D0065DC1B /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		8BE1AA302C7E483F0065DC1B /* PermissionsScreentimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsScreentimeView.swift; sourceTree = "<group>"; };
+		8BE1AA322C7E4B640065DC1B /* PermissionsNotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsNotificationsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -454,6 +458,8 @@
 			isa = PBXGroup;
 			children = (
 				8BE1AA2E2C7E3A7D0065DC1B /* SplashView.swift */,
+				8BE1AA302C7E483F0065DC1B /* PermissionsScreentimeView.swift */,
+				8BE1AA322C7E4B640065DC1B /* PermissionsNotificationsView.swift */,
 			);
 			path = Welcome;
 			sourceTree = "<group>";
@@ -711,6 +717,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BBF76F52C6EB346005EC2D2 /* EditAppGroupView.swift in Sources */,
+				8BE1AA312C7E483F0065DC1B /* PermissionsScreentimeView.swift in Sources */,
+				8BE1AA332C7E4B640065DC1B /* PermissionsNotificationsView.swift in Sources */,
 				8BBF76B62C6BDAD5005EC2D2 /* Persistence.swift in Sources */,
 				8BBF76C42C6BE8A5005EC2D2 /* AppGroupSettingsView.swift in Sources */,
 				8BE1AA232C7907AB0065DC1B /* BlockedItemDefault.swift in Sources */,
