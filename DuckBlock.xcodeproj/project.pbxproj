@@ -102,6 +102,7 @@
 		8BE1AA282C793A770065DC1B /* SettingsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA272C793A770065DC1B /* SettingsError.swift */; };
 		8BE1AA2A2C7D43730065DC1B /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA292C7D43730065DC1B /* HelpView.swift */; };
 		8BE1AA2D2C7E398A0065DC1B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA2C2C7E398A0065DC1B /* HomeView.swift */; };
+		8BE1AA2F2C7E3A7D0065DC1B /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA2E2C7E3A7D0065DC1B /* SplashView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -210,6 +211,7 @@
 		8BE1AA272C793A770065DC1B /* SettingsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsError.swift; sourceTree = "<group>"; };
 		8BE1AA292C7D43730065DC1B /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
 		8BE1AA2C2C7E398A0065DC1B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		8BE1AA2E2C7E3A7D0065DC1B /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -451,6 +453,7 @@
 		8BE1AA2B2C7E396C0065DC1B /* Welcome */ = {
 			isa = PBXGroup;
 			children = (
+				8BE1AA2E2C7E3A7D0065DC1B /* SplashView.swift */,
 			);
 			path = Welcome;
 			sourceTree = "<group>";
@@ -726,6 +729,7 @@
 				8BE1AA282C793A770065DC1B /* SettingsError.swift in Sources */,
 				8B4A0E092C753AE5002722AB /* GroupShieldDefault.swift in Sources */,
 				8BBF76C12C6BE725005EC2D2 /* GroupColor.swift in Sources */,
+				8BE1AA2F2C7E3A7D0065DC1B /* SplashView.swift in Sources */,
 				8BBF76D82C6D662A005EC2D2 /* NewAppGroupView.swift in Sources */,
 				8B4A0E422C769A8C002722AB /* NotificationHelpers.swift in Sources */,
 				8BBF76CF2C6D1DCF005EC2D2 /* AppSelectionSettingView.swift in Sources */,
