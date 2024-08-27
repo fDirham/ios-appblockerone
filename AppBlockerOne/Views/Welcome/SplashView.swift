@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct SplashView: View {
+    @Environment(NavManager.self) private var navManager
+    
     var body: some View {
         Color.splashBg
             .ignoresSafeArea()
@@ -31,7 +33,9 @@ struct SplashView: View {
                                 Text("DuckBlock")
                                     .font(.largeTitle)
                                     .fontWeight(.bold)
-                                Button (action: {}){
+                                Button (action: {
+                                    navManager.navTo("permission-screentime")
+                                }){
                                     Text("Let's go")
                                 }
                                 .pillButton()
@@ -45,6 +49,22 @@ struct SplashView: View {
     }
 }
 
-#Preview {
-    SplashView()
+struct SplashView_Preview: PreviewProvider {
+    struct Container: View {
+        @State private var tutorialConfig = TutorialConfig(isTutorial: true)
+        @State private var navManager = NavManager()
+        
+        var body: some View {
+            NavStackView {
+                SplashView()
+            }
+            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+            .environment(tutorialConfig)
+            .environment(navManager)
+        }
+    }
+    
+    static var previews: some View {
+        Container()
+    }
 }

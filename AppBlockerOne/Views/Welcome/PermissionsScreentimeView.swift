@@ -9,6 +9,7 @@ import SwiftUI
 import FamilyControls
 
 struct PermissionsScreentimeView: View {
+    @Environment(NavManager.self) private var navManager
     @State private var alertMsg: String? = nil
     
     private var isShowAlert: Binding<Bool> {
@@ -32,16 +33,25 @@ struct PermissionsScreentimeView: View {
                     Spacer()
                     Button(action: {
                         Task {
-                            await askScreentimePermissions()
+                            if isPreview {
+                                onGranted()
+                            }
+                            else {
+                                await askScreentimePermissions()
+                            }
                         }
                     }) {
                         Text("Grant permissions")
                     }
                     .pillButton()
                 }
+                .padding()
             }
+            .navigationBarBackButtonHidden(true)
             .task {
-                await askScreentimePermissions()
+                if !isPreview {
+                    await askScreentimePermissions()
+                }
             }
             .alert(
                 Text("Authorization Failed!"),
@@ -66,10 +76,26 @@ struct PermissionsScreentimeView: View {
     }
     
     private func onGranted(){
-        debugPrint("TODO")
+        navManager.navTo("permission-notification")
     }
 }
 
-#Preview {
-    PermissionsScreentimeView()
+struct PermissionsScreentimeView_Preview: PreviewProvider {
+    struct Container: View {
+        @State private var tutorialConfig = TutorialConfig(isTutorial: true)
+        @State private var navManager = NavManager()
+        
+        var body: some View {
+            NavStackView {
+                PermissionsScreentimeView()
+            }
+            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+            .environment(tutorialConfig)
+            .environment(navManager)
+        }
+    }
+    
+    static var previews: some View {
+        Container()
+    }
 }

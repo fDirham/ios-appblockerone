@@ -42,6 +42,8 @@ struct HomeView: View {
                     .padding(.top, 10)
                 }
                 .navigationTitle("Blocked groups")
+                .navigationBarTitleDisplayMode(.large)
+                .navigationBarBackButtonHidden(true)
                 .padding(.horizontal)
                 .toolbar {
                     if showHelpButton {

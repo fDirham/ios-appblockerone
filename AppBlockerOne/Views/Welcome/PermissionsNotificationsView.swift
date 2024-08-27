@@ -9,8 +9,9 @@ import SwiftUI
 import FamilyControls
 
 struct PermissionsNotificationsView: View {
+    @Environment(NavManager.self) private var navManager
     @State private var alertMsg: String? = nil
-    
+
     private var isShowAlert: Binding<Bool> {
         Binding(get: {
             return alertMsg != nil
@@ -31,7 +32,11 @@ struct PermissionsNotificationsView: View {
                     Image(.notificationsLogo)
                     Spacer()
                     Button(action: {
-                        askNotificationPermissions()
+                        if isPreview{
+                            onGranted()
+                        } else {
+                            askNotificationPermissions()
+                        }
                     }) {
                         Text("Grant permissions")
                     }
@@ -43,9 +48,13 @@ struct PermissionsNotificationsView: View {
                             .foregroundStyle(Color.danger)
                     }
                 }
+                .padding()
             }
+            .navigationBarBackButtonHidden(true)
             .task {
-                askNotificationPermissions()
+                if !isPreview {
+                    askNotificationPermissions()
+                }
             }
             .alert(
                 Text("Authorization Failed!"),
@@ -70,14 +79,30 @@ struct PermissionsNotificationsView: View {
     }
     
     private func onGranted(){
-        debugPrint("TODO")
+        navManager.navTo("tutorial-0")
     }
     
     private func onSkip(){
-        debugPrint("TODO")
+        navManager.navTo("tutorial-0")
     }
 }
 
-#Preview {
-    PermissionsNotificationsView()
+struct PermissionsNotificationsView_Preview: PreviewProvider {
+    struct Container: View {
+        @State private var tutorialConfig = TutorialConfig(isTutorial: true)
+        @State private var navManager = NavManager()
+        
+        var body: some View {
+            NavStackView {
+                PermissionsNotificationsView()
+            }
+            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+            .environment(tutorialConfig)
+            .environment(navManager)
+        }
+    }
+    
+    static var previews: some View {
+        Container()
+    }
 }

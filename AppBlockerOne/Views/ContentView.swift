@@ -43,6 +43,12 @@ struct NavStackView<Content: View>: View{
                         Tutorial1View()
                     case "tutorial-2":
                         Tutorial2View()
+                    case "splash":
+                        SplashView()
+                    case "permission-screentime":
+                        PermissionsScreentimeView()
+                    case "permission-notification":
+                        PermissionsNotificationsView()
                     default:
                         if np.pathId.starts(with: "edit-group-") {
                             EditAppGroupView(coreDataContext: viewContext, appGroup: np.appGroup!)
