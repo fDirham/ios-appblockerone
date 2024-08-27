@@ -101,6 +101,7 @@
 		8BE1AA262C7907AB0065DC1B /* BlockedItemDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA222C7907AB0065DC1B /* BlockedItemDefault.swift */; };
 		8BE1AA282C793A770065DC1B /* SettingsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA272C793A770065DC1B /* SettingsError.swift */; };
 		8BE1AA2A2C7D43730065DC1B /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA292C7D43730065DC1B /* HelpView.swift */; };
+		8BE1AA2D2C7E398A0065DC1B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA2C2C7E398A0065DC1B /* HomeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -208,6 +209,7 @@
 		8BE1AA222C7907AB0065DC1B /* BlockedItemDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedItemDefault.swift; sourceTree = "<group>"; };
 		8BE1AA272C793A770065DC1B /* SettingsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsError.swift; sourceTree = "<group>"; };
 		8BE1AA292C7D43730065DC1B /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
+		8BE1AA2C2C7E398A0065DC1B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -367,6 +369,8 @@
 				8BBF76AE2C6BDAD2005EC2D2 /* ContentView.swift */,
 				8BBF76DE2C6E6EFF005EC2D2 /* FamilyActivityTokensView.swift */,
 				8BE1AA292C7D43730065DC1B /* HelpView.swift */,
+				8BE1AA2C2C7E398A0065DC1B /* HomeView.swift */,
+				8BE1AA2B2C7E396C0065DC1B /* Welcome */,
 				8BBF76F32C6EB2DD005EC2D2 /* AppGroupSettings */,
 			);
 			path = Views;
@@ -442,6 +446,13 @@
 				8BBF77402C6FFEAF005EC2D2 /* iosDeviceActivityMonitor.entitlements */,
 			);
 			path = iosDeviceActivityMonitor;
+			sourceTree = "<group>";
+		};
+		8BE1AA2B2C7E396C0065DC1B /* Welcome */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Welcome;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -723,6 +734,7 @@
 				8BE1AA192C77FDDA0065DC1B /* BlockStatsDefault.swift in Sources */,
 				8BE1AA1E2C78077D0065DC1B /* ScheduleHelpers.swift in Sources */,
 				8BADB4112C73F28900E0DCDC /* TokenHelpers.swift in Sources */,
+				8BE1AA2D2C7E398A0065DC1B /* HomeView.swift in Sources */,
 				8B4A0E012C751DE7002722AB /* UserDefaultHelpers.swift in Sources */,
 				8BBF76D62C6D643D005EC2D2 /* OpenMethods.swift in Sources */,
 				8BBF76D42C6D5C81005EC2D2 /* AppGroupSettingsModel.swift in Sources */,
