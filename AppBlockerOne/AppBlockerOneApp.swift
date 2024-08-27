@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct AppBlockerOneApp: App {
     @State private var tutorialConfig = TutorialConfig(isTutorial: true)
+    @State private var navManager = NavManager()
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {
@@ -18,6 +19,7 @@ struct AppBlockerOneApp: App {
                 .foregroundStyle(.fg)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environment(tutorialConfig)
+                .environment(navManager)
         }
     }
 }

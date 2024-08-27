@@ -8,19 +8,58 @@
 import SwiftUI
 
 struct ContentView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    @Environment(NavManager.self) private var navManager
+    
     var body: some View {
-        TutorialView()
+        NavStackView {
+            HomeView()
+        }
+    }
+}
+
+struct NavStackView<Content: View>: View{
+    @Environment(\.managedObjectContext) private var viewContext
+    @Environment(NavManager.self) private var navManager
+    
+    @ViewBuilder let root: Content
+
+    var body: some View {
+        @Bindable var nm = navManager
+        
+        NavigationStack(path: $nm.pathStack){
+            root
+                .navigationDestination(for: NavPath.self) { np in
+                    switch np.pathId {
+                    case "home":
+                        HomeView()
+                    case "new-group":
+                        NewAppGroupView(coreDataContext: viewContext)
+                    case "help":
+                        HelpView()
+                    default:
+                        if np.pathId.starts(with: "edit-group-") {
+                            EditAppGroupView(coreDataContext: viewContext, appGroup: np.appGroup!)
+                        }
+                        else {
+                            EmptyView()
+                        }
+                    }
+                }
+        }
     }
 }
 
 struct ContentView_Preview: PreviewProvider {
     struct Container: View {
         @State private var tutorialConfig = TutorialConfig()
-        
+        @State private var navManager = NavManager()
+
         var body: some View {
             ContentView()
                 .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
                 .environment(tutorialConfig)
+                .environment(navManager)
         }
     }
     

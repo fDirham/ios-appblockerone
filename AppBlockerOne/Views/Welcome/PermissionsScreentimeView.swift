@@ -54,10 +54,8 @@ struct PermissionsScreentimeView: View {
     }
     
     private func askScreentimePermissions() async{
-        let center = UNUserNotificationCenter.current()
         do
         {
-            try await center.requestAuthorization(options: [.alert, .sound, .badge])
             try await AuthorizationCenter.shared.requestAuthorization(for: .individual)
             onGranted()
         }

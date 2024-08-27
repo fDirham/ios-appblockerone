@@ -107,6 +107,7 @@
 		8BE1AA332C7E4B640065DC1B /* PermissionsNotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA322C7E4B640065DC1B /* PermissionsNotificationsView.swift */; };
 		8BE1AA362C7E4D460065DC1B /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA352C7E4D460065DC1B /* TutorialView.swift */; };
 		8BE1AA3D2C7E6B500065DC1B /* TutorialConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA3C2C7E6B500065DC1B /* TutorialConfig.swift */; };
+		8BE1AA3F2C7E86190065DC1B /* NavPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA3E2C7E86190065DC1B /* NavPath.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -220,6 +221,7 @@
 		8BE1AA322C7E4B640065DC1B /* PermissionsNotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsNotificationsView.swift; sourceTree = "<group>"; };
 		8BE1AA352C7E4D460065DC1B /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		8BE1AA3C2C7E6B500065DC1B /* TutorialConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialConfig.swift; sourceTree = "<group>"; };
+		8BE1AA3E2C7E86190065DC1B /* NavPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavPath.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -370,6 +372,7 @@
 				8BBF76D52C6D643D005EC2D2 /* OpenMethods.swift */,
 				8B4A0E4D2C76B0BD002722AB /* UserDefaultModels */,
 				8BE1AA3C2C7E6B500065DC1B /* TutorialConfig.swift */,
+				8BE1AA3E2C7E86190065DC1B /* NavPath.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -757,6 +760,7 @@
 				8B4A0E522C76B45F002722AB /* ScheduleEndFlagDefault.swift in Sources */,
 				8BE1AA2A2C7D43730065DC1B /* HelpView.swift in Sources */,
 				8B4A0E332C766FBD002722AB /* ShieldMemory.swift in Sources */,
+				8BE1AA3F2C7E86190065DC1B /* NavPath.swift in Sources */,
 				8BBF76DD2C6D6EE8005EC2D2 /* Comparable+Clamp.swift in Sources */,
 				8BE1AA282C793A770065DC1B /* SettingsError.swift in Sources */,
 				8B4A0E092C753AE5002722AB /* GroupShieldDefault.swift in Sources */,
