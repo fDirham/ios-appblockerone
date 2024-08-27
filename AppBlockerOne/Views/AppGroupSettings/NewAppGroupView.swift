@@ -9,6 +9,7 @@ import SwiftUI
 import CoreData
 
 struct NewAppGroupView: View {
+    @Environment(TutorialConfig.self) private var tutorialConfig
     @Environment(\.managedObjectContext) private var viewContext
     @State private var sm: AppGroupSettingsModel
 
@@ -27,10 +28,13 @@ struct NewAppGroupView: View {
 struct NewAppGroupView_Preview: PreviewProvider {
     struct Container: View {
         let coreDataContext = PersistenceController.preview.container.viewContext
+        @State private var tutorialConfig = TutorialConfig()
+        
         var body: some View {
             NavigationStack{
                 NewAppGroupView(coreDataContext: coreDataContext)
                     .environment(\.managedObjectContext, coreDataContext)
+                    .environment(tutorialConfig)
             }
         }
     }

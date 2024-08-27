@@ -9,6 +9,7 @@ import SwiftUI
 import FamilyControls
 
 struct AppGroupSettingsView: View, KeyboardReadable {
+    @Environment(TutorialConfig.self) private var tutorialConfig
     @Environment(AppGroupSettingsModel.self) private var sm
     @Environment(\.presentationMode) var presentationMode
     @State private var settingsError = SettingsError()
@@ -39,6 +40,10 @@ struct AppGroupSettingsView: View, KeyboardReadable {
 
     private var showScheduleGroup: Bool {
         return sm.s_blockingEnabled
+    }
+    
+    private var showCancelButton: Bool {
+        return !tutorialConfig.isTutorial
     }
 
     var body: some View {
@@ -120,34 +125,20 @@ struct AppGroupSettingsView: View, KeyboardReadable {
                         Text("Are you sure you want to delete \(sm.groupName)")
                     }
                     .toolbar {
-                        ToolbarItem(placement: .topBarLeading) {
-                            Button(action: {
-                                sm.rollbackLocalChanges()
-                                presentationMode.wrappedValue.dismiss()
-                            }){
-                                Text("Cancel")
-                                    .foregroundStyle(Color.danger)
+                        if showCancelButton {
+                            ToolbarItem(placement: .topBarLeading) {
+                                Button(action: {
+                                    sm.rollbackLocalChanges()
+                                    presentationMode.wrappedValue.dismiss()
+                                }){
+                                    Text("Cancel")
+                                        .foregroundStyle(Color.danger)
+                                }
                             }
                         }
                         ToolbarItem(placement: .topBarTrailing) {
                             if showSave {
-                                Button(action: {
-                                    let saveRes = onSave()
-                                    let isSuccess = saveRes.0
-                                    if !isSuccess {
-                                        if let newSettingsError = saveRes.1 {
-                                            settingsError = newSettingsError
-                                        }
-                                        shakeForm = true
-                                        withAnimation(Animation.spring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
-                                            shakeForm = false
-                                        }
-                                    }
-                                    else {
-                                        presentationMode.wrappedValue.dismiss()
-                                    }
-                                
-                                }){
+                                Button(action: handleSave){
                                     Text("Save")
                                         .foregroundStyle(Color.accent)
                                 }
@@ -189,6 +180,24 @@ struct AppGroupSettingsView: View, KeyboardReadable {
                     }
                 }
             }
+    }
+    
+    private func handleSave(){
+        let saveRes = onSave()
+        let isSuccess = saveRes.0
+        if !isSuccess {
+            if let newSettingsError = saveRes.1 {
+                settingsError = newSettingsError
+            }
+            shakeForm = true
+            withAnimation(Animation.spring(response: 0.2, dampingFraction: 0.2, blendDuration: 0.2)) {
+                shakeForm = false
+            }
+        }
+        else {
+            tutorialConfig.triggerEndStage(forStage: 1)
+            presentationMode.wrappedValue.dismiss()
+        }
     }
 }
 
@@ -394,6 +403,7 @@ struct TimeSettingView: View {
 
 struct AppGroupSettingsView_Preview: PreviewProvider {
     struct Container: View {
+        @State private var tutorialConfig = TutorialConfig()
         @State private var sm: AppGroupSettingsModel = AppGroupSettingsModel(coreDataContext: PersistenceController.preview.container.viewContext)
         
         private func onSave() -> (Bool, SettingsError?){
@@ -405,6 +415,7 @@ struct AppGroupSettingsView_Preview: PreviewProvider {
             NavigationStack{
                 AppGroupSettingsView(onSave: onSave, navTitle: "Settings")
                     .environment(sm)
+                    .environment(tutorialConfig)
             }
         }
     }

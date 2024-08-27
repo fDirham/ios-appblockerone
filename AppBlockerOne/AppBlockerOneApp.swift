@@ -9,6 +9,7 @@ import SwiftUI
 
 @main
 struct AppBlockerOneApp: App {
+    @State private var tutorialConfig = TutorialConfig(isTutorial: true)
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {
@@ -16,6 +17,7 @@ struct AppBlockerOneApp: App {
             ContentView()
                 .foregroundStyle(.fg)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environment(tutorialConfig)
         }
     }
 }

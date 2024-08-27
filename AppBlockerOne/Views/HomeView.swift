@@ -13,26 +13,33 @@ import ManagedSettings
 
 struct HomeView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(TutorialConfig.self) private var tutorialConfig
     
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \AppGroup.timestamp, ascending: true)],
         animation: .default)
     private var appGroups: FetchedResults<AppGroup>
     
+    @State private var navPaths: [String] = []
+    
+    var showHelpButton: Bool {
+        return !tutorialConfig.isTutorial
+    }
+
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $navPaths) {
             Color.bg
                 .ignoresSafeArea()
                 .overlay {
                     ScrollView {
                         LazyVGrid(columns: columns, alignment: .leading) {
                             ForEach(appGroups) {appGroup in
-                                NavigationLink(destination: EditAppGroupView(coreDataContext: viewContext, appGroup: appGroup)) {
-                                    
+                                NavigationLink( destination: {
+                                    EditAppGroupView(coreDataContext: viewContext, appGroup: appGroup)
+                                }) {
                                     AppGroupBlockView(appGroup: appGroup)
-                                    
                                 }
                             }
                         }
@@ -41,20 +48,33 @@ struct HomeView: View {
                     .navigationTitle("Blocked groups")
                     .padding(.horizontal)
                     .toolbar {
-                        ToolbarItem(placement: .topBarLeading) {
-                            NavigationLink(destination: HelpView()) {
-                                Text("Help")
-                                    .foregroundStyle(.accent)
+                        if showHelpButton {
+                            ToolbarItem(placement: .topBarLeading) {
+                                NavigationLink(destination: HelpView()) {
+                                    Text("Help")
+                                        .foregroundStyle(.accent)
+                                }
                             }
                         }
                         ToolbarItem(placement: .topBarTrailing) {
-                            NavigationLink(destination: NewAppGroupView(coreDataContext: viewContext)) {
+                            Button(action: {
+                                tutorialConfig.triggerEndStage(forStage: 0)
+                                navPaths.append("new")
+                            }){
                                 Image(systemName: "plus")
                                     .foregroundStyle(.accent)
                             }
                         }
                     }
                 }
+                .navigationDestination(for: String.self, destination: {val in
+                    if val == "new" {
+                        NewAppGroupView(coreDataContext: viewContext)
+                    }
+                    else{
+                        EmptyView()
+                    }
+                })
         }
     }
 }
@@ -105,6 +125,18 @@ struct AppGroupBlockView: View {
     
 }
 
-#Preview {
-    HomeView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+struct HomeView_Preview: PreviewProvider {
+    struct Container: View {
+        @State private var tutorialConfig = TutorialConfig()
+        
+        var body: some View {
+            HomeView()
+                .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+                .environment(tutorialConfig)
+        }
+    }
+    
+    static var previews: some View {
+        Container()
+    }
 }

@@ -105,6 +105,8 @@
 		8BE1AA2F2C7E3A7D0065DC1B /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA2E2C7E3A7D0065DC1B /* SplashView.swift */; };
 		8BE1AA312C7E483F0065DC1B /* PermissionsScreentimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA302C7E483F0065DC1B /* PermissionsScreentimeView.swift */; };
 		8BE1AA332C7E4B640065DC1B /* PermissionsNotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA322C7E4B640065DC1B /* PermissionsNotificationsView.swift */; };
+		8BE1AA362C7E4D460065DC1B /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA352C7E4D460065DC1B /* TutorialView.swift */; };
+		8BE1AA3D2C7E6B500065DC1B /* TutorialConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA3C2C7E6B500065DC1B /* TutorialConfig.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -216,6 +218,8 @@
 		8BE1AA2E2C7E3A7D0065DC1B /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		8BE1AA302C7E483F0065DC1B /* PermissionsScreentimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsScreentimeView.swift; sourceTree = "<group>"; };
 		8BE1AA322C7E4B640065DC1B /* PermissionsNotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsNotificationsView.swift; sourceTree = "<group>"; };
+		8BE1AA352C7E4D460065DC1B /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
+		8BE1AA3C2C7E6B500065DC1B /* TutorialConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialConfig.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -365,6 +369,7 @@
 				8BE1AA272C793A770065DC1B /* SettingsError.swift */,
 				8BBF76D52C6D643D005EC2D2 /* OpenMethods.swift */,
 				8B4A0E4D2C76B0BD002722AB /* UserDefaultModels */,
+				8BE1AA3C2C7E6B500065DC1B /* TutorialConfig.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -372,10 +377,12 @@
 		8BBF76C22C6BE880005EC2D2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8BE1AA392C7E54150065DC1B /* Helpers */,
 				8BBF76AE2C6BDAD2005EC2D2 /* ContentView.swift */,
 				8BBF76DE2C6E6EFF005EC2D2 /* FamilyActivityTokensView.swift */,
 				8BE1AA292C7D43730065DC1B /* HelpView.swift */,
 				8BE1AA2C2C7E398A0065DC1B /* HomeView.swift */,
+				8BE1AA342C7E4D280065DC1B /* Tutorial */,
 				8BE1AA2B2C7E396C0065DC1B /* Welcome */,
 				8BBF76F32C6EB2DD005EC2D2 /* AppGroupSettings */,
 			);
@@ -462,6 +469,21 @@
 				8BE1AA322C7E4B640065DC1B /* PermissionsNotificationsView.swift */,
 			);
 			path = Welcome;
+			sourceTree = "<group>";
+		};
+		8BE1AA342C7E4D280065DC1B /* Tutorial */ = {
+			isa = PBXGroup;
+			children = (
+				8BE1AA352C7E4D460065DC1B /* TutorialView.swift */,
+			);
+			path = Tutorial;
+			sourceTree = "<group>";
+		};
+		8BE1AA392C7E54150065DC1B /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -721,9 +743,11 @@
 				8BE1AA332C7E4B640065DC1B /* PermissionsNotificationsView.swift in Sources */,
 				8BBF76B62C6BDAD5005EC2D2 /* Persistence.swift in Sources */,
 				8BBF76C42C6BE8A5005EC2D2 /* AppGroupSettingsView.swift in Sources */,
+				8BE1AA3D2C7E6B500065DC1B /* TutorialConfig.swift in Sources */,
 				8BE1AA232C7907AB0065DC1B /* BlockedItemDefault.swift in Sources */,
 				8BBF77322C6FFA31005EC2D2 /* String+Error.swift in Sources */,
 				8BBF76AF2C6BDAD2005EC2D2 /* ContentView.swift in Sources */,
+				8BE1AA362C7E4D460065DC1B /* TutorialView.swift in Sources */,
 				8B4A0E3C2C7680FF002722AB /* UserDefaults+JSONCoding.swift in Sources */,
 				8B4A0E4F2C76B0EF002722AB /* ScheduleDefault.swift in Sources */,
 				8BBF76AD2C6BDAD2005EC2D2 /* AppBlockerOneApp.swift in Sources */,
