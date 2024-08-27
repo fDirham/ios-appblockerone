@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct AppBlockerOneApp: App {
-    @State private var tutorialConfig = TutorialConfig(isTutorial: true)
+    @State private var tutorialConfig = TutorialConfig(isTutorial: false)
     @State private var navManager = NavManager()
     let persistenceController = PersistenceController.shared
 

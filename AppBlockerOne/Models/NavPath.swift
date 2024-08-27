@@ -13,6 +13,14 @@ import Foundation
     func navTo(_ navPath: NavPath){
         pathStack.append(navPath)
     }
+    
+    func navTo(_ pathId: String){
+        pathStack.append(NavPath(pathId: pathId))
+    }
+    
+    func goBack(){
+        var _ = pathStack.popLast()
+    }
 }
 
 struct NavPath: Hashable, Equatable {

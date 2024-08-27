@@ -9,9 +9,11 @@ import SwiftUI
 import FamilyControls
 
 struct AppGroupSettingsView: View, KeyboardReadable {
-    @Environment(TutorialConfig.self) private var tutorialConfig
-    @Environment(AppGroupSettingsModel.self) private var sm
     @Environment(\.presentationMode) var presentationMode
+    @Environment(AppGroupSettingsModel.self) private var sm
+    @Environment(TutorialConfig.self) private var tutorialConfig
+    @Environment(NavManager.self) private var navManager
+
     @State private var settingsError = SettingsError()
     @State private var showSave: Bool = true
     @State private var shakeForm: Bool = false
@@ -195,8 +197,13 @@ struct AppGroupSettingsView: View, KeyboardReadable {
             }
         }
         else {
-            tutorialConfig.triggerEndStage(forStage: 1)
-            presentationMode.wrappedValue.dismiss()
+            if tutorialConfig.isTutorial {
+                navManager.navTo("tutorial-2")
+                tutorialConfig.triggerEndStage(forStage: 1)
+            }
+            else {
+                navManager.goBack()
+            }
         }
     }
 }
@@ -403,20 +410,23 @@ struct TimeSettingView: View {
 
 struct AppGroupSettingsView_Preview: PreviewProvider {
     struct Container: View {
-        @State private var tutorialConfig = TutorialConfig()
         @State private var sm: AppGroupSettingsModel = AppGroupSettingsModel(coreDataContext: PersistenceController.preview.container.viewContext)
-        
+        @State private var tutorialConfig = TutorialConfig()
+        @State private var navManager = NavManager()
+
         private func onSave() -> (Bool, SettingsError?){
             return (false,
             SettingsError(faSelection: "Empty apps", schedule: "Hmm...",alertMsg: "Save clicked with fake failures")
             )
         }
         var body: some View {
-            NavigationStack{
+            NavStackView{
                 AppGroupSettingsView(onSave: onSave, navTitle: "Settings")
-                    .environment(sm)
-                    .environment(tutorialConfig)
             }
+            .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+            .environment(tutorialConfig)
+            .environment(navManager)
+            .environment(sm)
         }
     }
     

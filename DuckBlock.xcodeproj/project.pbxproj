@@ -105,9 +105,11 @@
 		8BE1AA2F2C7E3A7D0065DC1B /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA2E2C7E3A7D0065DC1B /* SplashView.swift */; };
 		8BE1AA312C7E483F0065DC1B /* PermissionsScreentimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA302C7E483F0065DC1B /* PermissionsScreentimeView.swift */; };
 		8BE1AA332C7E4B640065DC1B /* PermissionsNotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA322C7E4B640065DC1B /* PermissionsNotificationsView.swift */; };
-		8BE1AA362C7E4D460065DC1B /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA352C7E4D460065DC1B /* TutorialView.swift */; };
 		8BE1AA3D2C7E6B500065DC1B /* TutorialConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA3C2C7E6B500065DC1B /* TutorialConfig.swift */; };
 		8BE1AA3F2C7E86190065DC1B /* NavPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA3E2C7E86190065DC1B /* NavPath.swift */; };
+		8BE1AA412C7E8E3F0065DC1B /* Tutorial0View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA402C7E8E3F0065DC1B /* Tutorial0View.swift */; };
+		8BE1AA432C7E90230065DC1B /* Tutorial1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA422C7E90230065DC1B /* Tutorial1View.swift */; };
+		8BE1AA452C7E915C0065DC1B /* Tutorial2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA442C7E915C0065DC1B /* Tutorial2View.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -219,9 +221,11 @@
 		8BE1AA2E2C7E3A7D0065DC1B /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		8BE1AA302C7E483F0065DC1B /* PermissionsScreentimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsScreentimeView.swift; sourceTree = "<group>"; };
 		8BE1AA322C7E4B640065DC1B /* PermissionsNotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsNotificationsView.swift; sourceTree = "<group>"; };
-		8BE1AA352C7E4D460065DC1B /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		8BE1AA3C2C7E6B500065DC1B /* TutorialConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialConfig.swift; sourceTree = "<group>"; };
 		8BE1AA3E2C7E86190065DC1B /* NavPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavPath.swift; sourceTree = "<group>"; };
+		8BE1AA402C7E8E3F0065DC1B /* Tutorial0View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutorial0View.swift; sourceTree = "<group>"; };
+		8BE1AA422C7E90230065DC1B /* Tutorial1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutorial1View.swift; sourceTree = "<group>"; };
+		8BE1AA442C7E915C0065DC1B /* Tutorial2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutorial2View.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -380,7 +384,6 @@
 		8BBF76C22C6BE880005EC2D2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				8BE1AA392C7E54150065DC1B /* Helpers */,
 				8BBF76AE2C6BDAD2005EC2D2 /* ContentView.swift */,
 				8BBF76DE2C6E6EFF005EC2D2 /* FamilyActivityTokensView.swift */,
 				8BE1AA292C7D43730065DC1B /* HelpView.swift */,
@@ -477,16 +480,11 @@
 		8BE1AA342C7E4D280065DC1B /* Tutorial */ = {
 			isa = PBXGroup;
 			children = (
-				8BE1AA352C7E4D460065DC1B /* TutorialView.swift */,
+				8BE1AA402C7E8E3F0065DC1B /* Tutorial0View.swift */,
+				8BE1AA422C7E90230065DC1B /* Tutorial1View.swift */,
+				8BE1AA442C7E915C0065DC1B /* Tutorial2View.swift */,
 			);
 			path = Tutorial;
-			sourceTree = "<group>";
-		};
-		8BE1AA392C7E54150065DC1B /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -750,17 +748,18 @@
 				8BE1AA232C7907AB0065DC1B /* BlockedItemDefault.swift in Sources */,
 				8BBF77322C6FFA31005EC2D2 /* String+Error.swift in Sources */,
 				8BBF76AF2C6BDAD2005EC2D2 /* ContentView.swift in Sources */,
-				8BE1AA362C7E4D460065DC1B /* TutorialView.swift in Sources */,
 				8B4A0E3C2C7680FF002722AB /* UserDefaults+JSONCoding.swift in Sources */,
 				8B4A0E4F2C76B0EF002722AB /* ScheduleDefault.swift in Sources */,
 				8BBF76AD2C6BDAD2005EC2D2 /* AppBlockerOneApp.swift in Sources */,
 				8B4A0E032C753602002722AB /* GroupUserDefaults.swift in Sources */,
+				8BE1AA452C7E915C0065DC1B /* Tutorial2View.swift in Sources */,
 				8BBF76D12C6D1FB1005EC2D2 /* ReusableStyles.swift in Sources */,
 				8BBF76DF2C6E6EFF005EC2D2 /* FamilyActivityTokensView.swift in Sources */,
 				8B4A0E522C76B45F002722AB /* ScheduleEndFlagDefault.swift in Sources */,
 				8BE1AA2A2C7D43730065DC1B /* HelpView.swift in Sources */,
 				8B4A0E332C766FBD002722AB /* ShieldMemory.swift in Sources */,
 				8BE1AA3F2C7E86190065DC1B /* NavPath.swift in Sources */,
+				8BE1AA432C7E90230065DC1B /* Tutorial1View.swift in Sources */,
 				8BBF76DD2C6D6EE8005EC2D2 /* Comparable+Clamp.swift in Sources */,
 				8BE1AA282C793A770065DC1B /* SettingsError.swift in Sources */,
 				8B4A0E092C753AE5002722AB /* GroupShieldDefault.swift in Sources */,
@@ -778,6 +777,7 @@
 				8B4A0E012C751DE7002722AB /* UserDefaultHelpers.swift in Sources */,
 				8BBF76D62C6D643D005EC2D2 /* OpenMethods.swift in Sources */,
 				8BBF76D42C6D5C81005EC2D2 /* AppGroupSettingsModel.swift in Sources */,
+				8BE1AA412C7E8E3F0065DC1B /* Tutorial0View.swift in Sources */,
 				8BBF76E22C6E7C23005EC2D2 /* Helpers.swift in Sources */,
 				8BBF76B92C6BDAD5005EC2D2 /* AppBlockerOne.xcdatamodeld in Sources */,
 			);

@@ -54,8 +54,13 @@ struct HomeView: View {
                     }
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(action: {
-                            tutorialConfig.triggerEndStage(forStage: 0)
-                            navManager.navTo(NavPath(pathId: "new-group"))
+                            if tutorialConfig.isTutorial {
+                                tutorialConfig.triggerEndStage(forStage: 0)
+                                navManager.navTo(NavPath(pathId: "tutorial-1"))
+                            }
+                            else {
+                                navManager.navTo(NavPath(pathId: "new-group"))
+                            }
                         }){
                             Image(systemName: "plus")
                                 .foregroundStyle(.accent)

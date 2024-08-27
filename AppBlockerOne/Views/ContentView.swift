@@ -37,6 +37,12 @@ struct NavStackView<Content: View>: View{
                         NewAppGroupView(coreDataContext: viewContext)
                     case "help":
                         HelpView()
+                    case "tutorial-0":
+                        Tutorial0View()
+                    case "tutorial-1":
+                        Tutorial1View()
+                    case "tutorial-2":
+                        Tutorial2View()
                     default:
                         if np.pathId.starts(with: "edit-group-") {
                             EditAppGroupView(coreDataContext: viewContext, appGroup: np.appGroup!)
