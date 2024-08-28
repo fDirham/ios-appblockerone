@@ -25,6 +25,10 @@ struct HomeView: View {
         return !tutorialConfig.isTutorial
     }
     
+    var allowAppBlockEdit: Bool {
+        return !tutorialConfig.isTutorial
+    }
+    
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
@@ -33,9 +37,11 @@ struct HomeView: View {
             .overlay {
                 ScrollView {
                     LazyVGrid(columns: columns, alignment: .leading) {
-                        ForEach(appGroups) {appGroup in
-                            NavigationLink( value: NavPath(pathId: "edit-group-\(appGroup.id!.uuidString)", appGroup: appGroup)) {
-                                AppGroupBlockView(appGroup: appGroup)
+                        if allowAppBlockEdit {
+                            ForEach(appGroups) {appGroup in
+                                NavigationLink( value: NavPath(pathId: "edit-group-\(appGroup.id!.uuidString)", appGroup: appGroup)) {
+                                    AppGroupBlockView(appGroup: appGroup)
+                                }
                             }
                         }
                     }

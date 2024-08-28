@@ -43,6 +43,22 @@ struct PillButton: ViewModifier {
     }
 }
 
+struct HelpTitle: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .font(.title2)
+            .padding(.bottom, 2)
+            .fontWeight(.bold)
+    }
+}
+
+struct HelpText: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .padding(.bottom, 16)
+    }
+}
+
 extension View {
     public func settingBlockBG ()-> some View {
         modifier(SettingBlockBG())
@@ -58,5 +74,13 @@ extension View {
     
     public func pillButton() -> some View {
         modifier(PillButton())
+    }
+    
+    public func helpTitle() -> some View {
+        modifier(HelpTitle())
+    }
+    
+    public func helpText() -> some View {
+        modifier(HelpText())
     }
 }
