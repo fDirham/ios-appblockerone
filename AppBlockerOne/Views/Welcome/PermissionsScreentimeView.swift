@@ -49,7 +49,11 @@ struct PermissionsScreentimeView: View {
             }
             .navigationBarBackButtonHidden(true)
             .task {
-                if !isPreview {
+                do {
+                    try await waitForS(seconds: 1)
+                    await askScreentimePermissions()
+                }
+                catch {
                     await askScreentimePermissions()
                 }
             }

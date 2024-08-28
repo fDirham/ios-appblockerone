@@ -9,11 +9,25 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(\.managedObjectContext) private var viewContext
+    @Environment(TutorialConfig.self) private var tutorialConfig
     @Environment(NavManager.self) private var navManager
     
     var body: some View {
         NavStackView {
-            HomeView()
+            HelloWorld()
+        }
+        .onAppear {
+            // Check tutorial
+            let ud = GroupUserDefaults()
+            let isTutorialDone = ud.bool(forKey: DEFAULT_KEY_TUTORIAL_DONE)
+            if isTutorialDone {
+                tutorialConfig.isTutorial = false
+                navManager.navTo("home")
+            }
+            else {
+                tutorialConfig.isTutorial = true
+                navManager.navTo("splash")
+            }
         }
     }
 }
@@ -32,26 +46,26 @@ struct NavStackView<Content: View>: View{
                 .navigationDestination(for: NavPath.self) { np in
                     switch np.pathId {
                     case "home":
-                        HomeView()
+                        NavigationLazyView(HomeView())
                     case "new-group":
-                        NewAppGroupView(coreDataContext: viewContext)
+                        NavigationLazyView(NewAppGroupView(coreDataContext: viewContext))
                     case "help":
-                        HelpView()
+                        NavigationLazyView(HelpView())
                     case "tutorial-0":
-                        Tutorial0View()
+                        NavigationLazyView(Tutorial0View())
                     case "tutorial-1":
-                        Tutorial1View()
+                        NavigationLazyView(Tutorial1View())
                     case "tutorial-2":
-                        Tutorial2View()
+                        NavigationLazyView(Tutorial2View())
                     case "splash":
-                        SplashView()
+                        NavigationLazyView(SplashView())
                     case "permission-screentime":
-                        PermissionsScreentimeView()
+                        NavigationLazyView(PermissionsScreentimeView())
                     case "permission-notification":
-                        PermissionsNotificationsView()
+                        NavigationLazyView(PermissionsNotificationsView())
                     default:
                         if np.pathId.starts(with: "edit-group-") {
-                            EditAppGroupView(coreDataContext: viewContext, appGroup: np.appGroup!)
+                            NavigationLazyView(EditAppGroupView(coreDataContext: viewContext, appGroup: np.appGroup!))
                         }
                         else {
                             EmptyView()
@@ -61,6 +75,17 @@ struct NavStackView<Content: View>: View{
         }
     }
 }
+
+struct NavigationLazyView<Content: View>: View {
+    let build: () -> Content
+    init(_ build: @autoclosure @escaping () -> Content) {
+        self.build = build
+    }
+    var body: Content {
+        build()
+    }
+}
+
 
 struct ContentView_Preview: PreviewProvider {
     struct Container: View {

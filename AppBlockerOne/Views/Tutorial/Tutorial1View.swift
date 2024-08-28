@@ -16,9 +16,7 @@ struct Tutorial1View: View {
         ZStack {
             NewAppGroupView(coreDataContext: viewContext)
                 .onTapGesture {
-                    withAnimation {
-                        tutorialOpacity = 0
-                    }
+                    dismissTutorial()
                 }
             VStack{
                 Text("Fill in this form and tap save when done")
@@ -29,11 +27,33 @@ struct Tutorial1View: View {
                     .opacity(tutorialOpacity)
                 Spacer()
             }
+            .onTapGesture {
+                dismissTutorial()
+            }
             .onAppear {
                 withAnimation {
                     tutorialOpacity = 1
                 }
             }
+            .task {
+                do {
+                    try await waitForS(seconds: 3)
+                    withAnimation{
+                        tutorialOpacity = 0
+                    }
+                }
+                catch {
+                    withAnimation{
+                        tutorialOpacity = 0
+                    }
+                }
+            }
+        }
+    }
+    
+    private func dismissTutorial(){
+        withAnimation {
+            tutorialOpacity = 0
         }
     }
 }

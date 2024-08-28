@@ -19,5 +19,10 @@
 	<array>
 		<string>Poppins-Bold.ttf</string>
 	</array>
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>splashBgColor</string>
+	</dict>
 </dict>
 </plist>

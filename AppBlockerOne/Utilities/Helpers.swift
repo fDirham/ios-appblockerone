@@ -32,3 +32,7 @@ func debugPrint(_ message: String){
     return
 #endif
 }
+
+func waitForS(seconds: Double) async throws {
+    try await Task.sleep(nanoseconds: UInt64(seconds * Double(NSEC_PER_SEC)))
+}

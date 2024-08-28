@@ -10,6 +10,7 @@ import ManagedSettings
 
 func getIdFromToken<T>(_ token: Token<T>) throws -> String {
     let tokenStr = try encodeJSONObj(token)
-    return String(tokenStr.suffix(13).prefix(10))
+    let toReturn = String(tokenStr.suffix(13).prefix(10))
+    return toReturn
 }
 

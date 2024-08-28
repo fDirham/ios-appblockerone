@@ -233,8 +233,7 @@ import ManagedSettings
 
         // Stop monitoring DAM activities a few seconds after
         Task{
-            let seconds: Double = 3
-            try await Task.sleep(nanoseconds: UInt64(seconds * Double(NSEC_PER_SEC)))
+            try await waitForS(seconds: 3)
             
             // Stop monitoring in DAM
             let center = DeviceActivityCenter()
@@ -366,7 +365,12 @@ import ManagedSettings
     
     private func _getModifiedTokensBeforeSync() throws -> AddRemoveTokenBatch{
         if cdObj == nil {
-            return (added: TokenSplit(), removed: TokenSplit())
+            return (added: TokenSplit(
+                appTokens: faSelection.applicationTokens,
+                webTokens: faSelection.webDomainTokens,
+                catTokens: faSelection.categoryTokens
+            ),
+                    removed: TokenSplit())
         }
         
         let cdoFa: FamilyActivitySelection = try decodeJSONObj(cdObj!.faSelection!)

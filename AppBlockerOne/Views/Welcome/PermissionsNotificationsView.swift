@@ -52,7 +52,11 @@ struct PermissionsNotificationsView: View {
             }
             .navigationBarBackButtonHidden(true)
             .task {
-                if !isPreview {
+                do {
+                    try await waitForS(seconds: 1)
+                    askNotificationPermissions()
+                }
+                catch {
                     askNotificationPermissions()
                 }
             }

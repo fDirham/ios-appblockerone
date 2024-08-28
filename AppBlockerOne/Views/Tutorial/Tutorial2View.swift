@@ -25,15 +25,22 @@ struct Tutorial2View: View {
                 Spacer()
             }
             .onAppear {
-                // TODO: Set to non tutorial
+                if !tutorialConfig.isTutorial{
+                    return
+                }
+                
+                tutorialConfig.isTutorial = false
+                
                 withAnimation {
                     tutorialOpacity = 1
                 }
+                
+                let ud = GroupUserDefaults()
+                ud.set(true, forKey: DEFAULT_KEY_TUTORIAL_DONE)
             }
             .task {
                 do {
-                    let seconds: Double = 3
-                    try await Task.sleep(nanoseconds: UInt64(seconds * Double(NSEC_PER_SEC)))
+                    try await waitForS(seconds: 3)
                     withAnimation{
                         tutorialOpacity = 0
                     }

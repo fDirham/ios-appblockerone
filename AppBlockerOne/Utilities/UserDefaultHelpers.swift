@@ -81,3 +81,5 @@ func getScheduleEndFlagDefaultKey(_ groupId: String?) -> String? {
 func getBlockStatsDefaultKey() -> String {
     return "blockstats_"
 }
+
+let DEFAULT_KEY_TUTORIAL_DONE = "tutorialdone_"

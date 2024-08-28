@@ -110,6 +110,7 @@
 		8BE1AA412C7E8E3F0065DC1B /* Tutorial0View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA402C7E8E3F0065DC1B /* Tutorial0View.swift */; };
 		8BE1AA432C7E90230065DC1B /* Tutorial1View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA422C7E90230065DC1B /* Tutorial1View.swift */; };
 		8BE1AA452C7E915C0065DC1B /* Tutorial2View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA442C7E915C0065DC1B /* Tutorial2View.swift */; };
+		8BE1AA472C7E9D190065DC1B /* HelloWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA462C7E9D190065DC1B /* HelloWorld.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -226,6 +227,7 @@
 		8BE1AA402C7E8E3F0065DC1B /* Tutorial0View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutorial0View.swift; sourceTree = "<group>"; };
 		8BE1AA422C7E90230065DC1B /* Tutorial1View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutorial1View.swift; sourceTree = "<group>"; };
 		8BE1AA442C7E915C0065DC1B /* Tutorial2View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutorial2View.swift; sourceTree = "<group>"; };
+		8BE1AA462C7E9D190065DC1B /* HelloWorld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelloWorld.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -388,6 +390,7 @@
 				8BBF76DE2C6E6EFF005EC2D2 /* FamilyActivityTokensView.swift */,
 				8BE1AA292C7D43730065DC1B /* HelpView.swift */,
 				8BE1AA2C2C7E398A0065DC1B /* HomeView.swift */,
+				8BE1AA462C7E9D190065DC1B /* HelloWorld.swift */,
 				8BE1AA342C7E4D280065DC1B /* Tutorial */,
 				8BE1AA2B2C7E396C0065DC1B /* Welcome */,
 				8BBF76F32C6EB2DD005EC2D2 /* AppGroupSettings */,
@@ -740,6 +743,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BBF76F52C6EB346005EC2D2 /* EditAppGroupView.swift in Sources */,
+				8BE1AA472C7E9D190065DC1B /* HelloWorld.swift in Sources */,
 				8BE1AA312C7E483F0065DC1B /* PermissionsScreentimeView.swift in Sources */,
 				8BE1AA332C7E4B640065DC1B /* PermissionsNotificationsView.swift in Sources */,
 				8BBF76B62C6BDAD5005EC2D2 /* Persistence.swift in Sources */,
@@ -1111,7 +1115,6 @@
 				INFOPLIST_FILE = AppBlockerOne/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
@@ -1144,7 +1147,6 @@
 				INFOPLIST_FILE = AppBlockerOne/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
