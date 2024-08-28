@@ -17,9 +17,7 @@ struct Tutorial2View: View {
             HomeView()
             VStack{
                 Text("Enjoy :)")
-                    .multilineTextAlignment(.center)
-                    .padding()
-                    .background(.splashPond)
+                    .tutorialText()
                     .offset(y: 100)
                     .opacity(tutorialOpacity)
                 Spacer()

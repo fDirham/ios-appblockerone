@@ -20,9 +20,7 @@ struct Tutorial1View: View {
                 }
             VStack{
                 Text("Fill in this form and tap save when done")
-                    .multilineTextAlignment(.center)
-                    .padding()
-                    .background(.splashPond)
+                    .tutorialText()
                     .offset(y: 40)
                     .opacity(tutorialOpacity)
                 Spacer()

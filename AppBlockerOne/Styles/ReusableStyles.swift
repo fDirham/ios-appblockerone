@@ -46,7 +46,8 @@ struct PillButton: ViewModifier {
 struct PillButtonMini: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .padding(6)
+            .padding(.vertical, 6)
+            .padding(.horizontal, 22)
             .background(Color.accentColor)
             .clipShape(Capsule())
             .foregroundStyle(.fg)
@@ -67,6 +68,18 @@ struct HelpText: ViewModifier {
     func body(content: Content) -> some View {
         content
             .padding(.bottom, 16)
+    }
+}
+
+struct TutorialText: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .multilineTextAlignment(.center)
+            .padding(.vertical, 6)
+            .padding(.horizontal, 22)
+            .background(Color.splashPond)
+            .clipShape(Capsule())
+            .foregroundStyle(.fg)
     }
 }
 
@@ -97,5 +110,9 @@ extension View {
     
     public func helpText() -> some View {
         modifier(HelpText())
+    }
+    
+    public func tutorialText() -> some View {
+        modifier(TutorialText())
     }
 }

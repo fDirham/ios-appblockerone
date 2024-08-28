@@ -16,9 +16,7 @@ struct Tutorial0View: View {
             HomeView()
             VStack{
                 Text("To start blocking apps, tap the + icon")
-                    .multilineTextAlignment(.center)
-                    .padding()
-                    .background(.splashPond)
+                    .tutorialText()
                     .offset(y: 100)
                     .opacity(tutorialOpacity)
                 Spacer()
