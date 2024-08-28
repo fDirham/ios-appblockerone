@@ -9,6 +9,7 @@ import SwiftUI
 import FamilyControls
 
 struct PermissionsNotificationsView: View {
+    @Environment(TutorialConfig.self) private var tutorialConfig
     @Environment(NavManager.self) private var navManager
     @State private var alertMsg: String? = nil
 
@@ -83,11 +84,21 @@ struct PermissionsNotificationsView: View {
     }
     
     private func onGranted(){
-        navManager.navTo("tutorial-0")
+        if tutorialConfig.isTutorial {
+            navManager.navTo("tutorial-0")
+        }
+        else {
+            navManager.goBack()
+        }
     }
     
     private func onSkip(){
-        navManager.navTo("tutorial-0")
+        if tutorialConfig.isTutorial {
+            navManager.navTo("tutorial-0")
+        }
+        else {
+            navManager.goBack()
+        }
     }
 }
 

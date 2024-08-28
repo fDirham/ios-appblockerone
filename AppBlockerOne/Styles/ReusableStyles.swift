@@ -43,6 +43,17 @@ struct PillButton: ViewModifier {
     }
 }
 
+struct PillButtonMini: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .padding(6)
+            .background(Color.accentColor)
+            .clipShape(Capsule())
+            .foregroundStyle(.fg)
+            .fontWeight(.semibold)
+    }
+}
+
 struct HelpTitle: ViewModifier {
     func body(content: Content) -> some View {
         content
@@ -76,6 +87,10 @@ extension View {
         modifier(PillButton())
     }
     
+    public func pillButtonMini() -> some View {
+        modifier(PillButtonMini())
+    }
+
     public func helpTitle() -> some View {
         modifier(HelpTitle())
     }

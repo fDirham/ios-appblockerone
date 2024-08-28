@@ -6,10 +6,17 @@
 //
 
 import SwiftUI
+import FamilyControls
 
 struct HelpView: View {
     @Environment(TutorialConfig.self) private var tutorialConfig
     @Environment(NavManager.self) private var navManager
+    
+    @State private var showNotificationPermissions = false
+    
+    private var showScreenTimePermissions: Bool {
+        AuthorizationCenter.shared.authorizationStatus != .approved
+    }
     
     var body: some View {
         Color.bg
@@ -23,8 +30,8 @@ struct HelpView: View {
                             tutorialConfig.isTutorial = true
                             navManager.navTo("tutorial-0")
                         }) {
-                            Text("Sure!")
-                                .pillButton()
+                            Text("Go to tutorial")
+                                .pillButtonMini()
                         }
                         .padding(.bottom, 16)
                         Text("What does strict block do?")
@@ -47,12 +54,38 @@ struct HelpView: View {
                             .helpTitle()
                         Text("You can manage to block 40 items, items are either apps, websites, or categories. You can only make 10 groups. These limitations exist due to hardware limitations.")
                             .helpText()
+                        if showScreenTimePermissions {
+                            Text("Grant screen time permissions")
+                                .helpTitle()
+                            Button(action: {
+                                navManager.navTo("permission-screentime")
+                            }) {
+                                Text("Grant")
+                                    .pillButtonMini()
+                            }
+                        }
+                        if showNotificationPermissions {
+                            Text("Grant notifications permissions")
+                                .helpTitle()
+                            Button(action: {
+                                navManager.navTo("permission-notification")
+                            }) {
+                                Text("Grant")
+                                    .pillButtonMini()
+                            }
+                        }
                         Spacer()
                     }
                     .padding()
                 }
             }
             .navigationTitle("Help")
+            .onAppear {
+                let center = UNUserNotificationCenter.current()
+                center.getNotificationSettings(completionHandler: { settings in
+                    showNotificationPermissions = settings.authorizationStatus != .authorized
+                })
+            }
     }
 }
 

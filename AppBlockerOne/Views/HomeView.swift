@@ -29,6 +29,10 @@ struct HomeView: View {
         return !tutorialConfig.isTutorial
     }
     
+    var isEmpty: Bool {
+        return !allowAppBlockEdit && appGroups.count > 0
+    }
+    
     let columns = [GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
@@ -36,16 +40,21 @@ struct HomeView: View {
             .ignoresSafeArea()
             .overlay {
                 ScrollView {
-                    LazyVGrid(columns: columns, alignment: .leading) {
-                        if allowAppBlockEdit {
-                            ForEach(appGroups) {appGroup in
-                                NavigationLink( value: NavPath(pathId: "edit-group-\(appGroup.id!.uuidString)", appGroup: appGroup)) {
-                                    AppGroupBlockView(appGroup: appGroup)
-                                }
+                    if !isEmpty {
+                        LazyVGrid(columns: columns, alignment: .leading) {
+                                ForEach(appGroups) {appGroup in
+                                    NavigationLink( value: NavPath(pathId: "edit-group-\(appGroup.id!.uuidString)", appGroup: appGroup)) {
+                                        AppGroupBlockView(appGroup: appGroup)
+                                    }
                             }
                         }
+                        .padding(.top, 10)
                     }
-                    .padding(.top, 10)
+                    else {
+                        Text("Add an app group by tapping the + button!")
+                            .foregroundStyle(.fgFaint)
+                            .padding(.top, 10)
+                    }
                 }
                 .navigationTitle("Blocked groups")
                 .navigationBarTitleDisplayMode(.large)

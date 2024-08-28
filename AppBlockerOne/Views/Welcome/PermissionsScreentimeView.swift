@@ -9,6 +9,7 @@ import SwiftUI
 import FamilyControls
 
 struct PermissionsScreentimeView: View {
+    @Environment(TutorialConfig.self) private var tutorialConfig
     @Environment(NavManager.self) private var navManager
     @State private var alertMsg: String? = nil
     
@@ -80,7 +81,12 @@ struct PermissionsScreentimeView: View {
     }
     
     private func onGranted(){
-        navManager.navTo("permission-notification")
+        if tutorialConfig.isTutorial {
+            navManager.navTo("permission-notification")
+        }
+        else {
+            navManager.goBack()
+        }
     }
 }
 
