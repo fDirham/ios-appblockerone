@@ -114,6 +114,18 @@ import ManagedSettings
         catch {
             return (false, error.localizedDescription)
         }
+        // Update blocked group counter
+        let ud = GroupUserDefaults()
+        let currGroupCount = ud.integer(forKey: DEFAULT_KEY_BLOCKED_GROUP_COUNTER)
+        let newGroupCount = currGroupCount - 1
+        ud.set(newGroupCount, forKey: DEFAULT_KEY_BLOCKED_GROUP_COUNTER)
+        
+        // Update blocked item counter
+        let currItemCount = ud.integer(forKey: DEFAULT_KEY_BLOCKED_ITEM_COUNTER)
+        let toDeleteItemCount = faSelection.applicationTokens.count + faSelection.categoryTokens.count + faSelection.webDomainTokens.count
+        let newItemCount = currItemCount - toDeleteItemCount
+        ud.set(newItemCount, forKey: DEFAULT_KEY_BLOCKED_ITEM_COUNTER)
+        
         return (true, nil)
     }
     
@@ -131,11 +143,12 @@ import ManagedSettings
             }
             
             let isNew = cdObj == nil
-            if cdObj == nil {
+            if isNew {
                 try _createNewCDObj()
             }
             
-            let isJustEnabled = !(cdObj!.s_blockingEnabled) && s_blockingEnabled
+            // Remnant of old code from when we could disable
+//            let isJustEnabled = !(cdObj!.s_blockingEnabled) && s_blockingEnabled
 
             if !s_blockingEnabled {
                 // We are disabling everything here
@@ -143,19 +156,7 @@ import ManagedSettings
             }
             
             // Add to blocked items + block unblock immediately
-            if isJustEnabled || isNew {
-                let added = TokenSplit(
-                    appTokens: faSelection.applicationTokens,
-                    webTokens: faSelection.webDomainTokens,
-                    catTokens: faSelection.categoryTokens
-                )
-                let addAllTokenBatch: AddRemoveTokenBatch = (added: added, removed: TokenSplit())
-                try _addAndRemoveBlockedItemTokens(arTokenBatch: addAllTokenBatch)
-            }
-            else{
-                try _addAndRemoveBlockedItemTokens(arTokenBatch: modifiedTokenBatch)
-            }
-            
+            try _addAndRemoveBlockedItemTokens(arTokenBatch: modifiedTokenBatch)
             try _onSaveBlockUnblock()
 
             try _syncCDObjWithSelf()
@@ -191,6 +192,18 @@ import ManagedSettings
             let deviceActivityName = getBlockScheduleDAName(groupId: cdObj!.id!)
             try center.startMonitoring(deviceActivityName, during: schedule) // NOTE this overrides previously scheduled so we should be good
             
+            // Update blocked group counter
+            if isNew {
+                let currGroupCount = ud.integer(forKey: DEFAULT_KEY_BLOCKED_GROUP_COUNTER)
+                let newGroupCount = currGroupCount + 1
+                ud.set(newGroupCount, forKey: DEFAULT_KEY_BLOCKED_GROUP_COUNTER)
+            }
+            
+            // Update blocked item counter
+            let currItemCount = ud.integer(forKey: DEFAULT_KEY_BLOCKED_ITEM_COUNTER)
+            let netItemsAdded = _getNetItemsAdded(tokenBatch: modifiedTokenBatch)
+            let newItemCount = currItemCount + netItemsAdded
+            ud.set(newItemCount, forKey: DEFAULT_KEY_BLOCKED_ITEM_COUNTER)
         } catch {
             let nsError = error as NSError
             Logger().error("Unresolved error \(nsError), \(nsError.userInfo)")
@@ -365,12 +378,12 @@ import ManagedSettings
     
     private func _getModifiedTokensBeforeSync() throws -> AddRemoveTokenBatch{
         if cdObj == nil {
-            return (added: TokenSplit(
+            let allAddedTokenSplit = TokenSplit (
                 appTokens: faSelection.applicationTokens,
                 webTokens: faSelection.webDomainTokens,
                 catTokens: faSelection.categoryTokens
-            ),
-                    removed: TokenSplit())
+            )
+            return (added: allAddedTokenSplit, removed: TokenSplit())
         }
         
         let cdoFa: FamilyActivitySelection = try decodeJSONObj(cdObj!.faSelection!)
@@ -437,8 +450,10 @@ import ManagedSettings
             if dupeErrCat != nil {
                 settingsError.faSelection = dupeErrApp
             }
+            
         }
         catch {
+            debugPrint("Something went wrong checking duplicates \(error.localizedDescription)")
             settingsError.faSelection = "Something went wrong checking duplicates \(error.localizedDescription)"
         }
         
@@ -457,14 +472,46 @@ import ManagedSettings
             settingsError.maxOpensPerDay = "If strict mode is off, max opens per day needs to be at least 1"
         }
         
+        
+        
+        // See if we hit group limit
+        let MAX_GROUPS = 10
+        let ud = GroupUserDefaults()
+        let currGroupCount = ud.integer(forKey: DEFAULT_KEY_BLOCKED_GROUP_COUNTER)
+        let groupCountDiff = currGroupCount + 1 - MAX_GROUPS
+        if groupCountDiff > 0 {
+            settingsError.alertMsg = "You will hit the limit of blocked groups. Delete another group to add this one."
+        }
+        
+        // See if we hit item limit
+        let MAX_ITEMS = 40
+        let netItemsAdded = _getNetItemsAdded(tokenBatch: modifiedTokenBatch)
+        let currItemCount = ud.integer(forKey: DEFAULT_KEY_BLOCKED_ITEM_COUNTER)
+        let itemCountDiff = netItemsAdded + currItemCount - MAX_ITEMS
+        if itemCountDiff > 0 {
+            settingsError.alertMsg = "You will hit the limit of blocked items. Remove \(itemCountDiff) blocked apps from this group or any other group to continue."
+        }
+        
         if settingsError.isNotError() {
             return nil
         }
         
-        settingsError.alertMsg = "Some settings are invalid!"
+        if settingsError.alertMsg == nil {
+            settingsError.alertMsg = "Some settings are invalid!"
+        }
+
         return settingsError
     }
     
+    private func _getNetItemsAdded(tokenBatch: AddRemoveTokenBatch) -> Int {
+        let addedTokenSplit = tokenBatch.added
+        let removedTokenSplit = tokenBatch.removed
+        let countItemsAdded = addedTokenSplit.appTokens.count + addedTokenSplit.catTokens.count + addedTokenSplit.webTokens.count
+        let countItemsRemoved = removedTokenSplit.appTokens.count + removedTokenSplit.catTokens.count + removedTokenSplit.webTokens.count
+        let netItemsAdded = countItemsAdded - countItemsRemoved
+        return netItemsAdded
+    }
+
     private func _getTimeSettingComponents(_ settingsVal: Int) -> (hours: Int, minutes: Int) {
         let strVal = "0000\(settingsVal)".suffix(4)
         let hoursVal = Int(strVal.prefix(2)) ?? 0

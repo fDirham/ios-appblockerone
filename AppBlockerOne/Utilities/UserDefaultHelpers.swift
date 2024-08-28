@@ -83,3 +83,6 @@ func getBlockStatsDefaultKey() -> String {
 }
 
 let DEFAULT_KEY_TUTORIAL_DONE = "tutorialdone_"
+let DEFAULT_KEY_BLOCKED_ITEM_COUNTER = "blockeditemcounter_"
+let DEFAULT_KEY_BLOCKED_GROUP_COUNTER = "blockedgroupcounter_"
+let DEFAULT_KEY_BLOCKED_CATEGORIES = "blockedcat_"

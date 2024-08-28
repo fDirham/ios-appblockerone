@@ -48,6 +48,10 @@ struct AppGroupSettingsView: View, KeyboardReadable {
         return !tutorialConfig.isTutorial
     }
 
+    private var showDelete: Bool {
+        return !tutorialConfig.isTutorial
+    }
+    
     var body: some View {
         @Bindable var sm = sm
         
@@ -90,11 +94,13 @@ struct AppGroupSettingsView: View, KeyboardReadable {
                             }
                             .padding(.bottom, 30)
                         }
-                        Button(action: {
-                            confirmDelete = true
-                        }) {
-                            Text("Delete")
-                                .foregroundStyle(Color.danger)
+                        if showDelete {
+                            Button(action: {
+                                confirmDelete = true
+                            }) {
+                                Text("Delete")
+                                    .foregroundStyle(Color.danger)
+                            }
                         }
                         Spacer()
                     }

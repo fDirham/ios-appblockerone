@@ -9,7 +9,6 @@ import Foundation
 import ManagedSettings
 import FamilyControls
 
-let BLOCKED_CATEGORIES_KEY = "blocked_cat"
 let managedSettingsStore = ManagedSettingsStore()
 
 func blockApps(faSelection: FamilyActivitySelection) throws {
@@ -18,6 +17,7 @@ func blockApps(faSelection: FamilyActivitySelection) throws {
 
 func blockApps(appTokens newBlockedApps: Set<ApplicationToken> = Set(), webTokens newBlockedWeb: Set<WebDomainToken> = Set(), catTokens newBlockedCat: Set<ActivityCategoryToken> = Set()) throws {
     let store = managedSettingsStore
+    let ud = GroupUserDefaults()
     
     // Block apps
     if !newBlockedApps.isEmpty{
@@ -40,16 +40,15 @@ func blockApps(appTokens newBlockedApps: Set<ApplicationToken> = Set(), webToken
     if !newBlockedCat.isEmpty{
         // Read from user defaults
         var toAdd: Set<ActivityCategoryToken> = Set()
-        if let blockedCatRaw = UserDefaults(suiteName: "group.appblockerone")!.string(forKey: BLOCKED_CATEGORIES_KEY) {
-            let blockedCat: Set<ActivityCategoryToken> = try decodeJSONObj(blockedCatRaw)
+        if let blockedCat: Set<ActivityCategoryToken> = try ud.getObj(forKey: DEFAULT_KEY_BLOCKED_CATEGORIES) {
             toAdd = blockedCat
         }
+        
         toAdd = toAdd.union(newBlockedCat)
         store.shield.applicationCategories = .specific(toAdd)
         store.shield.webDomainCategories = .specific(toAdd)
         
-        let saveString = try encodeJSONObj(toAdd)
-        UserDefaults(suiteName: "group.appblockerone")!.set(saveString, forKey: BLOCKED_CATEGORIES_KEY)
+        try ud.setObj(toAdd, forKey: DEFAULT_KEY_BLOCKED_CATEGORIES)
     }
 }
 
@@ -59,11 +58,13 @@ func unblockApps(faSelection: FamilyActivitySelection) throws {
 
 func unblockApps(appTokens newBlockedApps: Set<ApplicationToken> = Set(), webTokens newBlockedWeb: Set<WebDomainToken> = Set(), catTokens newBlockedCat: Set<ActivityCategoryToken> = Set()) throws {
     let store = managedSettingsStore
-    
+    let ud = GroupUserDefaults()
+
     // Unblock apps
     if !newBlockedApps.isEmpty{
         if let currApps = store.shield.applications {
-            store.shield.applications = currApps.subtracting(newBlockedApps)
+            let toSet = currApps.subtracting(newBlockedApps)
+            store.shield.applications = toSet
         }
         else {
             store.shield.applications = nil
@@ -72,7 +73,8 @@ func unblockApps(appTokens newBlockedApps: Set<ApplicationToken> = Set(), webTok
     
     if !newBlockedWeb.isEmpty{
         if let currWeb = store.shield.webDomains {
-            store.shield.webDomains = currWeb.subtracting(newBlockedWeb)
+            let toSet = currWeb.subtracting(newBlockedWeb)
+            store.shield.webDomains = toSet
         }
         else {
             store.shield.webDomains = nil
@@ -82,14 +84,11 @@ func unblockApps(appTokens newBlockedApps: Set<ApplicationToken> = Set(), webTok
     
     if !newBlockedCat.isEmpty{
         // Read from user defaults
-        if let blockedCatRaw = UserDefaults(suiteName: "group.appblockerone")!.string(forKey: BLOCKED_CATEGORIES_KEY) {
-            let blockedCat: Set<ActivityCategoryToken> = try decodeJSONObj(blockedCatRaw)
+        if let blockedCat: Set<ActivityCategoryToken> = try ud.getObj(forKey: DEFAULT_KEY_BLOCKED_CATEGORIES) {
             let toAdd = blockedCat.subtracting(newBlockedCat)
             store.shield.applicationCategories = .specific(toAdd)
             store.shield.webDomainCategories = .specific(toAdd)
-            
-            let saveString = try encodeJSONObj(toAdd)
-            UserDefaults(suiteName: "group.appblockerone")!.set(saveString, forKey: BLOCKED_CATEGORIES_KEY)
+            try ud.setObj(toAdd, forKey: DEFAULT_KEY_BLOCKED_CATEGORIES)
         }
         else {
             store.shield.applicationCategories = nil

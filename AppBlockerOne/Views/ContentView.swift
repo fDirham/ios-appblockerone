@@ -18,9 +18,10 @@ struct ContentView: View {
         }
         .onAppear {
             // Check tutorial
+            let allowTutorial = false // For debug
             let ud = GroupUserDefaults()
             let isTutorialDone = ud.bool(forKey: DEFAULT_KEY_TUTORIAL_DONE)
-            if isTutorialDone {
+            if !allowTutorial || isTutorialDone {
                 tutorialConfig.isTutorial = false
                 navManager.navTo("home")
             }
