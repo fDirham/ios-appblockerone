@@ -164,7 +164,7 @@ import ManagedSettings
 
             // Save as schedule default
             let ud = GroupUserDefaults()
-            let scheduleDefault = ScheduleDefault(faSelection: faSelection)
+            let scheduleDefault = ScheduleDefault(faSelection: faSelection, groupName: groupName)
             let sKey = getScheduleDefaultKey(cdObj!.id!)!
             try ud.setObj(scheduleDefault, forKey: sKey)
             

@@ -9,4 +9,5 @@ import FamilyControls
 
 struct ScheduleDefault: Codable {
     var faSelection: FamilyActivitySelection
+    var groupName: String
 }

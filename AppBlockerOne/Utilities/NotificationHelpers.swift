@@ -10,10 +10,11 @@ import UIKit
 
 func scheduleNotification(title: String, msg bodyText: String) {
     let center = UNUserNotificationCenter.current()
-    center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
-        if granted {
+    center.getNotificationSettings(completionHandler: {settings in
+        let canNotify = settings.authorizationStatus == .authorized && settings.alertSetting == .enabled
+        if canNotify {
             let content = UNMutableNotificationContent()
-            content.title = title // Using the custom title here
+            content.title = title
             content.body = bodyText
             content.sound = UNNotificationSound.default
             
@@ -27,9 +28,9 @@ func scheduleNotification(title: String, msg bodyText: String) {
                 }
             }
         } else {
-            debugPrint("Permission denied. \(error?.localizedDescription ?? "")")
+            debugPrint("Not notifying due to lack of permissions")
         }
-    }
+    })
 }
 
 func debugNotif(title: String, msg: String){

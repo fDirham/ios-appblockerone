@@ -48,7 +48,7 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
                 }
                 ud.set(false, forKey: sefKey)
                 
-                debugNotif(title: "DAM", msg: "Started block schedule")
+                scheduleNotification(title: "\(scheduleDefault.groupName) blocked!", msg: "\(APP_NAME) has blocked apps in the \"\(scheduleDefault.groupName)\" group.")
             }
         }
         catch {
@@ -82,7 +82,7 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
                 // Unblock apps
                 try unblockApps(faSelection: scheduleDefault.faSelection)
                 
-                debugNotif(title: "DAM", msg: "Ended block schedule")
+                scheduleNotification(title: "\(scheduleDefault.groupName) unblocked!", msg: "\(APP_NAME) has unblocked apps in the \"\(scheduleDefault.groupName)\" group.")
             }
             else if isTempUnblockActivity(activity) { // Temp block scheduled
                 let tokenId = getMainContentsOfDAName(daName: activity)
@@ -112,7 +112,7 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
                     try blockApps(catTokens: Set([blockedItem.catToken!]))
                 }
                 
-                debugNotif(title: "DAM", msg: "Ended temp unblock period")
+                scheduleNotification(title: "Temporary unblock has ended", msg: "\(APP_NAME) has blocked your app once again.")
             }
             else if isWipeBlockStatsActivity(activity) {
                 ud.removeObject(forKey: getBlockStatsDefaultKey())

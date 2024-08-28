@@ -10,6 +10,8 @@ import Foundation
 let plainJSONEncoder = JSONEncoder()
 let plainJSONDecoder = JSONDecoder()
 
+let APP_NAME = "DuckBlock"
+
 func encodeJSONObj<T: Encodable>(_ obj: T) throws -> String{
     let data = try plainJSONEncoder.encode(obj)
     return String(data: data, encoding: .utf8) ?? "Encoding failed"

@@ -54,6 +54,10 @@ struct HelpView: View {
                             .helpTitle()
                         Text("You can manage to block 40 items, items are either apps, websites, or categories. You can only make 10 groups. These limitations exist due to hardware limitations.")
                             .helpText()
+                        Text("How can I disable notifications?")
+                            .helpTitle()
+                        Text("You need to manually do so in your phone's settings. If this gets enough requests, this setting will be added in.")
+                            .helpText()
                         if showScreenTimePermissions {
                             Text("Grant screen time permissions")
                                 .helpTitle()
