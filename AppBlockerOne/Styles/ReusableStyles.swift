@@ -78,7 +78,7 @@ struct TutorialText: ViewModifier {
             .padding(.vertical, 6)
             .padding(.horizontal, 22)
             .background(Color.splashPond)
-            .clipShape(Capsule())
+            .clipShape(RoundedRectangle(cornerRadius: 4))
             .foregroundStyle(.fg)
     }
 }

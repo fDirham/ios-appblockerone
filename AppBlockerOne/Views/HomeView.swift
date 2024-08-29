@@ -51,9 +51,14 @@ struct HomeView: View {
                         .padding(.top, 10)
                     }
                     else {
-                        Text("Add an app group by tapping the + button!")
+                        HStack {
+                            
+                            Text("Add an app group by tapping the + button!")
                             .foregroundStyle(.fgFaint)
                             .padding(.top, 10)
+                            .multilineTextAlignment(.leading)
+                            Spacer()
+                        }
                     }
                 }
                 .navigationTitle("Blocked groups")
