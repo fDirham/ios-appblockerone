@@ -12,13 +12,46 @@ struct ContentView: View {
     @Environment(TutorialConfig.self) private var tutorialConfig
     @Environment(NavManager.self) private var navManager
     
+    @State private var tabIdx = 1
+    
+    private var showSettings: Bool {
+        !tutorialConfig.isTutorial
+    }
+    
+    private var showShop: Bool {
+        !tutorialConfig.isTutorial
+    }
+
     var body: some View {
-        NavStackView {
-            HelloWorld()
+        TabView(selection: $tabIdx){
+            if showSettings {
+                SettingsView()
+                    .tabItem {
+                        Label("Settings", systemImage: "gearshape.fill")
+                    }
+                    .tag(0)
+            }
+            
+            NavStackView {
+                HelloWorld()
+            }
+            .tabItem {
+                Label("Home", systemImage: "house.fill")
+            }
+            .tag(1)
+            
+            if showShop {
+                CustomStoreView()
+                    .tabItem {
+                        Label("Shop", systemImage: "storefront.fill")
+                    }
+                .tag(2)
+            }
         }
         .onAppear {
             // Check tutorial
             let allowTutorial = false // For debug
+            
             let ud = GroupUserDefaults()
             let isTutorialDone = ud.bool(forKey: DEFAULT_KEY_TUTORIAL_DONE)
             if !allowTutorial || isTutorialDone {
@@ -38,7 +71,7 @@ struct NavStackView<Content: View>: View{
     @Environment(NavManager.self) private var navManager
     
     @ViewBuilder let root: Content
-
+    
     var body: some View {
         @Bindable var nm = navManager
         
@@ -92,7 +125,7 @@ struct ContentView_Preview: PreviewProvider {
     struct Container: View {
         @State private var tutorialConfig = TutorialConfig()
         @State private var navManager = NavManager()
-
+        
         var body: some View {
             ContentView()
                 .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)

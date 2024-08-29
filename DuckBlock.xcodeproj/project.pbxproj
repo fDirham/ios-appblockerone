@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B3EAAC42C80DDA70067ED85 /* CustomStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3EAAC32C80DDA70067ED85 /* CustomStoreView.swift */; };
+		8B3EAAC92C80EAA10067ED85 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3EAAC82C80EAA10067ED85 /* HomeView.swift */; };
+		8B3EAACB2C80EC5C0067ED85 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3EAACA2C80EC5C0067ED85 /* SettingsView.swift */; };
 		8B4A0DFF2C7412B9002722AB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76B52C6BDAD5005EC2D2 /* Persistence.swift */; };
 		8B4A0E012C751DE7002722AB /* UserDefaultHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4A0E002C751DE7002722AB /* UserDefaultHelpers.swift */; };
 		8B4A0E032C753602002722AB /* GroupUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4A0E022C753602002722AB /* GroupUserDefaults.swift */; };
@@ -101,7 +104,6 @@
 		8BE1AA262C7907AB0065DC1B /* BlockedItemDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA222C7907AB0065DC1B /* BlockedItemDefault.swift */; };
 		8BE1AA282C793A770065DC1B /* SettingsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA272C793A770065DC1B /* SettingsError.swift */; };
 		8BE1AA2A2C7D43730065DC1B /* HelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA292C7D43730065DC1B /* HelpView.swift */; };
-		8BE1AA2D2C7E398A0065DC1B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA2C2C7E398A0065DC1B /* HomeView.swift */; };
 		8BE1AA2F2C7E3A7D0065DC1B /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA2E2C7E3A7D0065DC1B /* SplashView.swift */; };
 		8BE1AA312C7E483F0065DC1B /* PermissionsScreentimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA302C7E483F0065DC1B /* PermissionsScreentimeView.swift */; };
 		8BE1AA332C7E4B640065DC1B /* PermissionsNotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE1AA322C7E4B640065DC1B /* PermissionsNotificationsView.swift */; };
@@ -161,6 +163,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		8B3EAAC22C8038DE0067ED85 /* store.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = store.storekit; sourceTree = "<group>"; };
+		8B3EAAC32C80DDA70067ED85 /* CustomStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStoreView.swift; sourceTree = "<group>"; };
+		8B3EAAC82C80EAA10067ED85 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		8B3EAACA2C80EC5C0067ED85 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		8B4A0E002C751DE7002722AB /* UserDefaultHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHelpers.swift; sourceTree = "<group>"; };
 		8B4A0E022C753602002722AB /* GroupUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupUserDefaults.swift; sourceTree = "<group>"; };
 		8B4A0E082C753AE5002722AB /* GroupShieldDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupShieldDefault.swift; sourceTree = "<group>"; };
@@ -218,7 +224,6 @@
 		8BE1AA222C7907AB0065DC1B /* BlockedItemDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedItemDefault.swift; sourceTree = "<group>"; };
 		8BE1AA272C793A770065DC1B /* SettingsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsError.swift; sourceTree = "<group>"; };
 		8BE1AA292C7D43730065DC1B /* HelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpView.swift; sourceTree = "<group>"; };
-		8BE1AA2C2C7E398A0065DC1B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		8BE1AA2E2C7E3A7D0065DC1B /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		8BE1AA302C7E483F0065DC1B /* PermissionsScreentimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsScreentimeView.swift; sourceTree = "<group>"; };
 		8BE1AA322C7E4B640065DC1B /* PermissionsNotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsNotificationsView.swift; sourceTree = "<group>"; };
@@ -273,6 +278,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8B3EAAC72C80E78F0067ED85 /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				8B3EAAC32C80DDA70067ED85 /* CustomStoreView.swift */,
+				8B3EAACA2C80EC5C0067ED85 /* SettingsView.swift */,
+			);
+			path = Tabs;
+			sourceTree = "<group>";
+		};
 		8B4A0E132C754CA2002722AB /* iosShieldAction */ = {
 			isa = PBXGroup;
 			children = (
@@ -354,6 +368,7 @@
 				8BBF76C22C6BE880005EC2D2 /* Views */,
 				8BBF76B02C6BDAD5005EC2D2 /* Assets.xcassets */,
 				8BBF76B22C6BDAD5005EC2D2 /* Preview Content */,
+				8B3EAAC22C8038DE0067ED85 /* store.storekit */,
 			);
 			path = AppBlockerOne;
 			sourceTree = "<group>";
@@ -388,9 +403,10 @@
 			children = (
 				8BBF76AE2C6BDAD2005EC2D2 /* ContentView.swift */,
 				8BBF76DE2C6E6EFF005EC2D2 /* FamilyActivityTokensView.swift */,
+				8B3EAAC82C80EAA10067ED85 /* HomeView.swift */,
 				8BE1AA292C7D43730065DC1B /* HelpView.swift */,
-				8BE1AA2C2C7E398A0065DC1B /* HomeView.swift */,
 				8BE1AA462C7E9D190065DC1B /* HelloWorld.swift */,
+				8B3EAAC72C80E78F0067ED85 /* Tabs */,
 				8BE1AA342C7E4D280065DC1B /* Tutorial */,
 				8BE1AA2B2C7E396C0065DC1B /* Welcome */,
 				8BBF76F32C6EB2DD005EC2D2 /* AppGroupSettings */,
@@ -746,6 +762,7 @@
 				8BE1AA472C7E9D190065DC1B /* HelloWorld.swift in Sources */,
 				8BE1AA312C7E483F0065DC1B /* PermissionsScreentimeView.swift in Sources */,
 				8BE1AA332C7E4B640065DC1B /* PermissionsNotificationsView.swift in Sources */,
+				8B3EAAC92C80EAA10067ED85 /* HomeView.swift in Sources */,
 				8BBF76B62C6BDAD5005EC2D2 /* Persistence.swift in Sources */,
 				8BBF76C42C6BE8A5005EC2D2 /* AppGroupSettingsView.swift in Sources */,
 				8BE1AA3D2C7E6B500065DC1B /* TutorialConfig.swift in Sources */,
@@ -762,6 +779,7 @@
 				8B4A0E522C76B45F002722AB /* ScheduleEndFlagDefault.swift in Sources */,
 				8BE1AA2A2C7D43730065DC1B /* HelpView.swift in Sources */,
 				8B4A0E332C766FBD002722AB /* ShieldMemory.swift in Sources */,
+				8B3EAACB2C80EC5C0067ED85 /* SettingsView.swift in Sources */,
 				8BE1AA3F2C7E86190065DC1B /* NavPath.swift in Sources */,
 				8BE1AA432C7E90230065DC1B /* Tutorial1View.swift in Sources */,
 				8BBF76DD2C6D6EE8005EC2D2 /* Comparable+Clamp.swift in Sources */,
@@ -775,9 +793,9 @@
 				8BBF77502C702087005EC2D2 /* BlockSettingsHelpers.swift in Sources */,
 				8BBF76DB2C6D6A35005EC2D2 /* KeyboardReadable+Notifications.swift in Sources */,
 				8BE1AA192C77FDDA0065DC1B /* BlockStatsDefault.swift in Sources */,
+				8B3EAAC42C80DDA70067ED85 /* CustomStoreView.swift in Sources */,
 				8BE1AA1E2C78077D0065DC1B /* ScheduleHelpers.swift in Sources */,
 				8BADB4112C73F28900E0DCDC /* TokenHelpers.swift in Sources */,
-				8BE1AA2D2C7E398A0065DC1B /* HomeView.swift in Sources */,
 				8B4A0E012C751DE7002722AB /* UserDefaultHelpers.swift in Sources */,
 				8BBF76D62C6D643D005EC2D2 /* OpenMethods.swift in Sources */,
 				8BBF76D42C6D5C81005EC2D2 /* AppGroupSettingsModel.swift in Sources */,
