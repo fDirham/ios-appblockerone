@@ -57,7 +57,6 @@ func getShieldMemoryDefaultKey<T>(_ token: Token<T>) -> String? {
     }
 }
 
-
 func getMainContentOfUserDefaultKey(udKey: String) -> String{
     if let underscoreIdx = udKey.firstIndex(of: "_") {
         let startIdx = udKey.index(underscoreIdx, offsetBy: 1)
@@ -86,3 +85,4 @@ let DEFAULT_KEY_TUTORIAL_DONE = "tutorialdone_"
 let DEFAULT_KEY_BLOCKED_ITEM_COUNTER = "blockeditemcounter_"
 let DEFAULT_KEY_BLOCKED_GROUP_COUNTER = "blockedgroupcounter_"
 let DEFAULT_KEY_BLOCKED_CATEGORIES = "blockedcat_"
+let DEFAULT_KEY_MAIN_SETTINGS = "mainsettings_"

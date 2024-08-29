@@ -10,6 +10,10 @@
 		8B3EAAC42C80DDA70067ED85 /* CustomStoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3EAAC32C80DDA70067ED85 /* CustomStoreView.swift */; };
 		8B3EAAC92C80EAA10067ED85 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3EAAC82C80EAA10067ED85 /* HomeView.swift */; };
 		8B3EAACB2C80EC5C0067ED85 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3EAACA2C80EC5C0067ED85 /* SettingsView.swift */; };
+		8B3EAACD2C80F0440067ED85 /* MainSettingsDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3EAACC2C80F0440067ED85 /* MainSettingsDefault.swift */; };
+		8B3EAACE2C80F1420067ED85 /* MainSettingsDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3EAACC2C80F0440067ED85 /* MainSettingsDefault.swift */; };
+		8B3EAACF2C80F1430067ED85 /* MainSettingsDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3EAACC2C80F0440067ED85 /* MainSettingsDefault.swift */; };
+		8B3EAAD02C80F1440067ED85 /* MainSettingsDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3EAACC2C80F0440067ED85 /* MainSettingsDefault.swift */; };
 		8B4A0DFF2C7412B9002722AB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76B52C6BDAD5005EC2D2 /* Persistence.swift */; };
 		8B4A0E012C751DE7002722AB /* UserDefaultHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4A0E002C751DE7002722AB /* UserDefaultHelpers.swift */; };
 		8B4A0E032C753602002722AB /* GroupUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4A0E022C753602002722AB /* GroupUserDefaults.swift */; };
@@ -167,6 +171,7 @@
 		8B3EAAC32C80DDA70067ED85 /* CustomStoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomStoreView.swift; sourceTree = "<group>"; };
 		8B3EAAC82C80EAA10067ED85 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		8B3EAACA2C80EC5C0067ED85 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		8B3EAACC2C80F0440067ED85 /* MainSettingsDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSettingsDefault.swift; sourceTree = "<group>"; };
 		8B4A0E002C751DE7002722AB /* UserDefaultHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultHelpers.swift; sourceTree = "<group>"; };
 		8B4A0E022C753602002722AB /* GroupUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupUserDefaults.swift; sourceTree = "<group>"; };
 		8B4A0E082C753AE5002722AB /* GroupShieldDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupShieldDefault.swift; sourceTree = "<group>"; };
@@ -307,6 +312,7 @@
 				8B4A0E512C76B45F002722AB /* ScheduleEndFlagDefault.swift */,
 				8BE1AA182C77FDDA0065DC1B /* BlockStatsDefault.swift */,
 				8BE1AA222C7907AB0065DC1B /* BlockedItemDefault.swift */,
+				8B3EAACC2C80F0440067ED85 /* MainSettingsDefault.swift */,
 			);
 			path = UserDefaultModels;
 			sourceTree = "<group>";
@@ -391,9 +397,9 @@
 				8BBF76D32C6D5C81005EC2D2 /* AppGroupSettingsModel.swift */,
 				8BE1AA272C793A770065DC1B /* SettingsError.swift */,
 				8BBF76D52C6D643D005EC2D2 /* OpenMethods.swift */,
-				8B4A0E4D2C76B0BD002722AB /* UserDefaultModels */,
 				8BE1AA3C2C7E6B500065DC1B /* TutorialConfig.swift */,
 				8BE1AA3E2C7E86190065DC1B /* NavPath.swift */,
+				8B4A0E4D2C76B0BD002722AB /* UserDefaultModels */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -717,6 +723,7 @@
 				8B4A0E3E2C7680FF002722AB /* UserDefaults+JSONCoding.swift in Sources */,
 				8B4A0E352C766FBD002722AB /* ShieldMemory.swift in Sources */,
 				8B4A0E4A2C76A708002722AB /* GroupShieldDefault.swift in Sources */,
+				8B3EAACE2C80F1420067ED85 /* MainSettingsDefault.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -740,6 +747,7 @@
 				8BADB4132C7407A500E0DCDC /* TokenHelpers.swift in Sources */,
 				8B4A0E062C7539F8002722AB /* UserDefaultHelpers.swift in Sources */,
 				8B4A0E432C769A8C002722AB /* NotificationHelpers.swift in Sources */,
+				8B3EAACF2C80F1430067ED85 /* MainSettingsDefault.swift in Sources */,
 				8B4A0E0A2C753D7C002722AB /* GroupShieldDefault.swift in Sources */,
 				8B4A0E3D2C7680FF002722AB /* UserDefaults+JSONCoding.swift in Sources */,
 				8BADB4062C73B4B400E0DCDC /* ShieldConfigurationExtension.swift in Sources */,
@@ -791,6 +799,7 @@
 				8B4A0E422C769A8C002722AB /* NotificationHelpers.swift in Sources */,
 				8BBF76CF2C6D1DCF005EC2D2 /* AppSelectionSettingView.swift in Sources */,
 				8BBF77502C702087005EC2D2 /* BlockSettingsHelpers.swift in Sources */,
+				8B3EAACD2C80F0440067ED85 /* MainSettingsDefault.swift in Sources */,
 				8BBF76DB2C6D6A35005EC2D2 /* KeyboardReadable+Notifications.swift in Sources */,
 				8BE1AA192C77FDDA0065DC1B /* BlockStatsDefault.swift in Sources */,
 				8B3EAAC42C80DDA70067ED85 /* CustomStoreView.swift in Sources */,
@@ -824,6 +833,7 @@
 				8BBF77492C700391005EC2D2 /* String+Error.swift in Sources */,
 				8B4A0E452C769A8F002722AB /* NotificationHelpers.swift in Sources */,
 				8BBF77512C702087005EC2D2 /* BlockSettingsHelpers.swift in Sources */,
+				8B3EAAD02C80F1440067ED85 /* MainSettingsDefault.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
