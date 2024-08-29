@@ -11,6 +11,7 @@ import SwiftUI
 struct AppBlockerOneApp: App {
     @State private var tutorialConfig = TutorialConfig(isTutorial: true)
     @State private var navManager = NavManager()
+    @State private var storeModel = StoreModel()
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {
@@ -20,6 +21,7 @@ struct AppBlockerOneApp: App {
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
                 .environment(tutorialConfig)
                 .environment(navManager)
+                .environment(storeModel)
         }
     }
 }
