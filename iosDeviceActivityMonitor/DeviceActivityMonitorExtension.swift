@@ -48,7 +48,8 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
                 }
                 ud.set(false, forKey: sefKey)
                 
-                scheduleNotification(title: "\(scheduleDefault.groupName) blocked!", msg: "\(APP_NAME) has blocked apps in the \"\(scheduleDefault.groupName)\" group.")
+                // Send notifications
+                notifyIfAble(title: "\(scheduleDefault.groupName) blocked!", msg: "\(APP_NAME) has blocked apps in the \"\(scheduleDefault.groupName)\" group.")
             }
         }
         catch {
@@ -82,7 +83,7 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
                 // Unblock apps
                 try unblockApps(faSelection: scheduleDefault.faSelection)
                 
-                scheduleNotification(title: "\(scheduleDefault.groupName) unblocked!", msg: "\(APP_NAME) has unblocked apps in the \"\(scheduleDefault.groupName)\" group.")
+                notifyIfAble(title: "\(scheduleDefault.groupName) unblocked!", msg: "\(APP_NAME) has unblocked apps in the \"\(scheduleDefault.groupName)\" group.")
             }
             else if isTempUnblockActivity(activity) { // Temp block scheduled
                 let tokenId = getMainContentsOfDAName(daName: activity)
@@ -112,7 +113,7 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
                     try blockApps(catTokens: Set([blockedItem.catToken!]))
                 }
                 
-                scheduleNotification(title: "Temporary unblock has ended", msg: "\(APP_NAME) has blocked your app once again.")
+                notifyIfAble(title: "Temporary unblock has ended", msg: "\(APP_NAME) has blocked your app once again.")
             }
             else if isWipeBlockStatsActivity(activity) {
                 ud.removeObject(forKey: getBlockStatsDefaultKey())
@@ -121,6 +122,14 @@ class DeviceActivityMonitorExtension: DeviceActivityMonitor {
         }
         catch {
             debugNotif(title: "DAM ERROR", msg: "\(error.localizedDescription)")
+        }
+    }
+    
+    private func notifyIfAble(title: String, msg: String){
+        let ud = GroupUserDefaults()
+        let canNotify = ud.bool(forKey: DEFAULT_KEY_NOTIFICATIONS_ON)
+        if canNotify {
+            scheduleNotification(title: title, msg: msg)
         }
     }
 }

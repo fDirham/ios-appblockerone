@@ -56,7 +56,7 @@ struct HelpView: View {
                             .helpText()
                         Text("How can I disable notifications?")
                             .helpTitle()
-                        Text("You need to manually do so in your phone's settings. If this gets enough requests, this setting will be added in.")
+                        Text("Go to the settings page.")
                             .helpText()
                         if showScreenTimePermissions {
                             Text("Grant screen time permissions")

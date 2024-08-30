@@ -16,6 +16,8 @@
 		8B3EAAD02C80F1440067ED85 /* MainSettingsDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3EAACC2C80F0440067ED85 /* MainSettingsDefault.swift */; };
 		8B3EAAD22C80F4C40067ED85 /* StoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3EAAD12C80F4C40067ED85 /* StoreModel.swift */; };
 		8B3EAAD42C8125A60067ED85 /* StoreKitTestCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 8B3EAAD32C8125A60067ED85 /* StoreKitTestCertificate.cer */; };
+		8B3EAAD92C8135BA0067ED85 /* ObservableUserDefault in Frameworks */ = {isa = PBXBuildFile; productRef = 8B3EAAD82C8135BA0067ED85 /* ObservableUserDefault */; };
+		8B3EAADB2C8135BA0067ED85 /* ObservableUserDefaultClient in Frameworks */ = {isa = PBXBuildFile; productRef = 8B3EAADA2C8135BA0067ED85 /* ObservableUserDefaultClient */; };
 		8B4A0DFF2C7412B9002722AB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BBF76B52C6BDAD5005EC2D2 /* Persistence.swift */; };
 		8B4A0E012C751DE7002722AB /* UserDefaultHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4A0E002C751DE7002722AB /* UserDefaultHelpers.swift */; };
 		8B4A0E032C753602002722AB /* GroupUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4A0E022C753602002722AB /* GroupUserDefaults.swift */; };
@@ -273,6 +275,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B3EAAD92C8135BA0067ED85 /* ObservableUserDefault in Frameworks */,
+				8B3EAADB2C8135BA0067ED85 /* ObservableUserDefaultClient in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -592,6 +596,10 @@
 				8B4A0E192C754CA2002722AB /* PBXTargetDependency */,
 			);
 			name = DuckBlock;
+			packageProductDependencies = (
+				8B3EAAD82C8135BA0067ED85 /* ObservableUserDefault */,
+				8B3EAADA2C8135BA0067ED85 /* ObservableUserDefaultClient */,
+			);
 			productName = AppBlockerOne;
 			productReference = 8BBF76A92C6BDAD2005EC2D2 /* DuckBlock.app */;
 			productType = "com.apple.product-type.application";
@@ -652,6 +660,7 @@
 			);
 			mainGroup = 8BBF76A02C6BDAD2005EC2D2;
 			packageReferences = (
+				8B3EAAD72C8135BA0067ED85 /* XCRemoteSwiftPackageReference "ObservableUserDefault" */,
 			);
 			productRefGroup = 8BBF76AA2C6BDAD2005EC2D2 /* Products */;
 			projectDirPath = "";
@@ -1309,6 +1318,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8B3EAAD72C8135BA0067ED85 /* XCRemoteSwiftPackageReference "ObservableUserDefault" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/davidsteppenbeck/ObservableUserDefault.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8B3EAAD82C8135BA0067ED85 /* ObservableUserDefault */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B3EAAD72C8135BA0067ED85 /* XCRemoteSwiftPackageReference "ObservableUserDefault" */;
+			productName = ObservableUserDefault;
+		};
+		8B3EAADA2C8135BA0067ED85 /* ObservableUserDefaultClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8B3EAAD72C8135BA0067ED85 /* XCRemoteSwiftPackageReference "ObservableUserDefault" */;
+			productName = ObservableUserDefaultClient;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		8BBF76B72C6BDAD5005EC2D2 /* AppBlockerOne.xcdatamodeld */ = {

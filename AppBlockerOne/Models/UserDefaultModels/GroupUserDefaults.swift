@@ -14,3 +14,7 @@ class GroupUserDefaults: UserDefaults {
         super.init(suiteName: GroupUserDefaults.SUITE_NAME)!
     }
 }
+
+extension UserDefaults {
+    static let groupUserDefaults = GroupUserDefaults()
+}
