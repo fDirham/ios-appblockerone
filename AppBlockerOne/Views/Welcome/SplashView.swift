@@ -47,6 +47,7 @@ struct SplashView: View {
                 }
             }
             .navigationBarBackButtonHidden(true)
+            .toolbar(.hidden, for: .tabBar)
     }
 }
 

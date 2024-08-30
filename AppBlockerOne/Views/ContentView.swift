@@ -14,23 +14,13 @@ struct ContentView: View {
     
     @State private var tabIdx = 1
     
-    private var showSettings: Bool {
-        !tutorialConfig.isTutorial
-    }
-    
-    private var showShop: Bool {
-        !tutorialConfig.isTutorial
-    }
-
     var body: some View {
         TabView(selection: $tabIdx){
-            if showSettings {
-                SettingsView()
-                    .tabItem {
-                        Label("Settings", systemImage: "gearshape.fill")
-                    }
-                    .tag(0)
-            }
+            SettingsView()
+                .tabItem {
+                    Label("Settings", systemImage: "gearshape.fill")
+                }
+                .tag(0)
             
             NavStackView {
                 HelloWorld()
@@ -40,17 +30,15 @@ struct ContentView: View {
             }
             .tag(1)
             
-            if showShop {
-                CustomStoreView()
-                    .tabItem {
-                        Label("Shop", systemImage: "storefront.fill")
-                    }
+            CustomStoreView()
+                .tabItem {
+                    Label("Shop", systemImage: "storefront.fill")
+                }
                 .tag(2)
-            }
         }
         .onAppear {
             // Check tutorial
-            let allowTutorial = false // For debug
+            let allowTutorial = true // For debug
             
             let ud = GroupUserDefaults()
             let isTutorialDone = ud.bool(forKey: DEFAULT_KEY_TUTORIAL_DONE)

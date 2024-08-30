@@ -22,6 +22,7 @@ struct Tutorial2View: View {
                     .opacity(tutorialOpacity)
                 Spacer()
             }
+            .toolbar(.visible, for: .tabBar)
             .onAppear {
                 if !tutorialConfig.isTutorial{
                     return

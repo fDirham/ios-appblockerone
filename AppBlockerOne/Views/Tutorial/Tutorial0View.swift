@@ -21,6 +21,7 @@ struct Tutorial0View: View {
                     .opacity(tutorialOpacity)
                 Spacer()
             }
+            .toolbar(.hidden, for: .tabBar)
             .onAppear {
                 withAnimation {
                     tutorialOpacity = 1
